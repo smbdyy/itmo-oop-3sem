@@ -1,3 +1,5 @@
+using Isu.Exceptions;
+
 namespace Isu.Models;
 
 public class GroupName
@@ -6,12 +8,12 @@ public class GroupName
     {
         if (courseId is < 'A' or > 'Z')
         {
-            // throw
+            throw new IncorrectCourseIdException(courseId);
         }
 
         if (groupNumber is < 0 or > 99)
         {
-            // throw
+            throw new IncorrectGroupNumberException(groupNumber);
         }
 
         this.CourseId = courseId;
