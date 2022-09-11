@@ -1,16 +1,14 @@
+using Isu.Exceptions;
+
 namespace Isu.Models;
 
 public class CourseNumber
 {
     public CourseNumber(AcademicDegree degree, int number)
     {
-        if (number is < 1 or > 4)
+        if ((number is < 1 or > 4) || (degree == AcademicDegree.Master && number > 2))
         {
-            // throw
-        }
-        else if (degree == AcademicDegree.Master && number > 2)
-        {
-            // throw
+            throw new IncorrectCourseNumberException(degree, number);
         }
 
         this.Degree = degree;
