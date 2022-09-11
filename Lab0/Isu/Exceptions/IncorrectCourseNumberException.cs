@@ -10,14 +10,14 @@ public class IncorrectCourseNumberException : Exception
     {
         if (number < 1)
         {
-            this.Message = "course number cannot be less than 1";
+            this.Message = $"course number cannot be less than 1 ({number} is given)";
         }
 
         this.Message = degree switch
         {
-            AcademicDegree.Bachelor => "bachelor's max course number is 4",
-            AcademicDegree.Doctor => "doctor's max course number is 4",
-            AcademicDegree.Master => "master's max course number is 2",
+            AcademicDegree.Bachelor => "bachelor's max course number is 4 ({number} is given)",
+            AcademicDegree.Doctor => "doctor's max course number is 4 ({number} is given)",
+            AcademicDegree.Master => "master's max course number is 2 ({number} is given)",
             _ => string.Empty,
         };
     }
