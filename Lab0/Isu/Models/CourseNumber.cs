@@ -1,12 +1,5 @@
 namespace Isu.Models;
 
-public enum AcademicDegree
-{
-    Bachelor,
-    Master,
-    Doctor,
-}
-
 public class CourseNumber
 {
     public CourseNumber(AcademicDegree degree, int number)
