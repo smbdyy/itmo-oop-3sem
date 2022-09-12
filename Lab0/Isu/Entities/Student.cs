@@ -28,6 +28,7 @@ public class Student
         }
     }
 
+    public int Id { get; }
     public string Name { get; }
     public string Surname { get; }
 
