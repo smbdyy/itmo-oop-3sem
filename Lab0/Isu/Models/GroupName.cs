@@ -4,11 +4,11 @@ namespace Isu.Models;
 
 public class GroupName
 {
-    public GroupName(char courseId, CourseNumber courseNumber, int groupNumber)
+    public GroupName(char specialtyId, CourseNumber courseNumber, int groupNumber)
     {
-        if (courseId is < 'A' or > 'Z')
+        if (specialtyId is < 'A' or > 'Z')
         {
-            throw new IncorrectCourseIdException(courseId);
+            throw new IncorrectSpecialtyIdException(specialtyId);
         }
 
         if (groupNumber is < 0 or > 99)
@@ -16,12 +16,12 @@ public class GroupName
             throw new IncorrectGroupNumberException(groupNumber);
         }
 
-        this.CourseId = courseId;
+        this.SpecialtyId = specialtyId;
         this.CourseNum = courseNumber;
         this.GroupNumber = groupNumber;
     }
 
-    private char CourseId { get; }
+    private char SpecialtyId { get; }
     private CourseNumber CourseNum { get; }
     private int GroupNumber { get; }
 }
