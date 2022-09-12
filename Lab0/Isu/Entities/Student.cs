@@ -31,6 +31,8 @@ public class Student
         }
     }
 
+    ~Student() { _nextId--; }
+
     public int Id { get; }
     public string Name { get; }
     public string Surname { get; }
