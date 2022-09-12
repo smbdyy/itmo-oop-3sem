@@ -1,3 +1,4 @@
+using Isu.Entities;
 using Isu.Exceptions;
 
 namespace Isu.Models;
@@ -28,4 +29,16 @@ public class GroupName
     private char SpecialtyId { get; }
     private CourseNumber CourseNum { get; }
     private int GroupNumber { get; }
+
+    public string GetNameAsString()
+    {
+        if (GroupNumber < 10)
+        {
+            return $"{SpecialtyId}{CourseNum}0{GroupNumber}";
+        }
+        else
+        {
+            return $"{SpecialtyId}{CourseNum}{GroupNumber}";
+        }
+    }
 }
