@@ -64,4 +64,22 @@ public class Group
     }
 
     public List<Student> Students { get; } = new List<Student>();
+
+    public void AddStudent(Student student)
+    {
+        if (Students.Count == _maxStudentsAmount)
+        {
+            throw new MaxStudentsAmountExceededException(this);
+        }
+
+        if (student.Group == this)
+        {
+            throw new StudentIsAlreadyInTheGroupException(student);
+        }
+
+        if (student.Group is not null)
+        {
+            throw new StudentIsInAnotherGroupException(student);
+        }
+    }
 }
