@@ -22,5 +22,5 @@ public class IncorrectCourseNumberException : Exception
         };
     }
 
-    public override string Message { get; } = string.Empty;
+    public override string Message { get; } = "incorrect course number";
 }
