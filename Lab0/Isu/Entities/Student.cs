@@ -5,11 +5,14 @@ namespace Isu.Entities;
 
 public class Student
 {
+    private static int _nextId = 1;
     public Student(Group group, string name, string surname)
     {
         Group = group;
         Name = name;
         Surname = surname;
+        Id = _nextId;
+        _nextId++;
 
         if (!IsFullNameCorrect())
         {
@@ -39,7 +42,7 @@ public class Student
 
     public string GetNameAsString()
     {
-        return $"{Surname} {Name} {Patronymic}";
+        return Patronymic is null ? $"{Surname} {Name}" : $"{Surname} {Name} {Patronymic}";
     }
 
     private bool IsFullNameCorrect()
