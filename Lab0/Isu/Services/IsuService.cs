@@ -71,4 +71,14 @@ public class IsuService : IIsuService
     {
         return new List<Student>(_students.Where(student => student.Group.Name.CourseNum == courseNumber));
     }
+
+    public Group? FindGroup(GroupName groupName)
+    {
+        return _groups.Find(group => group.Name == groupName);
+    }
+
+    public List<Group> FindGroups(CourseNumber courseNumber)
+    {
+        return new List<Group>(_groups.Where(group => group.Name.CourseNum == courseNumber));
+    }
 }
