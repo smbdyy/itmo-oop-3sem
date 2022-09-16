@@ -33,7 +33,7 @@ public class IsuService : IIsuService
             throw new CannotGenerateNewStudentIdException();
         }
 
-        int id = _students.Any() ? 100000 : _students.Last().Id + 1;
+        int id = _students.Any() ? _students.Last().Id + 1 : 100000;
         var newStudent = new Student(group, name, id);
         _students.Add(newStudent);
         return newStudent;
