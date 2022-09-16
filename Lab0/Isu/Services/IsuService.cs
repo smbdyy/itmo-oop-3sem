@@ -38,4 +38,37 @@ public class IsuService : IIsuService
         _students.Add(newStudent);
         return newStudent;
     }
+
+    public Student GetStudent(int id)
+    {
+        Student? foundStudent = _students.Find(student => student.Id == id);
+        if (foundStudent is null)
+        {
+            throw new StudentIsNotFoundException(id);
+        }
+
+        return foundStudent;
+    }
+
+    public Student? FindStudent(int id)
+    {
+        return _students.Find(student => student.Id == id);
+    }
+
+    public List<Student> FindStudents(GroupName groupName)
+    {
+        Group? group = _groups.Find(group => group.Name == groupName);
+
+        if (group is null)
+        {
+            throw new GroupIsNotFoundException(groupName);
+        }
+
+        return new List<Student>(_students.Where(student => student.Group == group));
+    }
+
+    public List<Student> FindStudents(CourseNumber courseNumber)
+    {
+        return new List<Student>(_students.Where(student => student.Group.Name.CourseNum == courseNumber));
+    }
 }
