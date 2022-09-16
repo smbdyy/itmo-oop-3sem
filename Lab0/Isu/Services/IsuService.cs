@@ -28,7 +28,7 @@ public class IsuService : IIsuService
             throw new MaxStudentsAmountExceededException(group);
         }
 
-        if (_students.Last().Id == 999999)
+        if (_students.Any() && _students.Last().Id == 999999)
         {
             throw new CannotGenerateNewStudentIdException();
         }
