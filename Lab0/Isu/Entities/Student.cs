@@ -6,7 +6,7 @@ namespace Isu.Entities;
 
 public class Student
 {
-    public Student(Group group, StudentName name)
+    public Student(Group group, StudentName name, int id)
     {
         Name = name;
         Group = group;
