@@ -11,8 +11,7 @@ public class IsuService : IIsuService
 
     public Group AddGroup(GroupName name)
     {
-        bool groupWithGivenNameExists = _groups.Any(group => group.Name == name);
-        if (groupWithGivenNameExists)
+        if (_groups.Any(group => group.Name == name))
         {
             throw new GroupWithGivenNameAlreadyExistsException(name);
         }
@@ -21,5 +20,4 @@ public class IsuService : IIsuService
         _groups.Add(newGroup);
         return newGroup;
     }
-
 }
