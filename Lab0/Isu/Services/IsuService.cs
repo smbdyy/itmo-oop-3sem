@@ -81,4 +81,9 @@ public class IsuService : IIsuService
     {
         return new List<Group>(_groups.Where(group => group.Name.CourseNum == courseNumber));
     }
+
+    public void ChangeStudentGroup(Student student, Group newGroup)
+    {
+        student.ChangeGroup(newGroup);
+    }
 }
