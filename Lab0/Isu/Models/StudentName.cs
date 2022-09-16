@@ -4,6 +4,8 @@ using Isu.Exceptions;
 
 namespace Isu.Models;
 
+// the purpose of creating separate class for student name
+// is validation and separating it to name, surname and patronymic
 public class StudentName
 {
     public StudentName(string name, string surname)
