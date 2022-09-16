@@ -30,7 +30,7 @@ public class GroupName
     private CourseNumber CourseNum { get; }
     private int GroupNumber { get; }
 
-    public string GetNameAsString()
+    public string AsString()
     {
         if (GroupNumber < 10)
         {
