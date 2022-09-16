@@ -26,9 +26,9 @@ public class GroupName
         this.GroupNumber = groupNumber;
     }
 
-    private char SpecialtyId { get; }
-    private CourseNumber CourseNum { get; }
-    private int GroupNumber { get; }
+    public char SpecialtyId { get; }
+    public CourseNumber CourseNum { get; }
+    public int GroupNumber { get; }
 
     public string AsString()
     {
