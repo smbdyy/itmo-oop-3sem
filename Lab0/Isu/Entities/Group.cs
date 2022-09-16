@@ -5,21 +5,9 @@ namespace Isu.Entities;
 
 public class Group
 {
-    private int _maxStudentsAmount = 30;
     public Group(GroupName name)
     {
-        this.Name = name;
-    }
-
-    public Group(GroupName name, List<Student> students)
-        : this(name)
-    {
-        if (students.Count > MaxStudentsAmount)
-        {
-            throw new MaxStudentsAmountExceededException(this, students.Count);
-        }
-
-        Students = students;
+        Name = name;
     }
 
     public Group(GroupName name, int maxStudentsAmount)
@@ -30,56 +18,10 @@ public class Group
             throw new IncorrectMaxStudentsAmountException(maxStudentsAmount);
         }
 
-        _maxStudentsAmount = maxStudentsAmount;
-    }
-
-    public Group(GroupName name, int maxStudentsAmount, List<Student> students)
-        : this(name, maxStudentsAmount)
-    {
-        if (students.Count > MaxStudentsAmount)
-        {
-            throw new MaxStudentsAmountExceededException(this, students.Count);
-        }
-
-        Students = students;
+        MaxStudentsAmount = maxStudentsAmount;
     }
 
     public GroupName Name { get; }
 
-    public int MaxStudentsAmount
-    {
-        get
-        {
-            return _maxStudentsAmount;
-        }
-        set
-        {
-            if (value <= 0)
-            {
-                throw new IncorrectMaxStudentsAmountException(value);
-            }
-
-            _maxStudentsAmount = value;
-        }
-    }
-
-    public List<Student> Students { get; } = new List<Student>();
-
-    public void AddStudent(Student student)
-    {
-        if (Students.Count == _maxStudentsAmount)
-        {
-            throw new MaxStudentsAmountExceededException(this);
-        }
-
-        if (student.Group == this)
-        {
-            throw new StudentIsAlreadyInTheGroupException(student);
-        }
-
-        if (student.Group is not null)
-        {
-            throw new StudentIsInAnotherGroupException(student);
-        }
-    }
+    public int MaxStudentsAmount { get; }
 }
