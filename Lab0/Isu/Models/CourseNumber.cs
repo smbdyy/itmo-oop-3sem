@@ -16,6 +16,6 @@ public class CourseNumber
         this.Number = number;
     }
 
-    private AcademicDegree Degree { get; }
-    private int Number { get; }
+    public AcademicDegree Degree { get; }
+    public int Number { get; }
 }

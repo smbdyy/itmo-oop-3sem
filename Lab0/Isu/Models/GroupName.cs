@@ -32,13 +32,6 @@ public class GroupName
 
     public string AsString()
     {
-        if (GroupNumber < 10)
-        {
-            return $"{SpecialtyId}{CourseNum}0{GroupNumber}";
-        }
-        else
-        {
-            return $"{SpecialtyId}{CourseNum}{GroupNumber}";
-        }
+        return GroupNumber < 10 ? $"{SpecialtyId}{CourseNum.Number}0{GroupNumber}" : $"{SpecialtyId}{CourseNum.Number}{GroupNumber}";
     }
 }
