@@ -5,19 +5,16 @@ namespace Isu.Entities;
 
 public class Group
 {
-    public Group(GroupName name)
-    {
-        Name = name;
-    }
+    public const int DefaultMaxStudentsAmount = 30;
 
     public Group(GroupName name, int maxStudentsAmount)
-        : this(name)
     {
         if (maxStudentsAmount <= 0)
         {
             throw new IncorrectMaxStudentsAmountException(maxStudentsAmount);
         }
 
+        Name = name;
         MaxStudentsAmount = maxStudentsAmount;
     }
 
