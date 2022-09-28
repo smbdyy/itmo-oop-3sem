@@ -35,9 +35,6 @@ public class Person
             throw new NotEnoughMoneyException(this, moneyAmount);
         }
 
-        if (moneyAmount >= Money)
-        {
-            Money -= moneyAmount;
-        }
+        Money -= moneyAmount;
     }
 }
