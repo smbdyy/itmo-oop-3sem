@@ -8,9 +8,9 @@ public class OrderItem
     {
         Product = product;
 
-        if (amount <= 0)
+        if (amount < 0)
         {
-            throw new IncorrectOrderProductAmountException(amount);
+            throw new IncorrectProductAmountException();
         }
 
         Amount = amount;
