@@ -57,6 +57,23 @@ public class Shop
         }
     }
 
+    public void Supply(List<ShopProductInfo> supplement)
+    {
+        foreach (ShopProductInfo supplementItem in supplement)
+        {
+            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == supplementItem.Product);
+            if (shopItem == null)
+            {
+                _shopItems.Add(supplementItem);
+            }
+            else
+            {
+                shopItem.Amount += supplementItem.Amount;
+                shopItem.Price = supplementItem.Price;
+            }
+        }
+    }
+
     private static string Validate(string value)
     {
         if (value == string.Empty)
