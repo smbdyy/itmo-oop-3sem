@@ -31,7 +31,6 @@ public class Shop
 
     public void Buy(Person person, List<OrderItem> order)
     {
-        decimal cost = 0;
         foreach (OrderItem orderItem in order)
         {
             ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
@@ -39,10 +38,9 @@ public class Shop
             {
                 throw new NotEnoughProductException(this, orderItem.Product);
             }
-
-            cost += orderItem.Amount * shopItem.Price;
         }
 
+        decimal cost = CountOrderCost(order);
         if (cost > person.Money)
         {
             throw new NotEnoughMoneyException(person, cost);
@@ -83,6 +81,37 @@ public class Shop
         }
 
         shopItem.Price = newPrice;
+    }
+
+    public bool IsOrderAvailableToBuy(List<OrderItem> order)
+    {
+        foreach (OrderItem orderItem in order)
+        {
+            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
+            if (shopItem == null || shopItem.Amount < orderItem.Amount)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public decimal CountOrderCost(List<OrderItem> order)
+    {
+        decimal cost = 0;
+        foreach (OrderItem orderItem in order)
+        {
+            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
+            if (shopItem == null || shopItem.Amount < orderItem.Amount)
+            {
+                throw new NotEnoughProductException(this, orderItem.Product);
+            }
+
+            cost += orderItem.Amount * shopItem.Price;
+        }
+
+        return cost;
     }
 
     private static string Validate(string value)
