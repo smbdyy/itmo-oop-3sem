@@ -17,7 +17,7 @@ public class Person
     public int Money
     {
         get => _money;
-        private set
+        set
         {
             if (value < 0)
             {

@@ -19,7 +19,7 @@ public class ShopProductInfo
     public int Amount
     {
         get => _amount;
-        private set
+        set
         {
             if (value < 0)
             {
@@ -42,15 +42,5 @@ public class ShopProductInfo
 
             _price = value;
         }
-    }
-
-    public void SubtractAmount(int amount)
-    {
-        if (amount > Amount)
-        {
-            throw new NotEnoughProductException();
-        }
-
-        Amount -= amount;
     }
 }
