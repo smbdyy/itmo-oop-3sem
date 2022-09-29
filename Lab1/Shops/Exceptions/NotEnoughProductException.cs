@@ -4,12 +4,9 @@ namespace Shops.Exceptions;
 
 public class NotEnoughProductException : Exception
 {
-    public NotEnoughProductException() { }
-
-    // TODO shop
-    public NotEnoughProductException(Product product, int productNeeded)
+    public NotEnoughProductException(Shop shop, Product product)
     {
-        Message = $"pcs of product {product.Name} in shop, {productNeeded} needed";
+        Message = $"not enough product {product.Name} in shop {shop.Name}";
     }
 
     public override string Message { get; } = "not enough product to buy";
