@@ -74,6 +74,17 @@ public class Shop
         }
     }
 
+    public void ChangeProductPrice(Product product, decimal newPrice)
+    {
+        ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == product);
+        if (shopItem == null)
+        {
+            throw new NoProductInTheShopException(this, product);
+        }
+
+        shopItem.Price = newPrice;
+    }
+
     private static string Validate(string value)
     {
         if (value == string.Empty)
