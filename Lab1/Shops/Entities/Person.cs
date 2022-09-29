@@ -27,14 +27,4 @@ public class Person
             _money = value;
         }
     }
-
-    public void SubtractMoney(int moneyAmount)
-    {
-        if (moneyAmount < Money)
-        {
-            throw new NotEnoughMoneyException(this, moneyAmount);
-        }
-
-        Money -= moneyAmount;
-    }
 }
