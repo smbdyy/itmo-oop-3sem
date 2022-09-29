@@ -65,6 +65,6 @@ public class ShopManager
     public Shop? FindShopWithLowestCost(List<OrderItem> order)
     {
         var availableShops = _shops.Where(s => s.IsOrderAvailableToBuy(order)).ToList();
-        return !availableShops.Any() ? null : availableShops.MinBy(s => s.CountOrderCost(order));
+        return availableShops.Any() ? availableShops.MinBy(s => s.CountOrderCost(order)) : null;
     }
 }
