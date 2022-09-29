@@ -4,9 +4,9 @@ namespace Shops.Entities;
 
 public class Person
 {
-    private int _money;
+    private decimal _money;
 
-    public Person(string name, int money)
+    public Person(string name, decimal money)
     {
         Name = name;
         Money = money;
@@ -14,7 +14,7 @@ public class Person
 
     public string Name { get; }
 
-    public int Money
+    public decimal Money
     {
         get => _money;
         set

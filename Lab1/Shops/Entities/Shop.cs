@@ -31,7 +31,7 @@ public class Shop
 
     public void Buy(Person person, List<OrderItem> order)
     {
-        int cost = 0;
+        decimal cost = 0;
         foreach (OrderItem orderItem in order)
         {
             ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);

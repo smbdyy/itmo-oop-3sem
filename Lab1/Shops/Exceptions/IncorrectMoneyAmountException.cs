@@ -3,7 +3,7 @@
 public class IncorrectMoneyAmountException : Exception
 {
     public IncorrectMoneyAmountException() { }
-    public IncorrectMoneyAmountException(int money)
+    public IncorrectMoneyAmountException(decimal money)
     {
         Message = $"person's money amount cannot be {money}";
     }

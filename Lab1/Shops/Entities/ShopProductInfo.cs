@@ -5,9 +5,9 @@ namespace Shops.Entities;
 public class ShopProductInfo
 {
     private int _amount;
-    private int _price;
+    private decimal _price;
 
-    public ShopProductInfo(Product product, int amount, int price)
+    public ShopProductInfo(Product product, int amount, decimal price)
     {
         Product = product;
         Amount = amount;
@@ -30,7 +30,7 @@ public class ShopProductInfo
         }
     }
 
-    public int Price
+    public decimal Price
     {
         get => _price;
         set

@@ -4,7 +4,7 @@ namespace Shops.Exceptions;
 
 public class NotEnoughMoneyException : Exception
 {
-    public NotEnoughMoneyException(Person person, int moneyNeeded)
+    public NotEnoughMoneyException(Person person, decimal moneyNeeded)
     {
         Message = $"person {person.Name} has {person.Money} money, {moneyNeeded} needed";
     }
