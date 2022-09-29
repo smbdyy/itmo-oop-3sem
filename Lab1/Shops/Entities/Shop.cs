@@ -29,6 +29,22 @@ public class Shop
         set => _address = Validate(value);
     }
 
+    public bool IsProductInShop(Product product)
+    {
+        return _shopItems.Any(item => item.Product == product);
+    }
+
+    public ShopProductInfo GetProductInfo(Product product)
+    {
+        ShopProductInfo productInfo = _shopItems.First(item => item.Product == product);
+        if (productInfo == null)
+        {
+            throw new NoProductInTheShopException(this, product);
+        }
+
+        return productInfo;
+    }
+
     public void Buy(Person person, List<OrderItem> order)
     {
         foreach (OrderItem orderItem in order)
