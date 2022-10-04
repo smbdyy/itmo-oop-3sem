@@ -10,7 +10,7 @@ public class OrderItem
 
         if (amount < 0)
         {
-            throw new IncorrectProductAmountException();
+            throw IncorrectArgumentException.IncorrectProductAmount(amount);
         }
 
         Amount = amount;
