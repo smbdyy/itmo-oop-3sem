@@ -1,10 +1,11 @@
 ﻿using Shops.Exceptions;
+using Shops.Models;
 
 namespace Shops.Entities;
 
 public class Shop
 {
-    private List<ShopProductInfo> _shopItems = new ();
+    private readonly List<ShopItem> _shopItems = new ();
     private string _name;
     private string _address;
 
@@ -34,55 +35,60 @@ public class Shop
         return _shopItems.Any(item => item.Product == product);
     }
 
-    public ShopProductInfo GetProductInfo(Product product)
+    public ShopItem GetProductInfo(Product product)
     {
-        ShopProductInfo productInfo = _shopItems.First(item => item.Product == product);
-        if (productInfo == null)
+        ShopItem item = _shopItems.First(item => item.Product == product);
+        if (item == null)
         {
-            throw new NoProductInTheShopException(this, product);
+            throw NotFoundException.NoProductInTheShop(product, this);
         }
 
-        return productInfo;
+        return item;
     }
 
     public void Buy(Person person, List<OrderItem> order)
     {
         foreach (OrderItem orderItem in order)
         {
-            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
-            if (shopItem == null || shopItem.Amount < orderItem.Amount)
+            ShopItem? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
+            if (shopItem == null)
             {
-                throw new NotEnoughProductException(this, orderItem.Product);
+                throw NotFoundException.NoProductInTheShop(orderItem.Product, this);
+            }
+
+            if (shopItem.Amount < orderItem.Amount)
+            {
+                throw NotEnoughException.NotEnoughProduct(orderItem.Product);
             }
         }
 
         decimal cost = CountOrderCost(order);
         if (cost > person.Money)
         {
-            throw new NotEnoughMoneyException(person, cost);
+            throw NotEnoughException.NotEnoughMoney(person, cost);
         }
 
-        person.Money -= cost;
+        person.SubtractMoney(cost);
 
         foreach (OrderItem orderItem in order)
         {
-            ShopProductInfo shopItem = _shopItems.First(item => item.Product == orderItem.Product);
-            shopItem.Amount -= orderItem.Amount;
+            ShopItem shopItem = _shopItems.First(item => item.Product == orderItem.Product);
+            shopItem.SubtractAmount(orderItem.Amount);
         }
     }
 
-    public void Supply(List<ShopProductInfo> supplement)
+    public void Supply(List<ShopItem> supplement)
     {
-        foreach (ShopProductInfo supplementItem in supplement)
+        foreach (ShopItem supplementItem in supplement)
         {
-            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == supplementItem.Product);
+            ShopItem? shopItem = _shopItems.FirstOrDefault(item => item.Product == supplementItem.Product);
             if (shopItem == null)
             {
                 _shopItems.Add(supplementItem);
             }
             else
             {
-                shopItem.Amount += supplementItem.Amount;
+                shopItem.AddAmount(supplementItem.Amount);
                 shopItem.Price = supplementItem.Price;
             }
         }
@@ -90,10 +96,10 @@ public class Shop
 
     public void ChangeProductPrice(Product product, decimal newPrice)
     {
-        ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == product);
+        ShopItem? shopItem = _shopItems.FirstOrDefault(item => item.Product == product);
         if (shopItem == null)
         {
-            throw new NoProductInTheShopException(this, product);
+            throw NotFoundException.NoProductInTheShop(product, this);
         }
 
         shopItem.Price = newPrice;
@@ -103,7 +109,7 @@ public class Shop
     {
         foreach (OrderItem orderItem in order)
         {
-            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
+            ShopItem? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
             if (shopItem == null || shopItem.Amount < orderItem.Amount)
             {
                 return false;
@@ -118,10 +124,15 @@ public class Shop
         decimal cost = 0;
         foreach (OrderItem orderItem in order)
         {
-            ShopProductInfo? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
-            if (shopItem == null || shopItem.Amount < orderItem.Amount)
+            ShopItem? shopItem = _shopItems.FirstOrDefault(item => item.Product == orderItem.Product);
+            if (shopItem == null)
             {
-                throw new NotEnoughProductException(this, orderItem.Product);
+                throw NotFoundException.NoProductInTheShop(orderItem.Product, this);
+            }
+
+            if (shopItem.Amount < orderItem.Amount)
+            {
+                throw NotEnoughException.NotEnoughProduct(orderItem.Product);
             }
 
             cost += orderItem.Amount * shopItem.Price;
@@ -134,7 +145,7 @@ public class Shop
     {
         if (value == string.Empty)
         {
-            throw new EmptyNameStringException();
+            throw IncorrectArgumentException.EmptyName();
         }
 
         return value;
