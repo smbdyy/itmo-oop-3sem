@@ -1,4 +1,5 @@
 ﻿using Shops.Exceptions;
+using Shops.Models;
 
 namespace Shops.Entities;
 
@@ -57,5 +58,10 @@ public class ShopItem
         }
 
         Amount -= amount;
+    }
+
+    public ShopProductInfo GetInfo()
+    {
+        return new ShopProductInfo(Amount, Price);
     }
 }
