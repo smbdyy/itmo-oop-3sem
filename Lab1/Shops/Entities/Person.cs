@@ -17,14 +17,39 @@ public class Person
     public decimal Money
     {
         get => _money;
-        set
+        private set
         {
             if (value < 0)
             {
-                throw new IncorrectMoneyAmountException(value);
+                throw IncorrectArgumentException.IncorrectMoneyAmount(value);
             }
 
             _money = value;
         }
+    }
+
+    public void SubtractMoney(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw IncorrectArgumentException.IncorrectMoneyAmount(amount);
+        }
+
+        if (amount > Money)
+        {
+            throw NotEnoughException.NotEnoughMoney(this, amount);
+        }
+
+        Money -= amount;
+    }
+
+    public void GiveMoney(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw IncorrectArgumentException.IncorrectMoneyAmount(amount);
+        }
+
+        Money += amount;
     }
 }
