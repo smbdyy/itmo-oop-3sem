@@ -5,8 +5,8 @@ namespace Shops.Services;
 
 public class ShopManager
 {
-    private List<Shop> _shops = new ();
-    private List<Product> _products = new ();
+    private readonly List<Shop> _shops = new ();
+    private readonly List<Product> _products = new ();
 
     public Product RegisterProduct(string name)
     {
