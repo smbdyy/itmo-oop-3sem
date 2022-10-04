@@ -12,7 +12,7 @@ public class ShopsTest
         var shopManager = new ShopManager();
         Shop shop = shopManager.RegisterShop("My shop", "221B Baker street");
         Product product = shopManager.RegisterProduct("stuff");
-        shop.Supply(new List<ShopProductInfo> { new (product, 3, 10) });
+        shop.Supply(new List<ShopItem> { new (product, 3, 10) });
 
         Assert.True(shop.IsOrderAvailableToBuy(new List<OrderItem> { new (product, 3) }));
     }
@@ -25,7 +25,7 @@ public class ShopsTest
         var shopManager = new ShopManager();
         Shop shop = shopManager.RegisterShop("My shop", "221B Baker street");
         Product product = shopManager.RegisterProduct("stuff");
-        shop.Supply(new List<ShopProductInfo> { new (product, 3, 10) });
+        shop.Supply(new List<ShopItem> { new (product, 3, 10) });
 
         shop.ChangeProductPrice(product, newPrice);
         Assert.Equal(newPrice, shop.GetProductInfo(product).Price);
@@ -38,10 +38,10 @@ public class ShopsTest
         Product product = shopManager.RegisterProduct("stuff");
 
         Shop cheapestShop = shopManager.RegisterShop("Cheapest shop", "Kronverksky, 9");
-        cheapestShop.Supply(new List<ShopProductInfo> { new (product, 3, 10) });
+        cheapestShop.Supply(new List<ShopItem> { new (product, 3, 10) });
 
         Shop expensiveShop = shopManager.RegisterShop("Expensive shop", "Lomonosova, 49");
-        cheapestShop.Supply(new List<ShopProductInfo> { new (product, 3, 15) });
+        cheapestShop.Supply(new List<ShopItem> { new (product, 3, 15) });
 
         Shop? foundShop = shopManager.FindShopWithLowestCost(new List<OrderItem> { new (product, 2) });
         Assert.Equal(cheapestShop, foundShop);
@@ -53,7 +53,7 @@ public class ShopsTest
         var shopManager = new ShopManager();
         Shop shop = shopManager.RegisterShop("My shop", "221B Baker street");
         Product availableProduct = shopManager.RegisterProduct("stuff");
-        shop.Supply(new List<ShopProductInfo> { new (availableProduct, 3, 10) });
+        shop.Supply(new List<ShopItem> { new (availableProduct, 3, 10) });
 
         Product unavailableProduct = shopManager.RegisterProduct("unavailable stuff");
         Shop? foundShop = shopManager.FindShopWithLowestCost(new List<OrderItem> { new (unavailableProduct, 3) });
@@ -71,8 +71,8 @@ public class ShopsTest
         const int product1AmountBefore = 10;
         const int product2AmountBefore = 10;
 
-        shop.Supply(new List<ShopProductInfo> { new (product1, product1AmountBefore, 10) });
-        shop.Supply(new List<ShopProductInfo> { new (product2, product2AmountBefore, 15) });
+        shop.Supply(new List<ShopItem> { new (product1, product1AmountBefore, 10) });
+        shop.Supply(new List<ShopItem> { new (product2, product2AmountBefore, 15) });
 
         const int product1AmountToBuy = 3;
         const int product2AmountToBuy = 4;
