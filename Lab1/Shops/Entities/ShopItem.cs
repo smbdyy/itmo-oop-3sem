@@ -60,6 +60,16 @@ public class ShopItem
         Amount -= amount;
     }
 
+    public void AddAmount(int amount)
+    {
+        if (amount < 0)
+        {
+            throw IncorrectArgumentException.IncorrectProductAmount(amount);
+        }
+
+        Amount += amount;
+    }
+
     public ShopProductInfo GetInfo()
     {
         return new ShopProductInfo(Amount, Price);
