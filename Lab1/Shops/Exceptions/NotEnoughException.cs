@@ -9,9 +9,9 @@ public class NotEnoughException : Exception
     public NotEnoughException(string message)
         : base(message) { }
 
-    public static NotEnoughException NotEnoughProduct(Product product, Shop shop)
+    public static NotEnoughException NotEnoughProduct(Product product)
     {
-        return new NotEnoughException($"not enough product {product.Name} available in shop {shop.Name}");
+        return new NotEnoughException($"not enough product {product.Name} available");
     }
 
     public static NotEnoughException NotEnoughMoney(Person person, decimal moneyNeeded)
