@@ -31,7 +31,7 @@ public class ShopManager
     {
         if (_products.All(p => p.Id != id))
         {
-            throw new ProductIsNotFoundException(id);
+            throw NotFoundException.ProductIsNotFound(id);
         }
 
         return _products.First(p => p.Id == id);
@@ -51,7 +51,7 @@ public class ShopManager
     {
         if (_shops.All(s => s.Id != id))
         {
-            throw new ShopIsNotFoundException(id);
+            throw NotFoundException.ShopIsNotFound(id);
         }
 
         return _shops.First(s => s.Id == id);
