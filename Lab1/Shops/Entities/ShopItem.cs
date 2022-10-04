@@ -30,10 +30,10 @@ public class ShopItem
         }
     }
 
-    private int Amount
+    public int Amount
     {
         get => _amount;
-        set
+        private set
         {
             if (value < 0)
             {
@@ -53,7 +53,7 @@ public class ShopItem
 
         if (amount > Amount)
         {
-            throw NotEnoughException.NotEnoughProduct(this.Product);
+            throw NotEnoughException.NotEnoughProduct(Product);
         }
 
         Amount -= amount;
