@@ -6,7 +6,7 @@ namespace Isu.Entities;
 
 public class Student
 {
-    public Student(Group group, StudentName name, int id)
+    public Student(Group group, PersonName name, int id)
     {
         Name = name;
         Group = group;
@@ -14,7 +14,7 @@ public class Student
     }
 
     public int Id { get; }
-    public StudentName Name { get; }
+    public PersonName Name { get; }
     public Group Group { get; private set; }
 
     public void ChangeGroup(Group newGroup)

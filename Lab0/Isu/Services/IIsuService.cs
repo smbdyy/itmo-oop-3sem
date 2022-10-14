@@ -6,7 +6,7 @@ namespace Isu.Services;
 public interface IIsuService
 {
     Group AddGroup(GroupName name, int maxStudentsAmount = Group.DefaultMaxStudentsAmount);
-    Student AddStudent(Group group, StudentName name);
+    Student AddStudent(Group group, PersonName name);
 
     Student GetStudent(int id);
     Student? FindStudent(int id);

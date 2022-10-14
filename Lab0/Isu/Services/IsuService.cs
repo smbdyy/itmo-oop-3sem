@@ -21,7 +21,7 @@ public class IsuService : IIsuService
         return newGroup;
     }
 
-    public Student AddStudent(Group group, StudentName name)
+    public Student AddStudent(Group group, PersonName name)
     {
         if (_students.Count(student => student.Group == group) == group.MaxStudentsAmount)
         {

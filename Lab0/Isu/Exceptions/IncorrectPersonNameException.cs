@@ -2,11 +2,11 @@
 
 namespace Isu.Exceptions;
 
-public class IncorrectStudentNameException : Exception
+public class IncorrectPersonNameException : Exception
 {
-    public IncorrectStudentNameException() { }
+    public IncorrectPersonNameException() { }
 
-    public IncorrectStudentNameException(StudentName name)
+    public IncorrectPersonNameException(PersonName name)
     {
         Message =
             $"name, surname and patronymic must start with a capital letter, next letters must be from the same alphabet ({name.AsString()} is given)";

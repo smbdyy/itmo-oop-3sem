@@ -4,29 +4,29 @@ using Isu.Exceptions;
 
 namespace Isu.Models;
 
-// the purpose of creating separate class for student name
+// the purpose of creating separate class for person name
 // is validation and separating it to name, surname and patronymic
-public class StudentName
+public class PersonName
 {
-    public StudentName(string name, string surname)
+    public PersonName(string name, string surname)
     {
         Name = name;
         Surname = surname;
 
         if (!IsFullNameCorrect())
         {
-            throw new IncorrectStudentNameException(this);
+            throw new IncorrectPersonNameException(this);
         }
     }
 
-    public StudentName(string name, string surname, string patronymic)
+    public PersonName(string name, string surname, string patronymic)
         : this(name, surname)
     {
         Patronymic = patronymic;
 
         if (!IsFullNameCorrect())
         {
-            throw new IncorrectStudentNameException(this);
+            throw new IncorrectPersonNameException(this);
         }
     }
 
