@@ -6,10 +6,12 @@ namespace Isu.Extra.Services;
 
 public class IsuExtraService
 {
-    public TimeOnly LessonsStartTime { get; } = new TimeOnly(8, 20);
-    public TimeOnly LessonsMaxEndTime { get; } = new TimeOnly(22, 0);
-    public TimeSpan LessonDuration { get; } = new TimeSpan(1, 30, 0);
-    public TimeSpan BreakDuration { get; } = new TimeSpan(0, 10, 10);
+    public static TimeOnly LessonsStartTime { get; } = new TimeOnly(8, 20);
+    public static TimeOnly LessonsMaxEndTime { get; } = new TimeOnly(22, 0);
+    public static TimeSpan LessonDuration { get; } = new TimeSpan(1, 30, 0);
+    public static TimeSpan BreakDuration { get; } = new TimeSpan(0, 10, 10);
+
+    public static int MaxLessonsAmount { get; } = CountMaxLessonsAmount();
 
     public static Megafaculty GetMegafaculty(GroupName group)
     {
@@ -27,7 +29,22 @@ public class IsuExtraService
         };
     }
 
-    public int CountMaxLessonsAmount()
+    public static TimeOnly GetLessonStartTime(int number)
+    {
+        if (number < 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        if (number < CountMaxLessonsAmount())
+        {
+            throw new NotImplementedException();
+        }
+
+        return number == 1 ? LessonsStartTime : LessonsStartTime.Add((LessonDuration + BreakDuration) * number);
+    }
+
+    private static int CountMaxLessonsAmount()
     {
         int count = Convert.ToInt32(Math.Truncate((LessonsMaxEndTime - LessonsStartTime) / (LessonDuration + BreakDuration)));
         if (LessonsStartTime.Add(((LessonDuration + BreakDuration) * count) + LessonDuration) <= LessonsMaxEndTime)
@@ -36,22 +53,5 @@ public class IsuExtraService
         }
 
         return count;
-    }
-
-    public TimeOnly GetLessonStartTime(int number)
-    {
-        if (number < 1)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        if (number < CountMaxLessonsAmount())
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        return number == 1 ? LessonsStartTime : LessonsStartTime.Add((LessonDuration + BreakDuration) * number);
     }
 }
