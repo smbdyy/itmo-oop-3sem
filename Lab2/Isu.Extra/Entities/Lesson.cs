@@ -5,29 +5,23 @@ namespace Isu.Extra.Entities;
 
 public class Lesson
 {
-    public Lesson(Teacher teacher, int timeId, DayOfWeek week, Classroom classroom, string subjectName)
+    public Lesson(Teacher teacher, LessonTime time, Classroom classroom, string subjectName)
     {
-        if (timeId < 1)
-        {
-            throw new NotImplementedException();
-        }
-
         if (subjectName == string.Empty)
         {
             throw new NotImplementedException();
         }
 
         Teacher = teacher;
-        TimeId = timeId;
-        Week = week;
+        Time = time;
         Classroom = classroom;
         SubjectName = subjectName;
         Id = Guid.NewGuid();
     }
 
     public Teacher Teacher { get; }
-    public int TimeId { get; }
-    public DayOfWeek Week { get; }
+
+    public LessonTime Time { get; }
     public Classroom Classroom { get; }
     public string SubjectName { get; }
     public Guid Id { get; }
