@@ -1,4 +1,6 @@
-﻿namespace Isu.Extra.Services;
+﻿using Isu.Services;
+
+namespace Isu.Extra.Services;
 
 public class IsuExtraServiceBuilder
 {
@@ -6,6 +8,7 @@ public class IsuExtraServiceBuilder
     private TimeOnly _lessonsMaxEndTime = new (22, 0);
     private TimeSpan _lessonDuration = new (1, 30, 0);
     private TimeSpan _breakDuration = new (0, 10, 10);
+    private IsuService _isuService = new IsuService();
 
     public IsuExtraServiceBuilder WithLessonsStartTime(TimeOnly lessonsStartTime)
     {
@@ -31,8 +34,14 @@ public class IsuExtraServiceBuilder
         return this;
     }
 
+    public IsuExtraServiceBuilder WithIsuService(IsuService service)
+    {
+        _isuService = service;
+        return this;
+    }
+
     public IsuExtraService Build()
     {
-        return new IsuExtraService(_lessonsStartTime, _lessonsMaxEndTime, _lessonDuration, _breakDuration);
+        return new IsuExtraService(_lessonsStartTime, _lessonsMaxEndTime, _lessonDuration, _breakDuration, _isuService);
     }
 }
