@@ -77,16 +77,9 @@ public class IsuService : IIsuService
         return _groups.Find(group => group.Name == groupName);
     }
 
-    public Group GetGroup(Guid id)
+    public bool GroupExists(Group group)
     {
-        Group? group = _groups.Find(group => group.Id == id);
-
-        if (group is null)
-        {
-            throw new GroupIsNotFoundException();
-        }
-
-        return group;
+        return _groups.Contains(group);
     }
 
     public List<Group> FindGroups(CourseNumber courseNumber)
