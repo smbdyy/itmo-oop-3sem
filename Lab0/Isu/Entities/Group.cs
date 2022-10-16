@@ -16,9 +16,10 @@ public class Group
 
         Name = name;
         MaxStudentsAmount = maxStudentsAmount;
+        Id = Guid.NewGuid();
     }
 
     public GroupName Name { get; }
-
     public int MaxStudentsAmount { get; }
+    public Guid Id { get; }
 }
