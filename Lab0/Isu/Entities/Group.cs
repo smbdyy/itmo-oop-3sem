@@ -19,5 +19,6 @@ public class Group
     }
 
     public GroupName Name { get; }
+
     public int MaxStudentsAmount { get; }
 }
