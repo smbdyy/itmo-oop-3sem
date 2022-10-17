@@ -43,6 +43,11 @@ public class NotFoundException : Exception
 
     public static NotFoundException StudentIsNotThisStreamMember(Student student, OgnpStream stream)
     {
-        return new NotFoundException($"student {student.Name} is not a member of ognp stream {stream.Name}");
+        return new NotFoundException($"student {student.Name.AsString()} is not a member of ognp stream {stream.Name}");
+    }
+
+    public static NotFoundException OgnpStreamMember(Student student)
+    {
+        return new NotFoundException($"student {student.Name.AsString()} is not in any ognp stream");
     }
 }

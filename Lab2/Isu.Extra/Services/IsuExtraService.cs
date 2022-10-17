@@ -115,6 +115,23 @@ public class IsuExtraService
         return course;
     }
 
+    public OgnpStreamMember? FindOgnpStreamMember(Student student)
+    {
+        return _ognpStreamMembers.FirstOrDefault(member => member.Student == student);
+    }
+
+    public OgnpStreamMember GetOgnpStreamMember(Student student)
+    {
+        OgnpStreamMember? member = FindOgnpStreamMember(student);
+
+        if (member is null)
+        {
+            throw NotFoundException.OgnpStreamMember(student);
+        }
+
+        return member;
+    }
+
     public OgnpCourse CreateOgnpCourse(string name, Megafaculty megafaculty)
     {
         var course = new OgnpCourse(name, megafaculty);
