@@ -28,18 +28,18 @@ public class LessonTime
         return !(a == b);
     }
 
-    public override bool Equals(object? o)
+    public override bool Equals(object? obj)
     {
-        if (o is null)
+        if (obj is null)
         {
             return false;
         }
 
-        return o.GetType() == GetType() && this == (LessonTime)o;
+        return obj.GetType() == GetType() && this == (LessonTime)o;
     }
 
     public override int GetHashCode()
     {
-        return (int)(TimeId * 10 + Week);
+        return (int)((TimeId * 10) + Week);
     }
 }
