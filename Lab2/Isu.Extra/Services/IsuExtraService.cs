@@ -271,6 +271,11 @@ public class IsuExtraService
             throw AddStudentToOgnpException.AlreadyHasTwoCourses(student);
         }
 
+        if (GetLessons(student.Group).Any(lesson => GetLessons(stream).Any(l => l.Lesson.Time == lesson.Lesson.Time)))
+        {
+            throw AddStudentToOgnpException.ScheduleIntersect(student, stream);
+        }
+
         OgnpStreamMember? studentAsStreamMember =
             _ognpStreamMembers.FirstOrDefault(member => member.Student == student);
 
@@ -281,11 +286,6 @@ public class IsuExtraService
             if (studentStream.Course == stream.Course)
             {
                 throw AddStudentToOgnpException.SameCourse(student, stream);
-            }
-
-            if (GetLessons(student.Group).Any(lesson => GetLessons(stream).Any(l => l.Lesson.Time == lesson.Lesson.Time)))
-            {
-                throw AddStudentToOgnpException.ScheduleIntersect(student, stream);
             }
 
             if (GetLessons(studentStream).Any(lesson => GetLessons(stream).Any(l => l.Lesson.Time == lesson.Lesson.Time)))
