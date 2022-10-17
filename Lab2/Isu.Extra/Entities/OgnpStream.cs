@@ -1,5 +1,4 @@
-﻿using Isu.Exceptions;
-using Isu.Extra.Exceptions;
+﻿using Isu.Extra.Exceptions;
 using Isu.Extra.Models;
 
 namespace Isu.Extra.Entities;
