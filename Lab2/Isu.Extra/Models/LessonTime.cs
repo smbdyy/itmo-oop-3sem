@@ -35,7 +35,7 @@ public class LessonTime
             return false;
         }
 
-        return obj.GetType() == GetType() && this == (LessonTime)o;
+        return obj.GetType() == GetType() && this == (LessonTime)obj;
     }
 
     public override int GetHashCode()
