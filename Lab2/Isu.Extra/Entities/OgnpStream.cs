@@ -12,7 +12,7 @@ public class OgnpStream
         Id = Guid.NewGuid();
         if (maxMembers < 1)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.MaxMembersLessThanOne(maxMembers);
         }
 
         if (name == string.Empty)

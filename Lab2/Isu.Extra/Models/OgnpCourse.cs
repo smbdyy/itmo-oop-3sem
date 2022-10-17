@@ -1,4 +1,6 @@
-﻿namespace Isu.Extra.Models;
+﻿using Isu.Extra.Exceptions;
+
+namespace Isu.Extra.Models;
 
 public class OgnpCourse
 {
@@ -6,7 +8,7 @@ public class OgnpCourse
     {
         if (name == string.Empty)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.EmptyNameString();
         }
 
         Name = name;

@@ -1,4 +1,6 @@
-﻿namespace Isu.Extra.Models;
+﻿using Isu.Extra.Exceptions;
+
+namespace Isu.Extra.Models;
 
 public struct Classroom
 {
@@ -6,17 +8,17 @@ public struct Classroom
     {
         if (block is < 1 or > 9)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.ClassroomBlock(block);
         }
 
         if (floor is < 1 or > 9)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.ClassroomFloor(floor);
         }
 
         if (number is < 1 or > 99)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.ClassroomNumber(number);
         }
 
         Name = (block * 1000) + (floor * 100) + number;

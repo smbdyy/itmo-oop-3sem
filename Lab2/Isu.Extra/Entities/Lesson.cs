@@ -1,4 +1,5 @@
 ﻿using Isu.Entities;
+using Isu.Extra.Exceptions;
 using Isu.Extra.Models;
 
 namespace Isu.Extra.Entities;
@@ -9,7 +10,7 @@ public class Lesson
     {
         if (subjectName == string.Empty)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.EmptyNameString();
         }
 
         Teacher = teacher;

@@ -1,4 +1,6 @@
-﻿namespace Isu.Extra.Models;
+﻿using Isu.Extra.Exceptions;
+
+namespace Isu.Extra.Models;
 
 public class LessonTime
 {
@@ -6,7 +8,7 @@ public class LessonTime
     {
         if (timeId < 1)
         {
-            throw new NotImplementedException();
+            throw IncorrectArgumentException.TimeIdIsLessThanOne(timeId);
         }
 
         TimeId = timeId;
