@@ -246,7 +246,7 @@ public class IsuExtraService
         return lesson;
     }
 
-    public OgnpStreamMember AddOgnpStreamMember(Student student, OgnpStream stream)
+    public OgnpStreamMember AddStudentToOgnpStream(Student student, OgnpStream stream)
     {
         // check if student registered, throw exception if they're not
         IsuService.GetStudent(student.Id);
