@@ -1,6 +1,6 @@
 ﻿using Backups.Models;
 
-namespace Backups.Interfaces;
+namespace Backups.StorageAlgorithms;
 
 public interface IStorageAlgorithm
 {

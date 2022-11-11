@@ -1,7 +1,7 @@
 ﻿using Backups.Models;
 using Zio;
 
-namespace Backups.Interfaces;
+namespace Backups.Repositories;
 
 public interface IRepository
 {
