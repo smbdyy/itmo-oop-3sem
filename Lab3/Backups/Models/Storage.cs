@@ -8,7 +8,7 @@ public class Storage
 
     public Storage(string name, IEnumerable<BackupObject> backupObjects)
     {
-        if (name == string.Empty || name.Contains('/') || name.Contains('\\') || name.Contains(':'))
+        if (name == string.Empty || name.Contains('/') || name.Contains('\\'))
         {
             throw new NotImplementedException();
         }
@@ -18,5 +18,5 @@ public class Storage
     }
 
     public IReadOnlyList<BackupObject> BackupObjects => _backupObjects;
-    public string Name { get; }
+    public UPath Name { get; }
 }
