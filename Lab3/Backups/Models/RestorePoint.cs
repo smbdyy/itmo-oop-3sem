@@ -11,7 +11,13 @@ public class RestorePoint
             throw new NotImplementedException();
         }
 
-        _storages = new List<Storage>(storages);
+        _storages = storages.ToList();
+
+        if (_storages.Count == 0)
+        {
+            throw new NotImplementedException();
+        }
+
         Id = id;
         CreationDateTime = DateTime.Now;
         Name = name;
