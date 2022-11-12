@@ -4,13 +4,8 @@ public class RestorePoint
 {
     private List<Storage> _storages;
 
-    public RestorePoint(int id, string name, IEnumerable<Storage> storages)
+    public RestorePoint(int id, IEnumerable<Storage> storages)
     {
-        if (name == string.Empty)
-        {
-            throw new NotImplementedException();
-        }
-
         _storages = storages.ToList();
 
         if (_storages.Count == 0)
@@ -20,11 +15,9 @@ public class RestorePoint
 
         Id = id;
         CreationDateTime = DateTime.Now;
-        Name = name;
     }
 
     public IReadOnlyList<Storage> Storages => _storages;
     public int Id { get; }
     public DateTime CreationDateTime { get; }
-    public string Name { get; }
 }
