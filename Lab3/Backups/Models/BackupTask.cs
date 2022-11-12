@@ -45,12 +45,12 @@ public class BackupTask
         _backupObjects.Remove(backupObject);
     }
 
-    public void CreateRestorePoint(string name)
+    public void CreateRestorePoint()
     {
-        List<Storage> storages = StorageAlgorithm.MakeStorages(_backupObjects);
         int id = _restorePoints.Count == 0 ? 0 : _restorePoints.Last().Id + 1;
+        List<Storage> storages = StorageAlgorithm.MakeStorages(id, _backupObjects);
 
-        var restorePoint = new RestorePoint(id, name, storages);
+        var restorePoint = new RestorePoint(id, storages);
         Repository.SaveRestorePoint(restorePoint);
         _restorePoints.Add(restorePoint);
     }

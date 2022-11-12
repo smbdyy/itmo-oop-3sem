@@ -4,5 +4,5 @@ namespace Backups.StorageAlgorithms;
 
 public interface IStorageAlgorithm
 {
-    public List<Storage> MakeStorages(IEnumerable<BackupObject> backupObjects);
+    public List<Storage> MakeStorages(int id, IEnumerable<BackupObject> backupObjects);
 }
