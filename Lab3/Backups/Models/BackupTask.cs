@@ -34,6 +34,12 @@ public class BackupTask
             throw new NotImplementedException();
         }
 
+        if (Repository.RepositoryFileSystem.DirectoryExists(fullPath) &&
+            Repository.RepositoryFileSystem.FileExists(fullPath))
+        {
+            throw new NotImplementedException();
+        }
+
         _backupObjects.Add(backupObject);
     }
 
