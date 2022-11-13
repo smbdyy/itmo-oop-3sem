@@ -3,10 +3,10 @@ using Zio;
 
 public class BackupObject
 {
-    public BackupObject(UPath path)
+    public BackupObject(UPath relativePath)
     {
-        ObjectPath = path;
+        RelativePath = relativePath;
     }
 
-    public UPath ObjectPath { get; }
+    public UPath RelativePath { get; }
 }

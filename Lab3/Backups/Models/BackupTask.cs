@@ -21,13 +21,13 @@ public class BackupTask
 
     public void AddBackupObject(BackupObject backupObject)
     {
-        if (_backupObjects.Any(obj => obj.ObjectPath == backupObject.ObjectPath))
+        if (_backupObjects.Any(obj => obj.RelativePath == backupObject.RelativePath))
         {
             throw new NotImplementedException();
         }
 
-        if (!Repository.RepositoryFileSystem.DirectoryExists(backupObject.ObjectPath) &&
-            !Repository.RepositoryFileSystem.FileExists(backupObject.ObjectPath))
+        if (!Repository.RepositoryFileSystem.DirectoryExists(backupObject.RelativePath) &&
+            !Repository.RepositoryFileSystem.FileExists(backupObject.RelativePath))
         {
             throw new NotImplementedException();
         }
