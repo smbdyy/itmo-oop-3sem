@@ -28,7 +28,7 @@ public class PhysicalRepository : IRepository
             var zip = new ZipFile();
             foreach (BackupObject backupObject in storage.BackupObjects)
             {
-                zip.AddItem(backupObject.ObjectPath.FullName, string.Empty);
+                zip.AddItem(UPath.Combine(BaseDirectory, backupObject.RelativePath).FullName, string.Empty);
             }
 
             zip.Save(zipFilePath);
