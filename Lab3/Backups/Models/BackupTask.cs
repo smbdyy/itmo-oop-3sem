@@ -1,5 +1,6 @@
 ﻿using Backups.Repositories;
 using Backups.StorageAlgorithms;
+using Zio;
 
 namespace Backups.Models;
 
@@ -26,8 +27,9 @@ public class BackupTask
             throw new NotImplementedException();
         }
 
-        if (!Repository.RepositoryFileSystem.DirectoryExists(backupObject.RelativePath) &&
-            !Repository.RepositoryFileSystem.FileExists(backupObject.RelativePath))
+        var fullPath = UPath.Combine(Repository.BaseDirectory, backupObject.RelativePath);
+        if (!Repository.RepositoryFileSystem.DirectoryExists(fullPath) &&
+            !Repository.RepositoryFileSystem.FileExists(fullPath))
         {
             throw new NotImplementedException();
         }
