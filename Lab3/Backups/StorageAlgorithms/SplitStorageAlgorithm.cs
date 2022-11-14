@@ -6,6 +6,11 @@ public class SplitStorageAlgorithm : IStorageAlgorithm
 {
     public IEnumerable<Storage> MakeStorages(int id, IEnumerable<BackupObject> backupObjects)
     {
+        if (!backupObjects.Any())
+        {
+            throw new NotImplementedException();
+        }
+
         var storages = new List<Storage>();
         foreach (BackupObject backupObject in backupObjects)
         {
