@@ -56,7 +56,7 @@ public class BackupTask
     public void CreateRestorePoint()
     {
         int id = _restorePoints.Count == 0 ? 0 : _restorePoints.Last().Id + 1;
-        List<Storage> storages = StorageAlgorithm.MakeStorages(id, _backupObjects);
+        var storages = StorageAlgorithm.MakeStorages(id, _backupObjects).ToList();
 
         var restorePoint = new RestorePoint(id, storages);
         Repository.SaveRestorePoint(restorePoint);
