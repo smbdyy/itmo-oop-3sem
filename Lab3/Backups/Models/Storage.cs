@@ -1,4 +1,5 @@
-﻿using Zio;
+﻿using Backups.Exceptions;
+using Zio;
 
 namespace Backups.Models;
 
@@ -10,7 +11,7 @@ public class Storage
     {
         if (name == string.Empty || name.Contains('/') || name.Contains('\\'))
         {
-            throw new NotImplementedException();
+            throw PathException.IncorrectStorageName(name);
         }
 
         Name = name;

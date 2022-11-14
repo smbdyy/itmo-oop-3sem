@@ -1,4 +1,5 @@
-﻿using Backups.Models;
+﻿using Backups.Exceptions;
+using Backups.Models;
 using Zio;
 
 namespace Backups.Repositories;
@@ -15,7 +16,7 @@ public interface IRepository
     {
         if (!RepositoryFileSystem.DirectoryExists(source))
         {
-            throw new NotImplementedException();
+            throw PathException.DoesNotExist(source.FullName);
         }
 
         UPath dirName = Path.GetFileName(source.FullName);

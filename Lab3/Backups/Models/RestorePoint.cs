@@ -1,4 +1,6 @@
-﻿namespace Backups.Models;
+﻿using ArgumentException = Backups.Exceptions.ArgumentException;
+
+namespace Backups.Models;
 
 public class RestorePoint
 {
@@ -10,7 +12,7 @@ public class RestorePoint
 
         if (_storages.Count == 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyList();
         }
 
         Id = id;

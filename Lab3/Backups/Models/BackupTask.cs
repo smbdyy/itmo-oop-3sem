@@ -1,6 +1,8 @@
-﻿using Backups.Repositories;
+﻿using Backups.Exceptions;
+using Backups.Repositories;
 using Backups.StorageAlgorithms;
 using Zio;
+using ArgumentException = Backups.Exceptions.ArgumentException;
 
 namespace Backups.Models;
 
@@ -24,20 +26,20 @@ public class BackupTask
     {
         if (_backupObjects.Any(obj => obj.RelativePath == backupObject.RelativePath))
         {
-            throw new NotImplementedException();
+            throw ArgumentException.BackupObjectIsAlreadyAdded(backupObject);
         }
 
         var fullPath = UPath.Combine(Repository.BaseDirectory, backupObject.RelativePath);
         if (!Repository.RepositoryFileSystem.DirectoryExists(fullPath) &&
             !Repository.RepositoryFileSystem.FileExists(fullPath))
         {
-            throw new NotImplementedException();
+            throw PathException.DoesNotExist(fullPath.FullName);
         }
 
         if (Repository.RepositoryFileSystem.DirectoryExists(fullPath) &&
             Repository.RepositoryFileSystem.FileExists(fullPath))
         {
-            throw new NotImplementedException();
+            throw PathException.DirectoryAndFileWithSamePath(fullPath.FullName);
         }
 
         _backupObjects.Add(backupObject);
@@ -47,7 +49,7 @@ public class BackupTask
     {
         if (!_backupObjects.Contains(backupObject))
         {
-            throw new NotImplementedException();
+            throw ArgumentException.BackupObjectIsNotAdded();
         }
 
         _backupObjects.Remove(backupObject);

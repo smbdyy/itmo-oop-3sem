@@ -1,4 +1,5 @@
 ﻿using Backups.Models;
+using ArgumentException = Backups.Exceptions.ArgumentException;
 
 namespace Backups.StorageAlgorithms;
 
@@ -9,7 +10,7 @@ public class SplitStorageAlgorithm : IStorageAlgorithm
         IEnumerable<BackupObject> backupObjectsList = backupObjects.ToList();
         if (!backupObjectsList.Any())
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyList();
         }
 
         var storages = new List<Storage>();
