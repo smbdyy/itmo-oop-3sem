@@ -6,13 +6,14 @@ public class SplitStorageAlgorithm : IStorageAlgorithm
 {
     public IEnumerable<Storage> MakeStorages(int id, IEnumerable<BackupObject> backupObjects)
     {
-        if (!backupObjects.Any())
+        IEnumerable<BackupObject> backupObjectsList = backupObjects.ToList();
+        if (!backupObjectsList.Any())
         {
             throw new NotImplementedException();
         }
 
         var storages = new List<Storage>();
-        foreach (BackupObject backupObject in backupObjects)
+        foreach (BackupObject backupObject in backupObjectsList)
         {
             string fileName = Path.GetFileName(backupObject.RelativePath.FullName);
             string storageName = $"{fileName}({id}).zip";
