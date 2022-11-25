@@ -11,6 +11,7 @@ public class FileSystemRepositoryFile : RepositoryFile
 
     public override Stream Open()
     {
+        // TODO file mode and access
         return File.Open(_fullPath, FileMode.Open, FileAccess.ReadWrite);
     }
 }
