@@ -8,7 +8,6 @@ public interface IRepository
     public void DeleteFile(string path);
     public bool DirectoryExists(string path);
     public bool FileExists(string path);
-    public IRepositoryObject GetRootDirectoryAsCompositeTree();
     public IReadOnlyCollection<IRepositoryObject> GetRootDirectoryEntries();
     public IRepositoryObject GetRepositoryObject(string path);
 }
