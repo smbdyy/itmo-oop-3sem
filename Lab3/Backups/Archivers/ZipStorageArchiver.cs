@@ -17,43 +17,21 @@ public class ZipStorageArchiver : IStorageArchiver
         repository.CreateFile(archivePath);
 
         using Stream zipFileStream = repository.OpenWrite(archivePath);
-        WriteToArchiveStream(zipFileStream, repositoryObjects);
-        return new ZipStorageArchive(GetEntriesFromCreatedArchive(zipFileStream, repositoryObjects));
+        CreateArchiveCompositeEntries(zipFileStream, repositoryObjects);
+        return new ZipStorageArchive(name + ".zip", CreateArchiveCompositeEntries(zipFileStream, repositoryObjects));
     }
 
-    private static void WriteToArchiveStream(Stream zipFileStream, IEnumerable<IRepositoryObject> repositoryObjects)
+    private static IEnumerable<IRepositoryObject> CreateArchiveCompositeEntries(Stream zipFileStream, IEnumerable<IRepositoryObject> repositoryObjects)
     {
+        var entries = new List<IRepositoryObject>();
         using var archive = new ZipArchive(zipFileStream, ZipArchiveMode.Create);
-        var visitor = new ZipArchiverVisitor(archive);
         foreach (IRepositoryObject repositoryObject in repositoryObjects)
         {
+            var visitor = new ZipArchiverVisitor(archive);
             repositoryObject.Accept(visitor);
-        }
-    }
-
-    private static IEnumerable<ZipStorageArchiveEntry> GetEntriesFromCreatedArchive(
-        Stream zipFileStream,
-        IEnumerable<IRepositoryObject> repositoryObjects)
-    {
-        using var archive = new ZipArchive(zipFileStream, ZipArchiveMode.Read);
-        var storageArchiveEntries = new List<ZipStorageArchiveEntry>();
-        foreach (IRepositoryObject repositoryObject in repositoryObjects)
-        {
-            ZipArchiveEntry? archiveEntry = GetEntry(archive, repositoryObject.Path);
-            storageArchiveEntries.Add(new ZipStorageArchiveEntry(archiveEntry, repositoryObject.Path));
+            entries.Add(visitor.GetComposite());
         }
 
-        return storageArchiveEntries;
-    }
-
-    private static ZipArchiveEntry GetEntry(ZipArchive archive, string path)
-    {
-        ZipArchiveEntry? entry = archive.GetEntry(path);
-        if (entry is null)
-        {
-            throw new NotImplementedException();
-        }
-
-        return entry;
+        return entries;
     }
 }
