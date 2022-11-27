@@ -9,8 +9,9 @@ public class BackupTask
 {
     private readonly List<RestorePoint> _restorePoints = new ();
     private readonly List<BackupObject> _backupObjects = new ();
-    private IStorageAlgorithm _storageAlgorithm;
-    private IStorageArchiver _archiver;
+    private readonly IStorageAlgorithm _storageAlgorithm;
+    private readonly IStorageArchiver _archiver;
+    private int _newRestorePointId = 0;
 
     public BackupTask(string name, IRepository repository, IStorageAlgorithm storageAlgorithm, IStorageArchiver archiver)
     {
@@ -27,7 +28,13 @@ public class BackupTask
 
     public void CreateRestorePoint()
     {
-        IStorage storage = _storageAlgorithm.MakeStorage(Repository, _archiver, BackupObjects);
+        IStorage storage = _storageAlgorithm.MakeStorage(GetNewRestorePointId(), Repository, _archiver, BackupObjects);
         _restorePoints.Add(new RestorePoint(BackupObjects, storage));
+    }
+
+    private int GetNewRestorePointId()
+    {
+        _newRestorePointId++;
+        return _newRestorePointId;
     }
 }
