@@ -5,7 +5,7 @@ namespace Backups.StorageAlgorithms;
 
 public class SingleStorage : IStorage
 {
-    private List<IStorageArchive> _archives;
+    private readonly List<IStorageArchive> _archives;
 
     public SingleStorage(IEnumerable<IStorageArchive> archives)
     {
