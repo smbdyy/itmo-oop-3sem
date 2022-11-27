@@ -4,7 +4,7 @@ using Backups.Repositories;
 
 namespace Backups.StorageAlgorithms;
 
-public class SingleStorageAlgorithm : IStorageAlgorithm
+public class SplitStorageAlgorithm : IStorageAlgorithm
 {
     public IStorage MakeStorage(int id, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<BackupObject> objects)
     {
@@ -15,6 +15,6 @@ public class SingleStorageAlgorithm : IStorageAlgorithm
             archives.Add(storageArchiver.CreateArchive(archiveName, repository, backupObject));
         }
 
-        return new SingleStorage(archives);
+        return new SplitStorage(archives);
     }
 }
