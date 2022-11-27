@@ -4,5 +4,5 @@ namespace Backups.StorageAlgorithms;
 
 public interface IStorage
 {
-    IEnumerable<IRepositoryObject> GetEntries();
+    public IEnumerable<IRepositoryObject> GetEntries();
 }

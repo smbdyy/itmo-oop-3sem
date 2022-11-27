@@ -1,8 +1,10 @@
-﻿using Backups.Repositories;
+﻿using Backups.Archivers;
+using Backups.Models;
+using Backups.Repositories;
 
 namespace Backups.StorageAlgorithms;
 
 public interface IStorageAlgorithm
 {
-    IStorage MakeStorage(IEnumerable<IRepositoryObject> repositoryObjects);
+    IStorage MakeStorage(IRepository repository, IStorageArchiver storageArchiver, IEnumerable<BackupObject> objects);
 }
