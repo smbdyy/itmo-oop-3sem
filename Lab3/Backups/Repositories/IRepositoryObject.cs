@@ -1,6 +1,9 @@
-﻿namespace Backups.Repositories;
+﻿using Backups.Visitors;
+
+namespace Backups.Repositories;
 
 public interface IRepositoryObject
 {
-    public bool IsFile { get; }
+    public string Path { get; }
+    public void Accept(IVisitor visitor);
 }
