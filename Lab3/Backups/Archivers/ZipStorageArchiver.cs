@@ -19,8 +19,8 @@ public class ZipStorageArchiver : IStorageArchiver
         repository.CreateFile(archivePath);
 
         using Stream zipFileStream = repository.OpenWrite(archivePath);
-        CreateArchiveCompositeEntries(zipFileStream, repositoryObjects);
-        return new ZipStorageArchive(name + ArchiveExtension, CreateArchiveCompositeEntries(zipFileStream, repositoryObjects));
+        IEnumerable<IRepositoryObject> compositeEntries = CreateArchiveCompositeEntries(zipFileStream, repositoryObjects);
+        return new ZipStorageArchive(name + ArchiveExtension, compositeEntries);
     }
 
     private static IEnumerable<IRepositoryObject> CreateArchiveCompositeEntries(Stream zipFileStream, IEnumerable<IRepositoryObject> repositoryObjects)

@@ -23,7 +23,8 @@ public class FileSystemRepository : IRepository
     public void CreateFile(string path)
     {
         ValidateRelativePath(path);
-        File.Create(Path.Combine(RootPath, path));
+        FileStream stream = File.Create(Path.Combine(RootPath, path));
+        stream.Dispose();
     }
 
     public void DeleteDirectory(string path)
@@ -76,7 +77,7 @@ public class FileSystemRepository : IRepository
             throw RepositoryException.FileNotFound(path);
         }
 
-        return File.OpenWrite(Path.Combine(RootPath, path));
+        return new FileStream(Path.Combine(RootPath, path), FileMode.Open, FileAccess.ReadWrite, FileShare.None);
     }
 
     public Stream OpenRead(string path)
@@ -126,7 +127,7 @@ public class FileSystemRepository : IRepository
 
         if (Path.IsPathRooted(path) || Path.EndsInDirectorySeparator(path) || path.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
         {
-            throw RepositoryException.IncorrectRootPath(path);
+            throw RepositoryException.IncorrectRelativePath(path);
         }
 
         return path;

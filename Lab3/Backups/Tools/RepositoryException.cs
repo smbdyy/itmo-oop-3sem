@@ -5,7 +5,7 @@ public class RepositoryException : Exception
     public RepositoryException(string message)
         : base(message) { }
 
-    public static RepositoryException IncorrectRootPath(string path)
+    public static RepositoryException IncorrectRelativePath(string path)
     {
         return new RepositoryException($"repository init failed: incorrect root path {path}");
     }
