@@ -3,6 +3,7 @@ using Backups.Entities;
 using Backups.Models;
 using Backups.Repositories;
 using Backups.StorageAlgorithms;
+using Backups.Tools.Creators;
 using Xunit;
 
 namespace Backups.Test;
@@ -14,7 +15,7 @@ public class LocalFileSystemTest
     {
         const string restorePointsPath = "RestorePoints";
         var repository = new FileSystemRepository(@"C:\BackupsLab", restorePointsPath);
-        var backupTask = new BackupTask("TestTask", repository, new SplitStorageAlgorithm(), new ZipStorageArchiver());
+        var backupTask = new BackupTask("TestTask", repository, new SplitStorageAlgorithm(), new ZipStorageArchiver(), new RestorePointCreator());
         var fileBackupObject = new BackupObject("file1.txt");
         var dirBackupObject = new BackupObject("dir1");
         backupTask.AddBackupObject(fileBackupObject);
@@ -41,7 +42,7 @@ public class LocalFileSystemTest
     {
         const string restorePointsPath = "RestorePoints";
         var repository = new FileSystemRepository(@"C:\BackupsLab", restorePointsPath);
-        var backupTask = new BackupTask("TestTask", repository, new SingleStorageAlgorithm(), new ZipStorageArchiver());
+        var backupTask = new BackupTask("TestTask", repository, new SingleStorageAlgorithm(), new ZipStorageArchiver(), new RestorePointCreator());
         var fileBackupObject = new BackupObject("file1.txt");
         var dirBackupObject = new BackupObject("dir1");
         backupTask.AddBackupObject(fileBackupObject);

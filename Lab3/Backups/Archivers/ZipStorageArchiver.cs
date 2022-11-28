@@ -9,10 +9,10 @@ public class ZipStorageArchiver : IStorageArchiver
 {
     public string ArchiveExtension => ".zip";
 
-    public IStorageArchive CreateArchive(string name, IRepository repository, BackupObject backupObject)
-        => CreateArchive(name, repository, new List<BackupObject> { backupObject });
+    public IStorageArchive CreateArchive(string name, IRepository repository, IBackupObject backupObject)
+        => CreateArchive(name, repository, new List<IBackupObject> { backupObject });
 
-    public IStorageArchive CreateArchive(string name, IRepository repository, IEnumerable<BackupObject> backupObjects)
+    public IStorageArchive CreateArchive(string name, IRepository repository, IEnumerable<IBackupObject> backupObjects)
     {
         var repositoryObjects = backupObjects.Select(backupObject => repository.GetRepositoryObject(backupObject.Path)).ToList();
         string archivePath = Path.Combine(repository.RestorePointsPath, name + ArchiveExtension);

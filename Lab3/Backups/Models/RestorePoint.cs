@@ -2,17 +2,17 @@
 
 namespace Backups.Models;
 
-public class RestorePoint
+public class RestorePoint : IRestorePoint
 {
-    private List<BackupObject> _backupObjects;
+    private List<IBackupObject> _backupObjects;
 
-    public RestorePoint(IEnumerable<BackupObject> backupObjects, IStorage storage)
+    public RestorePoint(IEnumerable<IBackupObject> backupObjects, IStorage storage)
     {
         _backupObjects = backupObjects.ToList();
         Storage = storage;
     }
 
-    public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects;
+    public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
     public DateTime CreationDateTime { get; } = DateTime.Now;
     public IStorage Storage { get; }
 }

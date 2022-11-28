@@ -1,8 +1,8 @@
-﻿using Backups.Tools;
+﻿using Backups.Tools.Exceptions;
 
 namespace Backups.Models;
 
-public class BackupObject
+public class BackupObject : IBackupObject
 {
     public BackupObject(string path)
     {

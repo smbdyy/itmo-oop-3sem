@@ -2,38 +2,46 @@
 using Backups.Models;
 using Backups.Repositories;
 using Backups.StorageAlgorithms;
-using Backups.Tools;
+using Backups.Tools.Creators;
+using Backups.Tools.Exceptions;
 
 namespace Backups.Entities;
 
-public class BackupTask
+public class BackupTask : IBackupTask
 {
-    private readonly List<RestorePoint> _restorePoints = new ();
-    private readonly List<BackupObject> _backupObjects = new ();
+    private readonly List<IRestorePoint> _restorePoints = new ();
+    private readonly List<IBackupObject> _backupObjects = new ();
     private readonly IStorageAlgorithm _storageAlgorithm;
     private readonly IStorageArchiver _archiver;
+    private readonly IRestorePointCreator _restorePointCreator;
     private int _newRestorePointId;
 
-    public BackupTask(string name, IRepository repository, IStorageAlgorithm storageAlgorithm, IStorageArchiver archiver)
+    public BackupTask(
+        string name,
+        IRepository repository,
+        IStorageAlgorithm storageAlgorithm,
+        IStorageArchiver archiver,
+        IRestorePointCreator restorePointCreator)
     {
         Name = repository.ValidateRelativePath(name);
         Repository = repository;
         _storageAlgorithm = storageAlgorithm;
         _archiver = archiver;
+        _restorePointCreator = restorePointCreator;
     }
 
     public string Name { get; }
     public IRepository Repository { get; }
-    public IReadOnlyCollection<RestorePoint> RestorePoints => _restorePoints;
-    public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects;
+    public IReadOnlyCollection<IRestorePoint> RestorePoints => _restorePoints;
+    public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
 
     public void CreateRestorePoint()
     {
         IStorage storage = _storageAlgorithm.MakeStorage(GetNewRestorePointId(), Repository, _archiver, BackupObjects);
-        _restorePoints.Add(new RestorePoint(BackupObjects, storage));
+        _restorePoints.Add(_restorePointCreator.Create(_backupObjects, storage));
     }
 
-    public void AddBackupObject(BackupObject backupObject)
+    public void AddBackupObject(IBackupObject backupObject)
     {
         if (_backupObjects.Any(obj => obj.Path == backupObject.Path))
         {
@@ -49,7 +57,7 @@ public class BackupTask
         _backupObjects.Add(backupObject);
     }
 
-    public void RemoveBackupObject(BackupObject backupObject)
+    public void RemoveBackupObject(IBackupObject backupObject)
     {
         if (!_backupObjects.Contains(backupObject))
         {

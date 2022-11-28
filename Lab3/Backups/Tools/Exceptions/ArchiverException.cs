@@ -1,4 +1,4 @@
-﻿namespace Backups.Tools;
+﻿namespace Backups.Tools.Exceptions;
 
 public class ArchiverException : Exception
 {
@@ -7,6 +7,6 @@ public class ArchiverException : Exception
 
     public static ArchiverException CompositeNotBuilt()
     {
-        return new ArchiverException($"visitor has not built repository object' composite");
+        return new ArchiverException($"visitor has not built repository object's composite");
     }
 }

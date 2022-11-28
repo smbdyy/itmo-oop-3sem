@@ -1,4 +1,4 @@
-﻿namespace Backups.Tools;
+﻿namespace Backups.Tools.Exceptions;
 
 public class BackupsArgumentException : Exception
 {
