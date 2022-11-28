@@ -101,7 +101,6 @@ public class FileSystemRepository : IRepository
 
     public IRepositoryObject GetRepositoryObject(string path)
     {
-        Debug.WriteLine(path);
         ValidateRelativePath(path);
         if (FileExists(path))
         {
