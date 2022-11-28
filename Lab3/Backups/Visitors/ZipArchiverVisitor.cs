@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using Backups.Archivers;
 using Backups.Repositories;
+using Backups.Tools;
 
 namespace Backups.Visitors;
 
@@ -18,7 +19,7 @@ public class ZipArchiverVisitor : IVisitor
     {
         if (_composite is null)
         {
-            throw new NotImplementedException();
+            throw ArchiverException.CompositeNotBuilt();
         }
 
         return _composite;

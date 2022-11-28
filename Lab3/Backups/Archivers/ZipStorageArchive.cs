@@ -1,4 +1,5 @@
 ﻿using Backups.Repositories;
+using ArgumentException = Backups.Tools.ArgumentException;
 
 namespace Backups.Archivers;
 
@@ -10,7 +11,7 @@ public class ZipStorageArchive : IStorageArchive
     {
         if (name == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyPathString();
         }
 
         _entries = entries.ToList();

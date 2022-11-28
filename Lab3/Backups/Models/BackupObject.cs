@@ -1,4 +1,6 @@
-﻿namespace Backups.Models;
+﻿using ArgumentException = Backups.Tools.ArgumentException;
+
+namespace Backups.Models;
 
 public class BackupObject
 {
@@ -6,7 +8,7 @@ public class BackupObject
     {
         if (path == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyPathString();
         }
 
         Path = path;

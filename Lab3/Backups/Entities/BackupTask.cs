@@ -2,6 +2,7 @@
 using Backups.Models;
 using Backups.Repositories;
 using Backups.StorageAlgorithms;
+using Backups.Tools;
 
 namespace Backups.Entities;
 
@@ -36,12 +37,12 @@ public class BackupTask
     {
         if (_backupObjects.Any(obj => obj.Path == backupObject.Path))
         {
-            throw new NotImplementedException();
+            throw BackupTaskException.AlreadyTracking(backupObject, this);
         }
 
         if (!Repository.DirectoryExists(backupObject.Path) && !Repository.FileExists(backupObject.Path))
         {
-            throw new NotImplementedException();
+            throw BackupTaskException.NotFoundInRepository(backupObject, this);
         }
 
         _backupObjects.Add(backupObject);
@@ -51,7 +52,7 @@ public class BackupTask
     {
         if (!_backupObjects.Contains(backupObject))
         {
-            throw new NotImplementedException();
+            throw BackupTaskException.NotTracking(backupObject, this);
         }
 
         _backupObjects.Remove(backupObject);

@@ -1,4 +1,7 @@
-﻿namespace Backups.Repositories;
+﻿using Backups.Tools;
+using ArgumentException = Backups.Tools.ArgumentException;
+
+namespace Backups.Repositories;
 
 public class FileSystemRepository : IRepository
 {
@@ -70,7 +73,7 @@ public class FileSystemRepository : IRepository
         ValidateRelativePath(path);
         if (!FileExists(path))
         {
-            throw new NotImplementedException();
+            throw RepositoryException.FileNotFound(path);
         }
 
         return File.OpenWrite(Path.Combine(RootPath, path));
@@ -81,7 +84,7 @@ public class FileSystemRepository : IRepository
         ValidateRelativePath(path);
         if (!FileExists(path))
         {
-            throw new NotImplementedException();
+            throw RepositoryException.FileNotFound(path);
         }
 
         return File.OpenRead(Path.Combine(RootPath, path));
@@ -102,7 +105,7 @@ public class FileSystemRepository : IRepository
 
         if (!DirectoryExists(path))
         {
-            throw new NotImplementedException();
+            throw RepositoryException.DirectoryNotFound(path);
         }
 
         var entries = new List<IRepositoryObject>();
@@ -118,12 +121,12 @@ public class FileSystemRepository : IRepository
     {
         if (path == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyPathString();
         }
 
         if (Path.IsPathRooted(path) || Path.EndsInDirectorySeparator(path) || path.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
         {
-            throw new NotImplementedException();
+            throw RepositoryException.IncorrectRootPath(path);
         }
 
         return path;
@@ -134,7 +137,7 @@ public class FileSystemRepository : IRepository
         string rootPath = Path.GetFullPath(path);
         if (!Directory.Exists(rootPath))
         {
-            throw new NotImplementedException();
+            throw RepositoryException.DirectoryNotFound(path);
         }
 
         if (!Path.EndsInDirectorySeparator(rootPath))
