@@ -7,7 +7,7 @@ public class RepositoryException : Exception
 
     public static RepositoryException IncorrectRelativePath(string path)
     {
-        return new RepositoryException($"repository init failed: incorrect root path {path}");
+        return new RepositoryException($"incorrect relative path {path}");
     }
 
     public static RepositoryException FileNotFound(string path)
