@@ -1,4 +1,5 @@
-﻿using Backups.Tools;
+﻿using System.Diagnostics;
+using Backups.Tools;
 
 namespace Backups.Repositories;
 
@@ -54,7 +55,9 @@ public class FileSystemRepository : IRepository
     public IEnumerable<string> EnumerateDirectories(string path)
     {
         ValidateRelativePath(path);
-        return Directory.EnumerateDirectories(Path.Combine(RootPath, path));
+        var fullNames = Directory.GetDirectories(Path.Combine(RootPath, path)).ToList();
+
+        return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
 
     public IEnumerable<string> EnumerateFiles(string path)
@@ -98,6 +101,7 @@ public class FileSystemRepository : IRepository
 
     public IRepositoryObject GetRepositoryObject(string path)
     {
+        Debug.WriteLine(path);
         ValidateRelativePath(path);
         if (FileExists(path))
         {
