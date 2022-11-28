@@ -8,6 +8,7 @@ public class FileSystemRepository : IRepository
     {
         RootPath = FormatRootPath(rootPath);
         RestorePointsPath = ValidateRelativePath(restorePointsPath);
+        CreateDirectory(RestorePointsPath);
     }
 
     public string RootPath { get; }
