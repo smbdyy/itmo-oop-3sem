@@ -68,7 +68,9 @@ public class FileSystemRepository : IRepository
     public IEnumerable<string> EnumerateFileSystemEntries(string path)
     {
         ValidateRelativePath(path);
-        return Directory.EnumerateFileSystemEntries(Path.Combine(RootPath, path));
+        var fullNames = Directory.GetFileSystemEntries(Path.Combine(RootPath, path)).ToList();
+
+        return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
 
     public Stream OpenWrite(string path)
