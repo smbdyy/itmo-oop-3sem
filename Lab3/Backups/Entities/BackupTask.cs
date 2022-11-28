@@ -40,6 +40,7 @@ public class BackupTask
             throw BackupTaskException.AlreadyTracking(backupObject, this);
         }
 
+        Repository.ValidateRelativePath(backupObject.Path);
         if (!Repository.DirectoryExists(backupObject.Path) && !Repository.FileExists(backupObject.Path))
         {
             throw BackupTaskException.NotFoundInRepository(backupObject, this);
