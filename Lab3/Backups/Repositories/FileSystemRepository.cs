@@ -1,5 +1,4 @@
 ﻿using Backups.Tools;
-using ArgumentException = Backups.Tools.ArgumentException;
 
 namespace Backups.Repositories;
 
@@ -121,7 +120,7 @@ public class FileSystemRepository : IRepository
     {
         if (path == string.Empty)
         {
-            throw ArgumentException.EmptyPathString();
+            throw BackupsArgumentException.EmptyPathString();
         }
 
         if (Path.IsPathRooted(path) || Path.EndsInDirectorySeparator(path) || path.IndexOfAny(Path.GetInvalidPathChars()) >= 0)

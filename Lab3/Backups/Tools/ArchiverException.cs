@@ -1,14 +1,12 @@
-﻿using Backups.Repositories;
-
-namespace Backups.Tools;
+﻿namespace Backups.Tools;
 
 public class ArchiverException : Exception
 {
     public ArchiverException(string message)
         : base(message) { }
 
-    public static ArgumentException CompositeNotBuilt()
+    public static ArchiverException CompositeNotBuilt()
     {
-        return new ArgumentException($"visitor has not built repository object' composite");
+        return new ArchiverException($"visitor has not built repository object' composite");
     }
 }
