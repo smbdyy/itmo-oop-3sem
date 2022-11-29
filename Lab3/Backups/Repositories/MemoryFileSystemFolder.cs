@@ -6,16 +6,19 @@ public class MemoryFileSystemFolder : IMemoryFileSystemFolder
 {
     private readonly List<IMemoryFileSystemObject> _entries;
 
-    public MemoryFileSystemFolder()
+    public MemoryFileSystemFolder(string path)
     {
         _entries = new List<IMemoryFileSystemObject>();
+        Path = path;
     }
 
-    public MemoryFileSystemFolder(IEnumerable<IMemoryFileSystemObject> entries)
+    public MemoryFileSystemFolder(string path, IEnumerable<IMemoryFileSystemObject> entries)
     {
         _entries = entries.ToList();
+        Path = path;
     }
 
+    public string Path { get; }
     public IReadOnlyCollection<IMemoryFileSystemObject> Entries => _entries;
 
     public void Accept(IMemoryFileSystemVisitor visitor) => visitor.Visit(this);
