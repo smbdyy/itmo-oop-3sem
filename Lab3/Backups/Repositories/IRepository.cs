@@ -13,7 +13,7 @@ public interface IRepository
     public IReadOnlyCollection<IRepositoryObject> GetRootDirectoryEntries();
     public IRepositoryObject GetRepositoryObject(string path);
     public Stream OpenWrite(string path);
-    public IEnumerable<string> EnumerateFiles(string path);
-    public IEnumerable<string> EnumerateDirectories(string path);
-    public IEnumerable<string> EnumerateFileSystemEntries(string path);
+    public IEnumerable<string> GetFiles(string path);
+    public IEnumerable<string> GetDirectories(string path);
+    public IEnumerable<string> GetFileSystemEntries(string path);
 }

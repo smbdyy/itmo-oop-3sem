@@ -51,7 +51,7 @@ public class FileSystemRepository : IRepository
         return File.Exists(Path.Combine(RootPath, path));
     }
 
-    public IEnumerable<string> EnumerateDirectories(string path)
+    public IEnumerable<string> GetDirectories(string path)
     {
         ValidateRelativePath(path);
         var fullNames = Directory.GetDirectories(Path.Combine(RootPath, path)).ToList();
@@ -59,7 +59,7 @@ public class FileSystemRepository : IRepository
         return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
 
-    public IEnumerable<string> EnumerateFiles(string path)
+    public IEnumerable<string> GetFiles(string path)
     {
         ValidateRelativePath(path);
         var fullNames = Directory.GetFiles(Path.Combine(RootPath, path)).ToList();
@@ -67,7 +67,7 @@ public class FileSystemRepository : IRepository
         return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
 
-    public IEnumerable<string> EnumerateFileSystemEntries(string path)
+    public IEnumerable<string> GetFileSystemEntries(string path)
     {
         ValidateRelativePath(path);
         var fullNames = Directory.GetFileSystemEntries(Path.Combine(RootPath, path)).ToList();
@@ -116,7 +116,7 @@ public class FileSystemRepository : IRepository
         }
 
         var entries = new List<IRepositoryObject>();
-        foreach (string entry in EnumerateFileSystemEntries(path))
+        foreach (string entry in GetFileSystemEntries(path))
         {
             entries.Add(GetRepositoryObject(Path.Combine(path, entry)));
         }

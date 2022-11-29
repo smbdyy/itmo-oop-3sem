@@ -24,13 +24,13 @@ public class LocalFileSystemTest
 
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "file1.txt(1).zip")));
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "dir1(1).zip")));
-        Assert.Equal(2, backupTask.Repository.EnumerateFileSystemEntries(restorePointsPath).Count());
+        Assert.Equal(2, backupTask.Repository.GetFileSystemEntries(restorePointsPath).Count());
 
         backupTask.RemoveBackupObject(dirBackupObject);
         backupTask.CreateRestorePoint();
 
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "file1.txt(2).zip")));
-        Assert.Equal(3, backupTask.Repository.EnumerateFileSystemEntries(restorePointsPath).Count());
+        Assert.Equal(3, backupTask.Repository.GetFileSystemEntries(restorePointsPath).Count());
 
         backupTask.Repository.DeleteFile(Path.Combine(restorePointsPath, "file1.txt(1).zip"));
         backupTask.Repository.DeleteFile(Path.Combine(restorePointsPath, "file1.txt(2).zip"));
@@ -50,6 +50,6 @@ public class LocalFileSystemTest
         backupTask.CreateRestorePoint();
 
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "RestorePoint_1.zip")));
-        Assert.Single(backupTask.Repository.EnumerateFileSystemEntries(restorePointsPath));
+        Assert.Single(backupTask.Repository.GetFileSystemEntries(restorePointsPath));
     }
 }
