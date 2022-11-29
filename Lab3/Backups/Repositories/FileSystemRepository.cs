@@ -54,7 +54,7 @@ public class FileSystemRepository : IRepository
     public IEnumerable<string> GetDirectories(string path)
     {
         ValidateRelativePath(path);
-        var fullNames = Directory.GetDirectories(Path.Combine(RootPath, path)).ToList();
+        string[] fullNames = Directory.GetDirectories(Path.Combine(RootPath, path));
 
         return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
@@ -62,7 +62,7 @@ public class FileSystemRepository : IRepository
     public IEnumerable<string> GetFiles(string path)
     {
         ValidateRelativePath(path);
-        var fullNames = Directory.GetFiles(Path.Combine(RootPath, path)).ToList();
+        string[] fullNames = Directory.GetFiles(Path.Combine(RootPath, path));
 
         return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
@@ -70,7 +70,7 @@ public class FileSystemRepository : IRepository
     public IEnumerable<string> GetFileSystemEntries(string path)
     {
         ValidateRelativePath(path);
-        var fullNames = Directory.GetFileSystemEntries(Path.Combine(RootPath, path)).ToList();
+        string[] fullNames = Directory.GetFileSystemEntries(Path.Combine(RootPath, path));
 
         return fullNames.Select(fullName => Path.GetFileName(fullName));
     }
