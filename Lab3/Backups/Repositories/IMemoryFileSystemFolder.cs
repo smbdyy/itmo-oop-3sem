@@ -2,6 +2,6 @@
 
 public interface IMemoryFileSystemFolder : IMemoryFileSystemObject
 {
-    public IEnumerable<IMemoryFileSystemObject> Entries { get; }
+    public IReadOnlyCollection<IMemoryFileSystemObject> Entries { get; }
     public void AddEntry(IMemoryFileSystemObject entry);
 }
