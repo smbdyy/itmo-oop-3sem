@@ -5,7 +5,7 @@ using Backups.Tools.Exceptions;
 
 namespace Backups.Visitors;
 
-public class ZipArchiverVisitor : IVisitor
+public class ZipArchiverVisitor : IRepositoryVisitor
 {
     private ZipArchive _archive;
     private IRepositoryObject? _composite;

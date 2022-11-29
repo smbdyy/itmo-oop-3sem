@@ -15,5 +15,5 @@ public class ZipArchiveFolder : IRepositoryFolder
 
     public IReadOnlyCollection<IRepositoryObject> Entries => _entries;
     public string Path { get; }
-    public void Accept(IVisitor visitor) => visitor.Visit(this);
+    public void Accept(IRepositoryVisitor visitor) => visitor.Visit(this);
 }

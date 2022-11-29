@@ -2,7 +2,7 @@
 
 namespace Backups.Visitors;
 
-public interface IVisitor
+public interface IRepositoryVisitor
 {
     public void Visit(IRepositoryFile repositoryFile);
     public void Visit(IRepositoryFolder repositoryFolder);

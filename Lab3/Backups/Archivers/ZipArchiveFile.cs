@@ -16,7 +16,7 @@ public class ZipArchiveFile : IRepositoryFile
 
     public string Path { get; }
 
-    public void Accept(IVisitor visitor) => visitor.Visit(this);
+    public void Accept(IRepositoryVisitor visitor) => visitor.Visit(this);
 
     public Stream Open()
     {

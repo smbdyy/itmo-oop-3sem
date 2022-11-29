@@ -5,5 +5,5 @@ namespace Backups.Repositories;
 public interface IRepositoryObject
 {
     public string Path { get; }
-    public void Accept(IVisitor visitor);
+    public void Accept(IRepositoryVisitor visitor);
 }
