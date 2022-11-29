@@ -4,5 +4,5 @@ namespace Backups.Repositories;
 
 public interface IMemoryFileSystemObject
 {
-    public void Accept(IVisitor visitor);
+    public void Accept(IMemoryFileSystemVisitor visitor);
 }
