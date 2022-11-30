@@ -32,4 +32,11 @@ public class MemoryFileFinderVisitor : IMemoryFileSystemVisitor
             }
         }
     }
+
+    public IMemoryFileSystemFile? GetFound() => _file;
+
+    public void Reset()
+    {
+        _file = null;
+    }
 }

@@ -30,4 +30,11 @@ public class MemoryFolderFinderVisitor : IMemoryFileSystemVisitor
             }
         }
     }
+
+    public IMemoryFileSystemFolder? GetFound() => _folder;
+
+    public void Reset()
+    {
+        _folder = null;
+    }
 }
