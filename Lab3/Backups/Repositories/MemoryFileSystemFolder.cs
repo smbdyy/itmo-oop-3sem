@@ -19,8 +19,10 @@ public class MemoryFileSystemFolder : IMemoryFileSystemFolder
     }
 
     public string Path { get; }
+
     public IReadOnlyCollection<IMemoryFileSystemObject> Entries => _entries;
 
+    public bool IsFile => false;
     public void Accept(IMemoryFileSystemVisitor visitor) => visitor.Visit(this);
 
     public void AddEntry(IMemoryFileSystemObject entry)

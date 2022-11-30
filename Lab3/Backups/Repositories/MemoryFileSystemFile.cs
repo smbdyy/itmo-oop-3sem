@@ -18,6 +18,7 @@ public class MemoryFileSystemFile : IMemoryFileSystemFile
     }
 
     public string Path { get; }
+    public bool IsFile => true;
 
     public void Accept(IMemoryFileSystemVisitor visitor) => visitor.Visit(this);
 
