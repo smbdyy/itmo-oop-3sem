@@ -29,4 +29,9 @@ public class MemoryFileSystemFolder : IMemoryFileSystemFolder
     {
         _entries.Add(entry);
     }
+
+    public void DeleteEntry(IMemoryFileSystemObject entry)
+    {
+        _entries.Remove(entry);
+    }
 }
