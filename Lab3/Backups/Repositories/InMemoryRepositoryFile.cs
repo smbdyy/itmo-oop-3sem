@@ -18,6 +18,6 @@ public class InMemoryRepositoryFile : IRepositoryFile
 
     public Stream Open()
     {
-        return _fileSystem.OpenFile(Path, FileMode.Open, FileAccess.Read);
+        return _fileSystem.OpenFile(System.IO.Path.DirectorySeparatorChar + Path, FileMode.Open, FileAccess.Read);
     }
 }

@@ -14,22 +14,25 @@ public class ZipStorageArchiver : IStorageArchiver
 
     public IStorageArchive CreateArchive(string name, IRepository repository, IEnumerable<IBackupObject> backupObjects)
     {
-        var repositoryObjects = backupObjects.Select(backupObject => repository.GetRepositoryObject(backupObject.Path)).ToList();
+        IEnumerable<IRepositoryObject> repositoryObjects =
+            backupObjects.Select(backupObject => repository.GetRepositoryObject(backupObject.Path));
+
         string archivePath = Path.Combine(repository.RestorePointsPath, name + ArchiveExtension);
         repository.CreateFile(archivePath);
 
-        using Stream zipFileStream = repository.OpenWrite(archivePath);
-        IEnumerable<IRepositoryObject> compositeEntries = CreateArchiveCompositeEntries(zipFileStream, repositoryObjects);
+        IEnumerable<IRepositoryObject> compositeEntries = CreateArchiveCompositeEntries(archivePath, repository, repositoryObjects);
         return new ZipStorageArchive(name + ArchiveExtension, compositeEntries);
     }
 
-    private static IEnumerable<IRepositoryObject> CreateArchiveCompositeEntries(Stream zipFileStream, IEnumerable<IRepositoryObject> repositoryObjects)
+    private static IEnumerable<IRepositoryObject> CreateArchiveCompositeEntries(
+        string archivePath,
+        IRepository repository,
+        IEnumerable<IRepositoryObject> repositoryObjects)
     {
         var entries = new List<IRepositoryObject>();
-        using var archive = new ZipArchive(zipFileStream, ZipArchiveMode.Create);
         foreach (IRepositoryObject repositoryObject in repositoryObjects)
         {
-            var visitor = new ZipArchiverVisitor(archive);
+            var visitor = new ZipArchiverVisitor(archivePath, repository);
             repositoryObject.Accept(visitor);
             entries.Add(visitor.GetComposite());
         }

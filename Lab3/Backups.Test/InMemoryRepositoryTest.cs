@@ -44,6 +44,8 @@ public class InMemoryRepositoryTest
     {
         const string restorePointsPath = "RestorePoints";
         var repository = new InMemoryRepository(restorePointsPath);
+        repository.CreateFile("file1.txt");
+        repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var backupTask = new BackupTask("TestTask", repository, new SingleStorageAlgorithm(), new ZipStorageArchiver(), new RestorePointCreator());
         var fileBackupObject = new BackupObject("file1.txt");
         var dirBackupObject = new BackupObject("dir1");

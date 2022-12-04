@@ -18,12 +18,14 @@ public class InMemoryRepository : IRepository
 
     public Stream OpenWrite(string path)
     {
+        Console.WriteLine($"repo open {path}");
         return _fileSystem.OpenFile(GetAbsolutePath(path), FileMode.Open, FileAccess.Write);
     }
 
     public void CreateFile(string path)
     {
-        _fileSystem.CreateFile(GetAbsolutePath(path));
+        Stream file = _fileSystem.CreateFile(GetAbsolutePath(path));
+        file.Dispose();
     }
 
     public void CreateDirectory(string path)
