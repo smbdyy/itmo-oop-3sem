@@ -15,7 +15,7 @@ public class Address
     public string Street { get; }
     public string HouseNumber { get; }
 
-    public static string ValidateNotEmpty(string value)
+    private static string ValidateNotEmpty(string value)
     {
         if (value == string.Empty)
         {
