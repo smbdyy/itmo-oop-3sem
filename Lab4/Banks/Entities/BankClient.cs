@@ -4,7 +4,7 @@ namespace Banks.Entities;
 
 public class BankClient
 {
-    public BankClient(PersonName name, PassportNumber passportNumber, Address address)
+    public BankClient(PersonName name, PassportNumber? passportNumber, Address? address)
     {
         Name = name;
         PassportNumber = passportNumber;
