@@ -4,19 +4,12 @@ namespace Banks.Entities;
 
 public class WithdrawalTransaction : ITransaction
 {
-    public WithdrawalTransaction(string name, decimal amount)
+    public WithdrawalTransaction(decimal amount)
     {
-        if (name == string.Empty)
-        {
-            throw new NotImplementedException();
-        }
-
-        Name = name;
         Amount = amount;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
-    public string Name { get; }
     public decimal Amount { get; }
 
     public decimal GetUndoResult(decimal accountMoney)
