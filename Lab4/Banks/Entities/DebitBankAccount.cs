@@ -16,8 +16,6 @@ public class DebitBankAccount : IBankAccount
     public BankClient Client { get; }
     public decimal MoneyAmount { get; private set; }
 
-    public decimal MinMoneyAmount => 0;
-
     public void SetState(IAccountState state)
     {
         _state = state;

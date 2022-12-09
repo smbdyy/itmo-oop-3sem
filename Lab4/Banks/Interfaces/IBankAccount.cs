@@ -6,7 +6,6 @@ public interface IBankAccount
 {
     public BankClient Client { get; }
     public decimal MoneyAmount { get; }
-    public decimal MinMoneyAmount { get; }
 
     public void SetState(IAccountState state);
     public decimal Withdraw(decimal amount);
