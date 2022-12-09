@@ -11,5 +11,7 @@ public interface IBankAccount
     public void SetState(IAccountState state);
     public decimal Withdraw(decimal amount);
     public void Replenish(decimal amount);
-    public void Transfer(decimal amount, IBankAccount recipient);
+    public void Send(decimal amount, IBankAccount recipient);
+    public void Receive(TransferTransaction transaction);
+    public void Undo(Guid transactionId);
 }

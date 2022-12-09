@@ -1,4 +1,5 @@
-﻿using Banks.Interfaces;
+﻿using Banks.Entities;
+using Banks.Interfaces;
 
 namespace Banks.Models;
 
@@ -7,11 +8,6 @@ public class VerifiedAccountState : IAccountState
     public decimal Withdraw(decimal accountMoney, decimal amount)
     {
         ValidateMoneyAmount(amount);
-        if (amount < accountMoney)
-        {
-            throw new NotImplementedException();
-        }
-
         return accountMoney - amount;
     }
 
@@ -21,16 +17,10 @@ public class VerifiedAccountState : IAccountState
         return accountMoney + amount;
     }
 
-    public decimal Transfer(decimal accountMoney, decimal amount, IBankAccount recipient)
+    public decimal Send(TransferTransaction transaction)
     {
-        ValidateMoneyAmount(amount);
-        if (amount > accountMoney)
-        {
-            throw new NotImplementedException();
-        }
-
-        recipient.Replenish(amount);
-        return accountMoney - amount;
+        transaction.Recipient.Receive(transaction);
+        return transaction.Sender.MoneyAmount - transaction.Amount;
     }
 
     private static decimal ValidateMoneyAmount(decimal value)
