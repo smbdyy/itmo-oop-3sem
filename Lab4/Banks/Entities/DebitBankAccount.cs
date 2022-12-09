@@ -23,6 +23,11 @@ public class DebitBankAccount : IBankAccount
 
     public decimal Withdraw(decimal amount)
     {
+        if (amount > MoneyAmount)
+        {
+            throw new NotImplementedException();
+        }
+
         MoneyAmount = _state.Withdraw(MoneyAmount, amount);
         _transactions.Add(new WithdrawalTransaction(amount));
         return amount;
@@ -36,6 +41,11 @@ public class DebitBankAccount : IBankAccount
 
     public void Send(decimal amount, IBankAccount recipient)
     {
+        if (amount > MoneyAmount)
+        {
+            throw new NotImplementedException();
+        }
+
         var transaction = new TransferTransaction(amount, this, recipient);
         MoneyAmount = _state.Send(transaction);
         _transactions.Add(transaction);
