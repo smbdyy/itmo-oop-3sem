@@ -6,6 +6,8 @@ public interface IBankAccount
 {
     public BankClient Client { get; }
     public decimal MoneyAmount { get; }
+
+    public void ToNextDay();
     public decimal Withdraw(decimal amount);
     public void Replenish(decimal amount);
     public void Transfer(decimal amount, IBankAccount recipient);
