@@ -8,6 +8,7 @@ public interface IBankAccount
     public decimal MoneyAmount { get; }
     public decimal MinMoneyAmount { get; }
 
+    public void SetState(IAccountState state);
     public decimal Withdraw(decimal amount);
     public void Replenish(decimal amount);
     public void Transfer(decimal amount, IBankAccount recipient);
