@@ -21,7 +21,7 @@ public class DebitBankAccount : IBankAccount
         _state = state;
     }
 
-    public decimal Withdraw(decimal amount)
+    public void Withdraw(decimal amount)
     {
         if (amount > MoneyAmount)
         {
@@ -30,7 +30,6 @@ public class DebitBankAccount : IBankAccount
 
         MoneyAmount = _state.Withdraw(MoneyAmount, amount);
         _transactions.Add(new WithdrawalTransaction(amount));
-        return amount;
     }
 
     public void Replenish(decimal amount)
