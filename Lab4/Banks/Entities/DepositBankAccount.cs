@@ -4,8 +4,8 @@ namespace Banks.Entities;
 
 public class DepositBankAccount : IBankAccount
 {
+    private readonly List<ITransaction> _transactions = new ();
     private IAccountState _state;
-    private List<ITransaction> _transactions = new ();
 
     public DepositBankAccount(BankClient client, IAccountState state, decimal moneyAmount, decimal percent)
     {

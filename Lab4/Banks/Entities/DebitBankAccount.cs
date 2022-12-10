@@ -4,8 +4,8 @@ namespace Banks.Entities;
 
 public class DebitBankAccount : IBankAccount
 {
+    private readonly List<ITransaction> _transactions = new ();
     private IAccountState _state;
-    private List<ITransaction> _transactions = new ();
 
     public DebitBankAccount(BankClient client, IAccountState state)
     {
