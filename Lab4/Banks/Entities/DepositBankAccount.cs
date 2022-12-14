@@ -42,13 +42,13 @@ public class DepositBankAccount : IBankAccount
         }
 
         MoneyAmount = _state.Withdraw(MoneyAmount, amount);
-        _transactions.Add(new WithdrawalTransaction(amount));
+        _transactions.Add(new WithdrawalTransaction(amount, 0));
     }
 
     public void Replenish(decimal amount)
     {
         MoneyAmount = _state.Replenish(MoneyAmount, amount);
-        _transactions.Add(new ReplenishmentTransaction(amount));
+        _transactions.Add(new ReplenishmentTransaction(amount, 0));
     }
 
     public void Send(decimal amount, IBankAccount recipient)
@@ -58,14 +58,14 @@ public class DepositBankAccount : IBankAccount
             throw new NotImplementedException();
         }
 
-        var transaction = new TransferTransaction(amount, this, recipient);
+        var transaction = new TransferTransaction(amount, 0, this, recipient);
         MoneyAmount = _state.Send(transaction);
         _transactions.Add(transaction);
     }
 
     public void Receive(TransferTransaction transaction)
     {
-        var receiveTransaction = new ReceiveTransferTransaction(transaction);
+        var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
         MoneyAmount = _state.Replenish(MoneyAmount, transaction.Amount);
         _transactions.Add(receiveTransaction);
     }

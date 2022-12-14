@@ -4,7 +4,7 @@ namespace Banks.Entities;
 
 public class TransferTransaction : ITransaction
 {
-    public TransferTransaction(decimal amount, IBankAccount sender, IBankAccount recipient)
+    public TransferTransaction(decimal amount, decimal commission, IBankAccount sender, IBankAccount recipient)
     {
         if (amount < 0)
         {
@@ -18,6 +18,7 @@ public class TransferTransaction : ITransaction
 
     public Guid Id { get; } = Guid.NewGuid();
     public decimal Amount { get; }
+    public decimal Commission { get; }
     public IBankAccount Sender { get; }
     public IBankAccount Recipient { get; }
 
