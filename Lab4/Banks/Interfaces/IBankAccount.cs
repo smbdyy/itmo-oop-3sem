@@ -13,4 +13,5 @@ public interface IBankAccount
     public void Send(decimal amount, IBankAccount recipient);
     public void Receive(TransferTransaction transaction);
     public void Undo(Guid transactionId);
+    public ITransaction? FindTransaction(Guid id);
 }

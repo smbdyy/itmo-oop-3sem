@@ -59,7 +59,7 @@ public class DebitBankAccount : IBankAccount
 
     public void Undo(Guid transactionId)
     {
-        ITransaction? transaction = _transactions.FirstOrDefault(t => t.Id == transactionId);
+        ITransaction? transaction = FindTransaction(transactionId);
         if (transaction is null)
         {
             throw new NotImplementedException();
@@ -67,5 +67,10 @@ public class DebitBankAccount : IBankAccount
 
         MoneyAmount = transaction.GetUndoResult(MoneyAmount);
         _transactions.Remove(transaction);
+    }
+
+    public ITransaction? FindTransaction(Guid id)
+    {
+        return _transactions.FirstOrDefault(t => t.Id == id);
     }
 }
