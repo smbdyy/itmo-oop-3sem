@@ -16,6 +16,6 @@ public class ReplenishmentTransaction : ITransaction
 
     public decimal GetUndoResult(decimal accountMoney)
     {
-        return accountMoney - Amount;
+        return accountMoney - Amount + Commission;
     }
 }

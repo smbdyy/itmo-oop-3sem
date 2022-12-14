@@ -25,6 +25,6 @@ public class TransferTransaction : ITransaction
     public decimal GetUndoResult(decimal accountMoney)
     {
         Recipient.Undo(Id);
-        return accountMoney + Amount;
+        return accountMoney + Amount + Commission;
     }
 }
