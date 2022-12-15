@@ -28,6 +28,7 @@ public class DepositBankAccount : IBankAccount
     public BankClient Client { get; }
     public decimal MoneyAmount { get; private set; }
     public decimal Percent { get; }
+    public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
     public void SetState(IAccountState state)
     {
