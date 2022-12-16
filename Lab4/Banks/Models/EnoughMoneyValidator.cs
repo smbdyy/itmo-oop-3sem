@@ -7,6 +7,7 @@ public class EnoughMoneyValidator : TransactionValidator
 {
     private decimal _limit = 0;
 
+    public EnoughMoneyValidator() { }
     public EnoughMoneyValidator(decimal limit)
     {
         _limit = limit;
