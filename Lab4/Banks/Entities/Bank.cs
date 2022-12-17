@@ -60,7 +60,7 @@ public class Bank : IBank
         set => _maxUnverifiedClientWithdrawal = ValidateNotNegative(value);
     }
 
-    public void ToNextDay()
+    public void NotifyNextDay()
     {
         CurrentDate.AddDays(1);
         foreach (IBankAccount account in _accounts)

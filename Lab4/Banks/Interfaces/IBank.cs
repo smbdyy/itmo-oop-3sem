@@ -13,7 +13,7 @@ public interface IBank
     public decimal CreditAccountCommission { get; }
     public DateOnly CurrentDate { get; }
 
-    public void ToNextDay();
+    public void NotifyNextDay();
     public CreditBankAccount CreateCreditAccount(BankClient client);
     public DebitBankAccount CreateDebitAccount(BankClient client);
     public DepositBankAccount CreateDepositAccount(BankClient client, decimal startMoneyAmount);
