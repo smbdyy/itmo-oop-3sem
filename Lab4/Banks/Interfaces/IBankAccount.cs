@@ -6,6 +6,8 @@ public interface IBankAccount
 {
     public BankClient Client { get; }
     public decimal MoneyAmount { get; }
+    public DateOnly CurrentDate { get; }
+    public DateOnly CreationDate { get; }
 
     public void SetState(IAccountState state);
     public void Withdraw(decimal amount);
@@ -14,4 +16,5 @@ public interface IBankAccount
     public void Receive(TransferTransaction transaction);
     public void Undo(Guid transactionId);
     public ITransaction? FindTransaction(Guid id);
+    public void NotifyNextDay();
 }

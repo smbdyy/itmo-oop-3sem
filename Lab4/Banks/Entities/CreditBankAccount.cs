@@ -29,6 +29,8 @@ public class CreditBankAccount : IBankAccount
     public decimal MoneyAmount { get; private set; }
     public decimal Limit { get; }
     public decimal Commission { get; }
+    public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
     public void SetState(IAccountState state)
     {
@@ -86,5 +88,10 @@ public class CreditBankAccount : IBankAccount
     public ITransaction? FindTransaction(Guid id)
     {
         return _transactions.FirstOrDefault(t => t.Id == id);
+    }
+
+    public void NotifyNextDay()
+    {
+        CurrentDate.AddDays(1);
     }
 }
