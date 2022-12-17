@@ -15,9 +15,9 @@ public class TransactionFinisher : TransactionValidator
         return base.Replenish(account, moneyAmount) - moneyAmount;
     }
 
-    public override decimal Send(TransferTransaction transaction, decimal moneyAmount)
+    public override decimal Send(TransferTransaction transaction)
     {
         transaction.Recipient.Receive(transaction);
-        return base.Send(transaction, moneyAmount) - moneyAmount;
+        return base.Send(transaction) - transaction.Amount - transaction.Commission;
     }
 }

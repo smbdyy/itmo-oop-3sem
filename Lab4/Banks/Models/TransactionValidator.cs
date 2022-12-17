@@ -23,8 +23,8 @@ public abstract class TransactionValidator
         return _next?.Replenish(account, moneyAmount) ?? account.MoneyAmount;
     }
 
-    public virtual decimal Send(TransferTransaction transaction, decimal moneyAmount)
+    public virtual decimal Send(TransferTransaction transaction)
     {
-        return _next?.Send(transaction, moneyAmount) ?? transaction.Sender.MoneyAmount;
+        return _next?.Send(transaction) ?? transaction.Sender.MoneyAmount;
     }
 }

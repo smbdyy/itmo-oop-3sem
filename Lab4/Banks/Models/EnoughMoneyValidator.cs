@@ -19,10 +19,10 @@ public class EnoughMoneyValidator : TransactionValidator
         return base.Withdraw(account, moneyAmount);
     }
 
-    public override decimal Send(TransferTransaction transaction, decimal moneyAmount)
+    public override decimal Send(TransferTransaction transaction)
     {
-        Validate(transaction.Sender.MoneyAmount, moneyAmount);
-        return base.Send(transaction, moneyAmount);
+        Validate(transaction.Sender.MoneyAmount, transaction.Amount + transaction.Commission);
+        return base.Send(transaction);
     }
 
     private void Validate(decimal accountMoney, decimal amount)

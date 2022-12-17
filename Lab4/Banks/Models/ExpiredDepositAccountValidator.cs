@@ -23,10 +23,10 @@ public class ExpiredDepositAccountValidator : TransactionValidator
         return base.Withdraw(account, moneyAmount);
     }
 
-    public override decimal Send(TransferTransaction transaction, decimal moneyAmount)
+    public override decimal Send(TransferTransaction transaction)
     {
         Validate(transaction.Sender);
-        return base.Send(transaction, moneyAmount);
+        return base.Send(transaction);
     }
 
     private void Validate(IBankAccount account)
