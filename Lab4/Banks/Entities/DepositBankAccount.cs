@@ -14,7 +14,8 @@ public class DepositBankAccount : IBankAccount
         decimal moneyAmount,
         decimal percent,
         int daysToExpire,
-        decimal maxUnverifiedClientWithdrawal)
+        decimal maxUnverifiedClientWithdrawal,
+        DateOnly currentDate)
     {
         if (moneyAmount < 0)
         {
@@ -29,6 +30,8 @@ public class DepositBankAccount : IBankAccount
         Client = client;
         MoneyAmount = moneyAmount;
         Percent = percent;
+        CurrentDate = currentDate;
+        CreationDate = currentDate;
 
         _validationChain = new ExpiredDepositAccountValidator(daysToExpire)
             .SetNext(new EnoughMoneyValidator())

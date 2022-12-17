@@ -8,9 +8,11 @@ public class DebitBankAccount : IBankAccount
     private readonly List<ITransaction> _transactions = new ();
     private readonly TransactionValidator _validationChain;
 
-    public DebitBankAccount(BankClient client, decimal maxUnverifiedClientWithdrawal)
+    public DebitBankAccount(BankClient client, decimal maxUnverifiedClientWithdrawal, DateOnly currentDate)
     {
         Client = client;
+        CurrentDate = currentDate;
+        CreationDate = currentDate;
 
         _validationChain = new EnoughMoneyValidator()
             .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
@@ -19,8 +21,8 @@ public class DebitBankAccount : IBankAccount
 
     public BankClient Client { get; }
     public decimal MoneyAmount { get; private set; }
-    public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
-    public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly CreationDate { get; }
+    public DateOnly CurrentDate { get; }
 
     public void Withdraw(decimal amount)
     {

@@ -8,7 +8,12 @@ public class CreditBankAccount : IBankAccount
     private readonly List<ITransaction> _transactions = new ();
     private readonly TransactionValidator _validationChain;
 
-    public CreditBankAccount(BankClient client, decimal limit, decimal commission, decimal maxUnverifiedClientWithdrawal)
+    public CreditBankAccount(
+        BankClient client,
+        decimal limit,
+        decimal commission,
+        decimal maxUnverifiedClientWithdrawal,
+        DateOnly currentDate)
     {
         if (limit > 0)
         {
@@ -23,6 +28,9 @@ public class CreditBankAccount : IBankAccount
         Client = client;
         Limit = limit;
         Commission = commission;
+        CurrentDate = currentDate;
+        CreationDate = currentDate;
+
         _validationChain = new EnoughMoneyValidator()
             .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
             .SetNext(new TransactionFinisher());
@@ -32,8 +40,8 @@ public class CreditBankAccount : IBankAccount
     public decimal MoneyAmount { get; private set; }
     public decimal Limit { get; }
     public decimal Commission { get; }
-    public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
-    public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly CreationDate { get; }
+    public DateOnly CurrentDate { get; }
 
     public void Withdraw(decimal amount)
     {
