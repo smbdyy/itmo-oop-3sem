@@ -7,14 +7,12 @@ public class VerifiedAccountState : IAccountState
 {
     public decimal Withdraw(decimal accountMoney, decimal amount)
     {
-        ValidateMoneyAmount(amount);
-        return accountMoney - amount;
+        return accountMoney - ValidateMoneyAmount(amount);
     }
 
     public decimal Replenish(decimal accountMoney, decimal amount)
     {
-        ValidateMoneyAmount(amount);
-        return accountMoney + amount;
+        return accountMoney + ValidateMoneyAmount(amount);
     }
 
     public decimal Send(TransferTransaction transaction)
