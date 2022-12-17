@@ -1,4 +1,5 @@
 ﻿using Banks.Entities;
+using Banks.Models;
 
 namespace Banks.Interfaces;
 
@@ -7,7 +8,7 @@ public interface IBank
     public Guid Id { get; }
     public string Name { get; }
     public IReadOnlyCollection<IBankAccount> Accounts { get; }
-    public decimal DepositAccountPercent { get; }
+    public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs { get; }
     public int DepositAccountTerm { get; }
     public decimal CreditAccountCommission { get; }
     public DateOnly CurrentDate { get; }
