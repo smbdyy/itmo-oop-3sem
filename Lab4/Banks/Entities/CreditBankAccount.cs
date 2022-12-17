@@ -1,13 +1,14 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
 public class CreditBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
-    private IAccountState _state;
+    private readonly TransactionValidator _validationChain;
 
-    public CreditBankAccount(BankClient client, IAccountState state, decimal limit, decimal commission)
+    public CreditBankAccount(BankClient client, decimal limit, decimal commission, decimal maxUnverifiedClientWithdrawal)
     {
         if (limit > 0)
         {
@@ -20,9 +21,11 @@ public class CreditBankAccount : IBankAccount
         }
 
         Client = client;
-        _state = state;
         Limit = limit;
         Commission = commission;
+        _validationChain = new EnoughMoneyValidator()
+            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new TransactionFinisher());
     }
 
     public BankClient Client { get; }
@@ -32,44 +35,29 @@ public class CreditBankAccount : IBankAccount
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
-    public void SetState(IAccountState state)
-    {
-        _state = state;
-    }
-
     public void Withdraw(decimal amount)
     {
-        if (MoneyAmount - amount - Commission < Limit)
-        {
-            throw new NotImplementedException();
-        }
-
-        MoneyAmount = _state.Withdraw(MoneyAmount, amount + Commission);
+        MoneyAmount = _validationChain.Withdraw(this, amount + Commission);
         _transactions.Add(new WithdrawalTransaction(amount, Commission));
     }
 
     public void Replenish(decimal amount)
     {
-        MoneyAmount = _state.Replenish(MoneyAmount, amount);
+        MoneyAmount = _validationChain.Replenish(this, amount);
         _transactions.Add(new ReplenishmentTransaction(amount, 0));
     }
 
     public void Send(decimal amount, IBankAccount recipient)
     {
-        if (amount + Commission < MoneyAmount)
-        {
-            throw new NotImplementedException();
-        }
-
         var transaction = new TransferTransaction(amount, Commission, this, recipient);
-        MoneyAmount = _state.Send(transaction);
+        MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
     }
 
     public void Receive(TransferTransaction transaction)
     {
         var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
-        MoneyAmount = _state.Replenish(MoneyAmount, transaction.Amount);
+        MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
     }
 

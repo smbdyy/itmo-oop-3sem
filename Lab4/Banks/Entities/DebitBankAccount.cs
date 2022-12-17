@@ -1,16 +1,20 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
 public class DebitBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
-    private IAccountState _state;
+    private readonly TransactionValidator _validationChain;
 
-    public DebitBankAccount(BankClient client, IAccountState state)
+    public DebitBankAccount(BankClient client, decimal maxUnverifiedClientWithdrawal)
     {
         Client = client;
-        _state = state;
+
+        _validationChain = new EnoughMoneyValidator()
+            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new TransactionFinisher());
     }
 
     public BankClient Client { get; }
@@ -18,44 +22,29 @@ public class DebitBankAccount : IBankAccount
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
-    public void SetState(IAccountState state)
-    {
-        _state = state;
-    }
-
     public void Withdraw(decimal amount)
     {
-        if (amount > MoneyAmount)
-        {
-            throw new NotImplementedException();
-        }
-
-        MoneyAmount = _state.Withdraw(MoneyAmount, amount);
+        MoneyAmount = _validationChain.Withdraw(this, amount);
         _transactions.Add(new WithdrawalTransaction(amount, 0));
     }
 
     public void Replenish(decimal amount)
     {
-        MoneyAmount = _state.Replenish(MoneyAmount, amount);
+        MoneyAmount = _validationChain.Replenish(this, amount);
         _transactions.Add(new ReplenishmentTransaction(amount, 0));
     }
 
     public void Send(decimal amount, IBankAccount recipient)
     {
-        if (amount > MoneyAmount)
-        {
-            throw new NotImplementedException();
-        }
-
         var transaction = new TransferTransaction(amount, 0, this, recipient);
-        MoneyAmount = _state.Send(transaction);
+        MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
     }
 
     public void Receive(TransferTransaction transaction)
     {
         var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
-        MoneyAmount = _state.Replenish(MoneyAmount, transaction.Amount);
+        MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
     }
 

@@ -6,15 +6,15 @@ namespace Banks.Entities;
 public class DepositBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
-    private IAccountState _state;
+    private readonly TransactionValidator _validationChain;
     private decimal _moneyToAdd;
 
     public DepositBankAccount(
         BankClient client,
-        IAccountState state,
         decimal moneyAmount,
         decimal percent,
-        int daysToExpire)
+        int daysToExpire,
+        decimal maxUnverifiedClientWithdrawal)
     {
         if (moneyAmount < 0)
         {
@@ -26,10 +26,14 @@ public class DepositBankAccount : IBankAccount
             throw new NotImplementedException();
         }
 
-        _state = state;
         Client = client;
         MoneyAmount = moneyAmount;
         Percent = percent;
+
+        _validationChain = new ExpiredDepositAccountValidator(daysToExpire)
+            .SetNext(new EnoughMoneyValidator())
+            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new TransactionFinisher());
     }
 
     public BankClient Client { get; }
@@ -38,25 +42,15 @@ public class DepositBankAccount : IBankAccount
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
-    public void SetState(IAccountState state)
-    {
-        _state = state;
-    }
-
     public void Withdraw(decimal amount)
     {
-        if (amount > MoneyAmount)
-        {
-            throw new NotImplementedException();
-        }
-
-        MoneyAmount = _state.Withdraw(MoneyAmount, amount);
+        MoneyAmount = _validationChain.Withdraw(this, amount);
         _transactions.Add(new WithdrawalTransaction(amount, 0));
     }
 
     public void Replenish(decimal amount)
     {
-        MoneyAmount = _state.Replenish(MoneyAmount, amount);
+        MoneyAmount = _validationChain.Replenish(this, amount);
         _transactions.Add(new ReplenishmentTransaction(amount, 0));
     }
 
@@ -68,14 +62,14 @@ public class DepositBankAccount : IBankAccount
         }
 
         var transaction = new TransferTransaction(amount, 0, this, recipient);
-        MoneyAmount = _state.Send(transaction);
+        MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
     }
 
     public void Receive(TransferTransaction transaction)
     {
         var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
-        MoneyAmount = _state.Replenish(MoneyAmount, transaction.Amount);
+        MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
     }
 

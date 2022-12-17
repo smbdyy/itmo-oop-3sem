@@ -8,8 +8,6 @@ public interface IBankAccount
     public decimal MoneyAmount { get; }
     public DateOnly CurrentDate { get; }
     public DateOnly CreationDate { get; }
-
-    public void SetState(IAccountState state);
     public void Withdraw(decimal amount);
     public void Replenish(decimal amount);
     public void Send(decimal amount, IBankAccount recipient);
