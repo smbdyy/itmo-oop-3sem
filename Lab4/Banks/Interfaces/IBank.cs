@@ -14,5 +14,7 @@ public interface IBank
     public DateOnly CurrentDate { get; }
 
     public void ToNextDay();
-    public void AddAccount(IBankAccount account);
+    public CreditBankAccount CreateCreditAccount(BankClient client);
+    public DebitBankAccount CreateDebitAccount(BankClient client);
+    public DepositBankAccount CreateDepositAccount(BankClient client, decimal startMoneyAmount);
 }
