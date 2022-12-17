@@ -1,4 +1,5 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
@@ -6,8 +7,14 @@ public class DepositBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
     private IAccountState _state;
+    private decimal _moneyToAdd;
 
-    public DepositBankAccount(BankClient client, IAccountState state, decimal moneyAmount, decimal percent)
+    public DepositBankAccount(
+        BankClient client,
+        IAccountState state,
+        decimal moneyAmount,
+        decimal percent,
+        int daysToExpire)
     {
         if (moneyAmount < 0)
         {
@@ -29,6 +36,7 @@ public class DepositBankAccount : IBankAccount
     public decimal MoneyAmount { get; private set; }
     public decimal Percent { get; }
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
 
     public void SetState(IAccountState state)
     {
@@ -86,5 +94,16 @@ public class DepositBankAccount : IBankAccount
     public ITransaction? FindTransaction(Guid id)
     {
         return _transactions.FirstOrDefault(t => t.Id == id);
+    }
+
+    public void NotifyNextDay()
+    {
+        CurrentDate.AddDays(1);
+        _moneyToAdd += MoneyAmount * (Percent / 36500);
+        if (CurrentDate.Day == CreationDate.Day)
+        {
+            MoneyAmount += _moneyToAdd;
+            _moneyToAdd = 0;
+        }
     }
 }
