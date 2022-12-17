@@ -6,7 +6,7 @@ public class TransferTransaction : ITransaction
 {
     public TransferTransaction(decimal amount, decimal commission, IBankAccount sender, IBankAccount recipient)
     {
-        if (amount < 0)
+        if (amount < 0 || commission < 0)
         {
             throw new NotImplementedException();
         }
@@ -14,6 +14,7 @@ public class TransferTransaction : ITransaction
         Amount = amount;
         Sender = sender;
         Recipient = recipient;
+        Commission = commission;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
