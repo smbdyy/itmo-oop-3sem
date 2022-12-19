@@ -130,6 +130,26 @@ public class Bank : IBank
         return account;
     }
 
+    public void DeleteAccount(IBankAccount account)
+    {
+        if (!_accounts.Contains(account))
+        {
+            throw new NotImplementedException();
+        }
+
+        _accounts.Remove(account);
+    }
+
+    public void DeleteAllClientAccounts(BankClient client)
+    {
+        List<IBankAccount> accounts = _accounts.FindAll(a => a.Client == client);
+
+        foreach (IBankAccount account in accounts)
+        {
+            _accounts.Remove(account);
+        }
+    }
+
     private static decimal ValidateNotNegative(decimal value)
     {
         if (value < 0)

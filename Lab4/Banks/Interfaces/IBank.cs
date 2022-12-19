@@ -17,4 +17,6 @@ public interface IBank
     public CreditBankAccount CreateCreditAccount(BankClient client);
     public DebitBankAccount CreateDebitAccount(BankClient client);
     public DepositBankAccount CreateDepositAccount(BankClient client, decimal startMoneyAmount);
+    public void DeleteAccount(IBankAccount account);
+    public void DeleteAllClientAccounts(BankClient client);
 }
