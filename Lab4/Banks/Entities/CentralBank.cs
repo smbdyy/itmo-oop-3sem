@@ -53,7 +53,9 @@ public class CentralBank : ICentralBank
     public IBank CreateBank(string name)
     {
         _bankBuilder.SetName(name);
-        return _bankBuilder.Build();
+        IBank bank = _bankBuilder.Build();
+        _banks.Add(bank);
+        return bank;
     }
 
     public void DeleteBank(IBank bank)
