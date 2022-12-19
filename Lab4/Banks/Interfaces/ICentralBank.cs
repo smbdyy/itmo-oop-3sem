@@ -7,6 +7,7 @@ public interface ICentralBank
 {
     public DateOnly CurrentDate { get; }
     public BankBuilder BankBuilder { set; }
+    public IReadOnlyCollection<BankClient> Clients { get; }
 
     public void SetDefaultDepositAccountTerm(int term);
     public void SetDefaultCreditAccountCommission(decimal commission);
