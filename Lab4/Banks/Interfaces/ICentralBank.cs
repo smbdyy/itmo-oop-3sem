@@ -13,6 +13,8 @@ public interface ICentralBank
     public void SetDefaultCreditAccountLimit(decimal limit);
     public void SetDefaultMaxUnverifiedClientWithdrawal(decimal value);
     public IBank CreateBank(string name);
+    public void DeleteBank(IBank bank);
+    public IBank? FindBankById(Guid id);
     public void RegisterClient(BankClient client);
     public void NotifyNextDay();
     public void DeleteClientAndAccounts(BankClient client);
