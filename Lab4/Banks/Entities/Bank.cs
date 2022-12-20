@@ -32,7 +32,7 @@ public class Bank : IBank
         DepositAccountTerm = depositAccountTerm;
         CreditAccountCommission = creditAccountCommission;
         CreditAccountLimit = creditAccountLimit;
-        MaxUnverifiedClientWithdrawal = unverifiedClientWithdrawalLimit;
+        UnverifiedClientWithdrawalLimit = unverifiedClientWithdrawalLimit;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
@@ -67,7 +67,7 @@ public class Bank : IBank
         }
     }
 
-    public decimal MaxUnverifiedClientWithdrawal
+    public decimal UnverifiedClientWithdrawalLimit
     {
         get => _unverifiedClientWithdrawalLimit;
         set => _unverifiedClientWithdrawalLimit = ValidateNotNegative(value);
@@ -223,7 +223,7 @@ public class Bank : IBank
                             Deposit account term: {_depositAccountTerm},
                             Credit account commission: {_creditAccountCommission},
                             Credit account limit: {_creditAccountLimit},
-                            Maximal unverified client withdrawal: {_unverifiedClientWithdrawalLimit}.
+                            Unverified client withdrawal limit: {_unverifiedClientWithdrawalLimit}.
                             Deposit account percents:";
         foreach (StartAmountPercentPair pair in _depositAmountPercentPairs)
         {
