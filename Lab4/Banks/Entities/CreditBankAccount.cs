@@ -13,7 +13,7 @@ public class CreditBankAccount : IBankAccount
         BankClient client,
         decimal limit,
         decimal commission,
-        decimal maxUnverifiedClientWithdrawal,
+        decimal unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
         if (limit > 0)
@@ -33,7 +33,7 @@ public class CreditBankAccount : IBankAccount
         CreationDate = currentDate;
 
         _validationChain = new EnoughMoneyValidator()
-            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());
     }
 

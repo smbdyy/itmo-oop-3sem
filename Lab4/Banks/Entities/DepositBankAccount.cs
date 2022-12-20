@@ -15,7 +15,7 @@ public class DepositBankAccount : IBankAccount
         decimal moneyAmount,
         decimal percent,
         int daysToExpire,
-        decimal maxUnverifiedClientWithdrawal,
+        decimal unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
         if (moneyAmount < 0)
@@ -36,7 +36,7 @@ public class DepositBankAccount : IBankAccount
 
         _validationChain = new ExpiredDepositAccountValidator(daysToExpire)
             .SetNext(new EnoughMoneyValidator())
-            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());
     }
 

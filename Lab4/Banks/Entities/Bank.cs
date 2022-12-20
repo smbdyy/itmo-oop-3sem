@@ -12,14 +12,14 @@ public class Bank : IBank
     private int _depositAccountTerm;
     private decimal _creditAccountCommission;
     private decimal _creditAccountLimit;
-    private decimal _maxUnverifiedClientWithdrawal;
+    private decimal _unverifiedClientWithdrawalLimit;
 
     public Bank(
         string name,
         int depositAccountTerm,
         decimal creditAccountCommission,
         decimal creditAccountLimit,
-        decimal maxUnverifiedClientWithdrawal)
+        decimal unverifiedClientWithdrawalLimit)
     {
         if (name == string.Empty)
         {
@@ -30,7 +30,7 @@ public class Bank : IBank
         DepositAccountTerm = depositAccountTerm;
         CreditAccountCommission = creditAccountCommission;
         CreditAccountLimit = creditAccountLimit;
-        MaxUnverifiedClientWithdrawal = maxUnverifiedClientWithdrawal;
+        MaxUnverifiedClientWithdrawal = unverifiedClientWithdrawalLimit;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
@@ -67,8 +67,8 @@ public class Bank : IBank
 
     public decimal MaxUnverifiedClientWithdrawal
     {
-        get => _maxUnverifiedClientWithdrawal;
-        set => _maxUnverifiedClientWithdrawal = ValidateNotNegative(value);
+        get => _unverifiedClientWithdrawalLimit;
+        set => _unverifiedClientWithdrawalLimit = ValidateNotNegative(value);
     }
 
     public void NotifyNextDay()
@@ -113,7 +113,7 @@ public class Bank : IBank
             client,
             _creditAccountLimit,
             _creditAccountCommission,
-            _maxUnverifiedClientWithdrawal,
+            _unverifiedClientWithdrawalLimit,
             CurrentDate);
 
         _accounts.Add(account);
@@ -122,7 +122,7 @@ public class Bank : IBank
 
     public DebitBankAccount CreateDebitAccount(BankClient client)
     {
-        var account = new DebitBankAccount(client, _maxUnverifiedClientWithdrawal, CurrentDate);
+        var account = new DebitBankAccount(client, _unverifiedClientWithdrawalLimit, CurrentDate);
         _accounts.Add(account);
         return account;
     }
@@ -134,7 +134,7 @@ public class Bank : IBank
             startMoneyAmount,
             CalculateDepositAccountPercent(startMoneyAmount),
             DepositAccountTerm,
-            _maxUnverifiedClientWithdrawal,
+            _unverifiedClientWithdrawalLimit,
             CurrentDate);
 
         _accounts.Add(account);
@@ -226,7 +226,7 @@ public class Bank : IBank
                             Deposit account term: {_depositAccountTerm},
                             Credit account commission: {_creditAccountCommission},
                             Credit account limit: {_creditAccountLimit},
-                            Maximal unverified client withdrawal: {_maxUnverifiedClientWithdrawal}.
+                            Maximal unverified client withdrawal: {_unverifiedClientWithdrawalLimit}.
                             Deposit account percents:";
         foreach (StartAmountPercentPair pair in _depositAmountPercentPairs)
         {

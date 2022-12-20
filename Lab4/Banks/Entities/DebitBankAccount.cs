@@ -9,14 +9,14 @@ public class DebitBankAccount : IBankAccount
     private readonly List<ITransaction> _transactions = new ();
     private readonly TransactionValidator _validationChain;
 
-    public DebitBankAccount(BankClient client, decimal maxUnverifiedClientWithdrawal, DateOnly currentDate)
+    public DebitBankAccount(BankClient client, decimal unverifiedClientWithdrawalLimit, DateOnly currentDate)
     {
         Client = client;
         CurrentDate = currentDate;
         CreationDate = currentDate;
 
         _validationChain = new EnoughMoneyValidator()
-            .SetNext(new VerifiedClientValidator(maxUnverifiedClientWithdrawal))
+            .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());
     }
 
