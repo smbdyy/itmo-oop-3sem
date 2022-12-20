@@ -47,7 +47,7 @@ public class DepositBankAccount : IBankAccount
     public decimal MoneyAmount { get; private set; }
     public decimal Percent { get; }
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
-    public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public Guid Id { get; } = Guid.NewGuid();
 
     public void Withdraw(decimal amount)
@@ -95,7 +95,7 @@ public class DepositBankAccount : IBankAccount
 
     public void NotifyNextDay()
     {
-        CurrentDate.AddDays(1);
+        CurrentDate = CurrentDate.AddDays(1);
         _moneyToAdd += MoneyAmount * (Percent / 36500);
         if (CurrentDate.Day == CreationDate.Day)
         {

@@ -75,7 +75,7 @@ public class Bank : IBank
 
     public void NotifyNextDay()
     {
-        CurrentDate.AddDays(1);
+        CurrentDate = CurrentDate.AddDays(1);
         foreach (IBankAccount account in _accounts)
         {
             account.NotifyNextDay();

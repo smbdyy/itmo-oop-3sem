@@ -22,7 +22,7 @@ public class CentralBank : ICentralBank
         CurrentDate = currentDate;
     }
 
-    public DateOnly CurrentDate { get; }
+    public DateOnly CurrentDate { get; private set; }
 
     public BankBuilder BankBuilder
     {
@@ -86,6 +86,7 @@ public class CentralBank : ICentralBank
 
     public void NotifyNextDay()
     {
+        CurrentDate = CurrentDate.AddDays(1);
         foreach (IBank bank in _banks)
         {
             bank.NotifyNextDay();
