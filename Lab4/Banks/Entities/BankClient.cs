@@ -1,11 +1,10 @@
-﻿using Banks.Interfaces;
-using Banks.Models;
+﻿using Banks.Models;
 
 namespace Banks.Entities;
 
 public class BankClient
 {
-    public BankClient(INotificationReceiver notificationReceiver, PersonName name, PassportNumber? passportNumber, Address? address)
+    public BankClient(NotificationReceiver notificationReceiver, PersonName name, PassportNumber? passportNumber, Address? address)
     {
         Name = name;
         PassportNumber = passportNumber;
@@ -13,7 +12,7 @@ public class BankClient
         NotificationReceiver = notificationReceiver;
     }
 
-    public BankClient(INotificationReceiver notificationReceiver, PersonName name)
+    public BankClient(NotificationReceiver notificationReceiver, PersonName name)
     {
         Name = name;
         NotificationReceiver = notificationReceiver;
@@ -24,5 +23,5 @@ public class BankClient
     public string NameAsString => $"{Name.Name} + {Name.Surname}";
     public PassportNumber? PassportNumber { get; set; }
     public Address? Address { get; set; }
-    public INotificationReceiver NotificationReceiver { get; }
+    public NotificationReceiver NotificationReceiver { get; }
 }
