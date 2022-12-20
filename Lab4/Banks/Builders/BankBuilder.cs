@@ -20,31 +20,56 @@ public abstract class BankBuilder
 
     public BankBuilder SetName(string name)
     {
+        if (name == string.Empty)
+        {
+            throw new NotImplementedException();
+        }
+
         Name = name;
         return this;
     }
 
     public BankBuilder SetDepositAccountTerm(int term)
     {
-        DepositAccountTerm = term;
+        DepositAccountTerm = ValidateNotNegative(term);
         return this;
     }
 
     public BankBuilder SetCreditAccountCommission(decimal commission)
     {
-        CreditAccountCommission = commission;
+        CreditAccountCommission = ValidateNotNegative(commission);
         return this;
     }
 
     public BankBuilder SetCreditAccountLimit(decimal limit)
     {
-        CreditAccountLimit = limit;
+        CreditAccountLimit = ValidateNotNegative(limit);
         return this;
     }
 
     public BankBuilder SetMaxUnverifiedClientWithdrawal(decimal value)
     {
-        MaxUnverifiedClientWithdrawal = value;
+        MaxUnverifiedClientWithdrawal = ValidateNotNegative(value);
         return this;
+    }
+
+    private static decimal ValidateNotNegative(decimal value)
+    {
+        if (value < 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        return value;
+    }
+
+    private static int ValidateNotNegative(int value)
+    {
+        if (value < 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        return value;
     }
 }
