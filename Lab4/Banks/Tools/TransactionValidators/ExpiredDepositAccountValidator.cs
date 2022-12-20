@@ -20,7 +20,7 @@ public class ExpiredDepositAccountValidator : TransactionValidator
         _daysToExpire = daysToExpire;
     }
 
-    public decimal Withdraw(DepositBankAccount account, decimal moneyAmount)
+    public override decimal Withdraw(IBankAccount account, decimal moneyAmount)
     {
         Validate(account);
         return base.Withdraw(account, moneyAmount);
