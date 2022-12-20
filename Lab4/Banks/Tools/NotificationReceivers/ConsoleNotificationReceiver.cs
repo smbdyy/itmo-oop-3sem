@@ -1,4 +1,4 @@
-﻿namespace Banks.Models;
+﻿namespace Banks.Tools.NotificationReceivers;
 
 public class ConsoleNotificationReceiver : NotificationReceiver
 {

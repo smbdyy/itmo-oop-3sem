@@ -1,4 +1,4 @@
-﻿namespace Banks.Models;
+﻿namespace Banks.Tools.NotificationReceivers;
 
 public abstract class NotificationReceiver
 {
