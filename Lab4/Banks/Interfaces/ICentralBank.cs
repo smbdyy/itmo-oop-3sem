@@ -12,7 +12,7 @@ public interface ICentralBank
     public void SetDefaultDepositAccountTerm(int term);
     public void SetDefaultCreditAccountCommission(decimal commission);
     public void SetDefaultCreditAccountLimit(decimal limit);
-    public void SetDefaultMaxUnverifiedClientWithdrawal(decimal value);
+    public void SetDefaultUnverifiedClientWithdrawalLimit(decimal value);
     public IBank CreateBank(string name);
     public void DeleteBank(IBank bank);
     public IBank? FindBankById(Guid id);

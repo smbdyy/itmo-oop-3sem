@@ -46,7 +46,7 @@ public class CentralBank : ICentralBank
         _bankBuilder.SetCreditAccountLimit(limit);
     }
 
-    public void SetDefaultMaxUnverifiedClientWithdrawal(decimal value)
+    public void SetDefaultUnverifiedClientWithdrawalLimit(decimal value)
     {
         _bankBuilder.SetMaxUnverifiedClientWithdrawal(value);
     }
