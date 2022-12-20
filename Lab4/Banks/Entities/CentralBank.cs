@@ -60,7 +60,7 @@ public class CentralBank : ICentralBank
 
     public void DeleteBank(IBank bank)
     {
-        if (_banks.Contains(bank))
+        if (!_banks.Contains(bank))
         {
             throw new NotImplementedException();
         }
