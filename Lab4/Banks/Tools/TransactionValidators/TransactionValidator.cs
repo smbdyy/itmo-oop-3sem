@@ -1,7 +1,7 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
 
-namespace Banks.Models;
+namespace Banks.Tools.TransactionValidators;
 
 public abstract class TransactionValidator
 {

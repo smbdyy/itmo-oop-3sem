@@ -1,7 +1,8 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
+using Banks.Models;
 
-namespace Banks.Models;
+namespace Banks.Tools.TransactionValidators;
 
 public class ExpiredDepositAccountValidator : TransactionValidator
 {
