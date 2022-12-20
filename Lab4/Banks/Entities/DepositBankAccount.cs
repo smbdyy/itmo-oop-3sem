@@ -60,11 +60,6 @@ public class DepositBankAccount : IBankAccount
 
     public void Send(decimal amount, IBankAccount recipient)
     {
-        if (amount > MoneyAmount)
-        {
-            throw new NotImplementedException();
-        }
-
         var transaction = new TransferTransaction(amount, 0, this, recipient);
         MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
