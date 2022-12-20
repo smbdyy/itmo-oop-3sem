@@ -10,7 +10,7 @@ public abstract class TransactionValidator
     public TransactionValidator SetNext(TransactionValidator next)
     {
         _next = next;
-        return this;
+        return next;
     }
 
     public virtual decimal Withdraw(IBankAccount account, decimal moneyAmount)

@@ -36,7 +36,8 @@ public class DepositBankAccount : IBankAccount
         CurrentDate = currentDate;
         CreationDate = currentDate;
 
-        _validationChain = new ExpiredDepositAccountValidator(daysToExpire)
+        _validationChain = new ExpiredDepositAccountValidator(daysToExpire);
+        _validationChain
             .SetNext(new EnoughMoneyValidator())
             .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());

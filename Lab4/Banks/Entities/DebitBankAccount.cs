@@ -16,7 +16,8 @@ public class DebitBankAccount : IBankAccount
         CurrentDate = currentDate;
         CreationDate = currentDate;
 
-        _validationChain = new EnoughMoneyValidator()
+        _validationChain = new EnoughMoneyValidator();
+        _validationChain
             .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());
     }

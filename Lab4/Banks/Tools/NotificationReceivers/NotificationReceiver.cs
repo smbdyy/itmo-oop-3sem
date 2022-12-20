@@ -7,7 +7,7 @@ public abstract class NotificationReceiver
     public NotificationReceiver SetNext(NotificationReceiver next)
     {
         _next = next;
-        return this;
+        return next;
     }
 
     public virtual void Receive(string message)
