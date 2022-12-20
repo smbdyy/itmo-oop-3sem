@@ -227,7 +227,7 @@ public class Bank : IBank
 
         foreach (BankClient client in _subscribers)
         {
-            client.NotificationReceiver.Receive(message);
+            client.NotificationReceiver.Receive($"Dear {client.NameAsString}, {Environment.NewLine}{message}");
         }
     }
 }

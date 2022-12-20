@@ -21,6 +21,7 @@ public class BankClient
 
     public Guid Id { get; } = Guid.NewGuid();
     public PersonName Name { get; }
+    public string NameAsString => $"{Name.Name} + {Name.Surname}";
     public PassportNumber? PassportNumber { get; set; }
     public Address? Address { get; set; }
     public INotificationReceiver NotificationReceiver { get; }
