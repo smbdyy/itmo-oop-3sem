@@ -12,6 +12,18 @@ public class PersonName
     public string Surname { get; }
 
     public string AsString => $"{Name} {Surname}";
+
+    public static PersonName FromString(string name)
+    {
+        string[] asArray = name.Split(' ');
+        if (asArray.Length != 2)
+        {
+            throw new NotImplementedException();
+        }
+
+        return new PersonName(asArray[0], asArray[1]);
+    }
+
     private static string Validate(string value)
     {
         if (value == string.Empty || !value.All(IsLatinLetter) || !char.IsUpper(value[0]))
