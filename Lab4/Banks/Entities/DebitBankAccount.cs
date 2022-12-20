@@ -24,6 +24,7 @@ public class DebitBankAccount : IBankAccount
     public decimal MoneyAmount { get; private set; }
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
+    public Guid Id { get; } = Guid.NewGuid();
 
     public void Withdraw(decimal amount)
     {

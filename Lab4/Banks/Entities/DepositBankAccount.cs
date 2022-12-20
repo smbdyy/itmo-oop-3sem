@@ -45,6 +45,7 @@ public class DepositBankAccount : IBankAccount
     public decimal Percent { get; }
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; } = DateOnly.FromDateTime(DateTime.Now);
+    public Guid Id { get; } = Guid.NewGuid();
 
     public void Withdraw(decimal amount)
     {

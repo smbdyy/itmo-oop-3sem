@@ -43,6 +43,7 @@ public class CreditBankAccount : IBankAccount
     public decimal Commission { get; }
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
+    public Guid Id { get; } = Guid.NewGuid();
 
     public void Withdraw(decimal amount)
     {
