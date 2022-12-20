@@ -12,12 +12,6 @@ public class BankClient
         NotificationReceiver = notificationReceiver;
     }
 
-    public BankClient(NotificationReceiver notificationReceiver, PersonName name)
-    {
-        Name = name;
-        NotificationReceiver = notificationReceiver;
-    }
-
     public Guid Id { get; } = Guid.NewGuid();
     public PersonName Name { get; }
     public string NameAsString => $"{Name.Name} + {Name.Surname}";
