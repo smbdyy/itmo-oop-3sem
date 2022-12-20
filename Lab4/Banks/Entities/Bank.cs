@@ -54,7 +54,15 @@ public class Bank : IBank
     public decimal CreditAccountLimit
     {
         get => _creditAccountLimit;
-        set => _creditAccountLimit = ValidateNotNegative(value);
+        set
+        {
+            if (value > 0)
+            {
+                throw new NotImplementedException();
+            }
+
+            _creditAccountLimit = value;
+        }
     }
 
     public decimal MaxUnverifiedClientWithdrawal

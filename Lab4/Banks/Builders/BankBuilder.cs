@@ -43,7 +43,12 @@ public abstract class BankBuilder
 
     public BankBuilder SetCreditAccountLimit(decimal limit)
     {
-        CreditAccountLimit = ValidateNotNegative(limit);
+        if (limit > 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        CreditAccountLimit = limit;
         return this;
     }
 
