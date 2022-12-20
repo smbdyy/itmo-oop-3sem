@@ -47,4 +47,18 @@ public class BankClientBuilder
         _passportNumber = passportNumber;
         return this;
     }
+
+    public BankClientBuilder AddNotificationReceiver(NotificationReceiver receiver)
+    {
+        if (_notificationReceiver is null)
+        {
+            _notificationReceiver = receiver;
+        }
+        else
+        {
+            _notificationReceiver.SetNext(receiver);
+        }
+
+        return this;
+    }
 }
