@@ -1,4 +1,5 @@
-﻿using Banks.Interfaces;
+﻿using System.Net.NetworkInformation;
+using Banks.Interfaces;
 using Banks.Models;
 
 namespace Banks.Entities;
@@ -7,6 +8,7 @@ public class Bank : IBank
 {
     private readonly List<IBankAccount> _accounts = new ();
     private readonly List<StartAmountPercentPair> _depositAmountPercentPairs = new ();
+    private readonly List<BankClient> _subscribers = new ();
     private int _depositAccountTerm;
     private decimal _creditAccountCommission;
     private decimal _creditAccountLimit;
@@ -36,6 +38,7 @@ public class Bank : IBank
     public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public IReadOnlyCollection<IBankAccount> Accounts => _accounts;
     public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs => _depositAmountPercentPairs;
+    public IReadOnlyCollection<BankClient> Subscribers => _subscribers;
     public int DepositAccountTerm
     {
         get => _depositAccountTerm;
@@ -150,6 +153,26 @@ public class Bank : IBank
         }
     }
 
+    public void SubscribeToNotifications(BankClient client)
+    {
+        if (_subscribers.Contains(client))
+        {
+            throw new NotImplementedException();
+        }
+
+        _subscribers.Add(client);
+    }
+
+    public void UnsubscribeFromNotifications(BankClient client)
+    {
+        if (!_subscribers.Contains(client))
+        {
+            throw new NetworkInformationException();
+        }
+
+        _subscribers.Remove(client);
+    }
+
     private static decimal ValidateNotNegative(decimal value)
     {
         if (value < 0)
@@ -187,5 +210,24 @@ public class Bank : IBank
         }
 
         return percent;
+    }
+
+    private void NotifySubscribers()
+    {
+        string message = @$"Our terms has been updated. Current terms: 
+                            Deposit account term: {_depositAccountTerm},
+                            Credit account commission: {_creditAccountCommission},
+                            Credit account limit: {_creditAccountLimit},
+                            Maximal unverified client withdrawal: {_maxUnverifiedClientWithdrawal}.
+                            Deposit account percents:";
+        foreach (StartAmountPercentPair pair in _depositAmountPercentPairs)
+        {
+            message += Environment.NewLine + $"From {pair.StartAmount}: {pair.Percent}";
+        }
+
+        foreach (BankClient client in _subscribers)
+        {
+            client.NotificationReceiver.Receive(message);
+        }
     }
 }

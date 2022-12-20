@@ -9,6 +9,7 @@ public interface IBank
     public string Name { get; }
     public IReadOnlyCollection<IBankAccount> Accounts { get; }
     public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs { get; }
+    public IReadOnlyCollection<BankClient> Subscribers { get; }
     public int DepositAccountTerm { get; }
     public decimal CreditAccountCommission { get; }
     public DateOnly CurrentDate { get; }
@@ -19,4 +20,6 @@ public interface IBank
     public DepositBankAccount CreateDepositAccount(BankClient client, decimal startMoneyAmount);
     public void DeleteAccount(IBankAccount account);
     public void DeleteAllClientAccounts(BankClient client);
+    public void SubscribeToNotifications(BankClient client);
+    public void UnsubscribeFromNotifications(BankClient client);
 }
