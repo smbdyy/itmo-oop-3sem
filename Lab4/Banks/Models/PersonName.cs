@@ -11,6 +11,7 @@ public class PersonName
     public string Name { get; }
     public string Surname { get; }
 
+    public string AsString => $"{Name} {Surname}";
     private static string Validate(string value)
     {
         if (value == string.Empty || !value.All(IsLatinLetter) || !char.IsUpper(value[0]))
