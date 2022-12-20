@@ -1,5 +1,6 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
+using Banks.Tools.Exceptions;
 
 namespace Banks.Tools.TransactionValidators;
 
@@ -29,7 +30,7 @@ public class VerifiedClientValidator : TransactionValidator
         if (account.Client.Address is not null && account.Client.PassportNumber is not null) return;
         if (moneyAmount > _limit)
         {
-            throw new NotImplementedException();
+            throw TransactionValidationException.UnverifiedClientWithdrawalLimitExceeded(account, moneyAmount);
         }
     }
 }

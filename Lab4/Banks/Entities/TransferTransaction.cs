@@ -1,4 +1,5 @@
 ﻿using Banks.Interfaces;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Entities;
 
@@ -6,9 +7,14 @@ public class TransferTransaction : ITransaction
 {
     public TransferTransaction(decimal amount, decimal commission, IBankAccount sender, IBankAccount recipient)
     {
-        if (amount < 0 || commission < 0)
+        if (amount < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(amount);
+        }
+
+        if (commission < 0)
+        {
+            throw ArgumentException.InappropriateNegativeNumber(commission);
         }
 
         Amount = amount;

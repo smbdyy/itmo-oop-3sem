@@ -1,5 +1,6 @@
 ﻿using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.Exceptions;
 using Banks.Tools.TransactionValidators;
 
 namespace Banks.Entities;
@@ -57,7 +58,7 @@ public class DebitBankAccount : IBankAccount
         ITransaction? transaction = FindTransaction(transactionId);
         if (transaction is null)
         {
-            throw new NotImplementedException();
+            throw NotFoundException.Transaction(transactionId, this);
         }
 
         MoneyAmount = transaction.GetUndoResult(MoneyAmount);

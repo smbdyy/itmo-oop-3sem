@@ -1,6 +1,7 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.Exceptions;
 
 namespace Banks.Tools.TransactionValidators;
 
@@ -16,21 +17,21 @@ public class EnoughMoneyValidator : TransactionValidator
 
     public override decimal Withdraw(IBankAccount account, decimal moneyAmount)
     {
-        Validate(account.MoneyAmount, moneyAmount);
+        Validate(account, moneyAmount);
         return base.Withdraw(account, moneyAmount);
     }
 
     public override decimal Send(TransferTransaction transaction)
     {
-        Validate(transaction.Sender.MoneyAmount, transaction.Amount + transaction.Commission);
+        Validate(transaction.Sender, transaction.Amount + transaction.Commission);
         return base.Send(transaction);
     }
 
-    private void Validate(decimal accountMoney, decimal amount)
+    private void Validate(IBankAccount account, decimal amount)
     {
-        if (accountMoney - amount < _limit)
+        if (account.MoneyAmount - amount < _limit)
         {
-            throw new NotImplementedException();
+            throw TransactionValidationException.NotEnoughMoney(account, amount);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Banks.Interfaces;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Builders;
 
@@ -22,7 +23,7 @@ public abstract class BankBuilder
     {
         if (name == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyString();
         }
 
         Name = name;
@@ -45,7 +46,7 @@ public abstract class BankBuilder
     {
         if (limit > 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNonNegativeNumber(limit);
         }
 
         CreditAccountLimit = limit;
@@ -62,7 +63,7 @@ public abstract class BankBuilder
     {
         if (value < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(value);
         }
 
         return value;
@@ -72,7 +73,7 @@ public abstract class BankBuilder
     {
         if (value < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(value);
         }
 
         return value;

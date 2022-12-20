@@ -1,4 +1,6 @@
 ﻿using Banks.Models;
+using Banks.Tools.Exceptions;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Builders;
 
@@ -21,7 +23,7 @@ public class AddressBuilder
     {
         if (_country is null || _town is null || _street is null || _houseNumber is null)
         {
-            throw new NotImplementedException();
+            throw new RequiredFieldInBuilderIsNullException();
         }
 
         return new Address(_country, _town, _street, _houseNumber);

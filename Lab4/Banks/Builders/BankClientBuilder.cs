@@ -1,5 +1,6 @@
 ﻿using Banks.Entities;
 using Banks.Models;
+using Banks.Tools.Exceptions;
 using Banks.Tools.NotificationReceivers;
 
 namespace Banks.Builders;
@@ -23,7 +24,7 @@ public class BankClientBuilder
     {
         if (_name is null || _notificationReceiver is null)
         {
-            throw new NotImplementedException();
+            throw new RequiredFieldInBuilderIsNullException();
         }
 
         return new BankClient(_notificationReceiver, _name, _passportNumber, _address);

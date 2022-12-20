@@ -1,6 +1,8 @@
 ﻿using System.Net.NetworkInformation;
 using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.Exceptions;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Entities;
 
@@ -23,7 +25,7 @@ public class Bank : IBank
     {
         if (name == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyString();
         }
 
         Name = name;
@@ -58,7 +60,7 @@ public class Bank : IBank
         {
             if (value > 0)
             {
-                throw new NotImplementedException();
+                throw ArgumentException.InappropriateNonNegativeNumber(value);
             }
 
             _creditAccountLimit = value;
@@ -84,12 +86,12 @@ public class Bank : IBank
     {
         if (_depositAmountPercentPairs.Any(p => p.StartAmount == depositAmountPercentPair.StartAmount))
         {
-            throw new NotImplementedException();
+            throw AlreadyExistsException.PairForStartAmount(depositAmountPercentPair.StartAmount);
         }
 
         if (_depositAmountPercentPairs.Any(p => p.Percent == depositAmountPercentPair.Percent))
         {
-            throw new NotImplementedException();
+            throw AlreadyExistsException.PairForPercent(depositAmountPercentPair.Percent);
         }
 
         _depositAmountPercentPairs.Add(depositAmountPercentPair);
@@ -101,7 +103,7 @@ public class Bank : IBank
             p.StartAmount != depositAmountPercentPair.StartAmount && p.Percent != depositAmountPercentPair.Percent);
         if (found is null)
         {
-            throw new NotImplementedException();
+            throw NotFoundException.StartAmountPercentPair(depositAmountPercentPair, this);
         }
 
         _depositAmountPercentPairs.Remove(found);
@@ -145,7 +147,7 @@ public class Bank : IBank
     {
         if (!_accounts.Contains(account))
         {
-            throw new NotImplementedException();
+            throw NotFoundException.BankAccount(account);
         }
 
         _accounts.Remove(account);
@@ -165,7 +167,7 @@ public class Bank : IBank
     {
         if (_subscribers.Contains(client))
         {
-            throw new NotImplementedException();
+            throw AlreadyExistsException.ClientSubscribed(client, this);
         }
 
         _subscribers.Add(client);
@@ -175,7 +177,7 @@ public class Bank : IBank
     {
         if (!_subscribers.Contains(client))
         {
-            throw new NetworkInformationException();
+            throw NotFoundException.BankClientInBank(client, this);
         }
 
         _subscribers.Remove(client);
@@ -185,7 +187,7 @@ public class Bank : IBank
     {
         if (value < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(value);
         }
 
         return value;
@@ -195,7 +197,7 @@ public class Bank : IBank
     {
         if (value < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(value);
         }
 
         return value;
@@ -203,11 +205,6 @@ public class Bank : IBank
 
     private decimal CalculateDepositAccountPercent(decimal startAmount)
     {
-        if (_depositAmountPercentPairs.Count == 0)
-        {
-            throw new NotImplementedException();
-        }
-
         decimal percent = 0;
         foreach (StartAmountPercentPair amountPercent in _depositAmountPercentPairs)
         {

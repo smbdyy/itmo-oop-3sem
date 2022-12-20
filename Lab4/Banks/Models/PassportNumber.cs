@@ -1,4 +1,6 @@
-﻿namespace Banks.Models;
+﻿using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
+
+namespace Banks.Models;
 
 public class PassportNumber
 {
@@ -7,7 +9,7 @@ public class PassportNumber
         if (series.Length != 4 || series.Any(symbol => !char.IsDigit(symbol)) ||
             number.Length != 6 || number.Any(symbol => !char.IsDigit(symbol)))
         {
-            throw new NotImplementedException();
+            throw ArgumentException.IncorrectPassportNumber(series, number);
         }
 
         Series = series;
@@ -22,7 +24,7 @@ public class PassportNumber
         string[] asArray = passportNumber.Split(' ');
         if (asArray.Length != 2)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.IncorrectPassportNumberString(passportNumber);
         }
 
         return new PassportNumber(asArray[0], asArray[1]);

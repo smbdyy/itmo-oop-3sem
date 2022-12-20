@@ -29,4 +29,19 @@ public class ArgumentException : Exception
     {
         return new ArgumentException($"{value} is an incorrect name/surname");
     }
+
+    public static ArgumentException IncorrectPersonNameString(string value)
+    {
+        return new ArgumentException($"cannot create PersonName object from string {value}");
+    }
+
+    public static ArgumentException IncorrectPassportNumber(string series, string number)
+    {
+        return new ArgumentException($"incorrect passport number or series: {series} {number}");
+    }
+
+    public static ArgumentException IncorrectPassportNumberString(string value)
+    {
+        return new ArgumentException($"cannot create PassportNumber object from string {value}");
+    }
 }

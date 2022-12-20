@@ -1,5 +1,6 @@
 ﻿using Banks.Builders;
 using Banks.Interfaces;
+using Banks.Tools.Exceptions;
 
 namespace Banks.Entities;
 
@@ -62,7 +63,7 @@ public class CentralBank : ICentralBank
     {
         if (!_banks.Contains(bank))
         {
-            throw new NotImplementedException();
+            throw NotFoundException.Bank(bank);
         }
 
         _banks.Remove(bank);
@@ -77,7 +78,7 @@ public class CentralBank : ICentralBank
     {
         if (_clients.Contains(client))
         {
-            throw new NotImplementedException();
+            throw AlreadyExistsException.ClientRegistered(client);
         }
 
         _clients.Add(client);
@@ -95,7 +96,7 @@ public class CentralBank : ICentralBank
     {
         if (!_clients.Contains(client))
         {
-            throw new NotImplementedException();
+            throw NotFoundException.BankClient(client);
         }
 
         foreach (IBank bank in _banks)

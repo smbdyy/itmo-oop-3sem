@@ -1,5 +1,6 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
+using Banks.Tools.Exceptions;
 
 namespace Banks.Builders;
 
@@ -9,7 +10,7 @@ public class DefaultBankBuilder : BankBuilder
     {
         if (Name is null)
         {
-            throw new NotImplementedException();
+            throw new RequiredFieldInBuilderIsNullException();
         }
 
         return new Bank(

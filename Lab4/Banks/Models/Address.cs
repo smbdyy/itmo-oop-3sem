@@ -1,4 +1,7 @@
-﻿namespace Banks.Models;
+﻿using Banks.Tools.Exceptions;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
+
+namespace Banks.Models;
 
 public class Address
 {
@@ -19,7 +22,7 @@ public class Address
     {
         if (value == string.Empty)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.EmptyString();
         }
 
         return value;

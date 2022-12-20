@@ -1,6 +1,8 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.Exceptions;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Tools.TransactionValidators;
 
@@ -12,7 +14,7 @@ public class ExpiredDepositAccountValidator : TransactionValidator
     {
         if (daysToExpire < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(daysToExpire);
         }
 
         _daysToExpire = daysToExpire;
@@ -34,7 +36,7 @@ public class ExpiredDepositAccountValidator : TransactionValidator
     {
         if (account.CurrentDate.DayNumber - account.CreationDate.DayNumber < _daysToExpire)
         {
-            throw new NotImplementedException();
+            throw TransactionValidationException.DepositAccountNotExpired(account, _daysToExpire);
         }
     }
 }

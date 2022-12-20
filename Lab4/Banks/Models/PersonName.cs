@@ -1,4 +1,6 @@
-﻿namespace Banks.Models;
+﻿using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
+
+namespace Banks.Models;
 
 public class PersonName
 {
@@ -18,7 +20,7 @@ public class PersonName
         string[] asArray = name.Split(' ');
         if (asArray.Length != 2)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.IncorrectPersonNameString(name);
         }
 
         return new PersonName(asArray[0], asArray[1]);
@@ -28,7 +30,7 @@ public class PersonName
     {
         if (value == string.Empty || !value.All(IsLatinLetter) || !char.IsUpper(value[0]))
         {
-            throw new NotImplementedException();
+            throw ArgumentException.IncorrectName(value);
         }
 
         return value;

@@ -1,6 +1,8 @@
 ﻿using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.Exceptions;
 using Banks.Tools.TransactionValidators;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Entities;
 
@@ -20,12 +22,12 @@ public class DepositBankAccount : IBankAccount
     {
         if (moneyAmount < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(moneyAmount);
         }
 
         if (percent < 0)
         {
-            throw new NotImplementedException();
+            throw ArgumentException.InappropriateNegativeNumber(percent);
         }
 
         Client = client;
@@ -78,7 +80,7 @@ public class DepositBankAccount : IBankAccount
         ITransaction? transaction = FindTransaction(transactionId);
         if (transaction is null)
         {
-            throw new NotImplementedException();
+            throw NotFoundException.Transaction(transactionId, this);
         }
 
         MoneyAmount = transaction.GetUndoResult(MoneyAmount);
