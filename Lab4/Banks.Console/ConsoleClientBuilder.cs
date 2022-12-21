@@ -2,6 +2,7 @@
 using Banks.Entities;
 using Banks.Interfaces;
 using Banks.Models;
+using Banks.Tools.NotificationReceivers;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
@@ -15,6 +16,7 @@ public class ConsoleClientBuilder
     {
         _centralBank = centralBank;
         _builder = builder;
+        _builder.AddNotificationReceiver(new ConsoleNotificationReceiver());
     }
 
     public void InputName()
