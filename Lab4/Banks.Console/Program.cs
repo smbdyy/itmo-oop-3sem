@@ -8,21 +8,15 @@ var centralBankInterface = new CentralBankConsoleInterface(centralBank);
 
 Console.WriteLine(
     @"initialized, commands:
+    exit
     create_b - create new bank
     select_b - select bank to manage
     create_c - create client
     select_c - select client to manage
 ");
 
-string? inputString = Console.ReadLine();
-if (inputString is null)
-{
-    Console.WriteLine("input error");
-    return;
-}
-
-string[] input = inputString.Split(' ');
-switch (input[0])
+string input = Utils.GetStringInput();
+switch (input)
 {
     case "create_b":
         centralBankInterface.InputDepositAccountTerm();
