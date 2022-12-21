@@ -36,6 +36,7 @@ public class ConsoleClientInterface
         System.Console.WriteLine(
             $@"managing client {_client.Name.AsString} {_client.Id}, commands:
             exit - go back to main menu
+            info - write client info
             del - delete client and all their accounts
             set_a - set address
             set_p - set passport number");
@@ -48,6 +49,9 @@ public class ConsoleClientInterface
                 case "exit":
                     System.Console.WriteLine("returning to main menu");
                     return;
+                case "info":
+                    WriteInfo();
+                    break;
                 case "del":
                     _centralBank.DeleteClientAndAccounts(_client);
                     System.Console.WriteLine("client deleted, returning to main menu");
@@ -59,6 +63,9 @@ public class ConsoleClientInterface
                 case "set_p":
                     SetPassportNumber();
                     System.Console.WriteLine("passport number has been set");
+                    break;
+                default:
+                    System.Console.WriteLine("incorrect input");
                     break;
             }
         }
@@ -85,5 +92,15 @@ public class ConsoleClientInterface
         var addressBuilder = new ConsoleAddressBuilder(new AddressBuilder());
         addressBuilder.InputAllData();
         _client.Address = addressBuilder.Build();
+    }
+
+    private void WriteInfo()
+    {
+        System.Console.WriteLine($"Id: {_client.Id}");
+        System.Console.WriteLine($"Name: {_client.Name.AsString}");
+        System.Console.Write("Passport number: ");
+        System.Console.WriteLine(_client.PassportNumber is null ? "---" : _client.PassportNumber.AsString);
+        System.Console.Write("Address: ");
+        System.Console.WriteLine(_client.Address is null ? "---" : _client.Address.AsString);
     }
 }
