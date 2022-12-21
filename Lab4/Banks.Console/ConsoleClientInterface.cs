@@ -31,22 +31,6 @@ public class ConsoleClientInterface
         _client = client ?? throw NotFoundException.BankClientById(clientId);
     }
 
-    public void SetPassportNumber()
-    {
-        while (true)
-        {
-            try
-            {
-                _client.PassportNumber = PassportNumber.FromString(Utils.GetStringInput());
-                return;
-            }
-            catch (ArgumentException ex)
-            {
-                System.Console.WriteLine($"exception: {ex.Message}");
-            }
-        }
-    }
-
     public void Init()
     {
         System.Console.WriteLine(
@@ -69,9 +53,7 @@ public class ConsoleClientInterface
                     System.Console.WriteLine("client deleted, returning to main menu");
                     return;
                 case "set_a":
-                    var addressBuilder = new ConsoleAddressBuilder(new AddressBuilder());
-                    addressBuilder.InputAllData();
-                    _client.Address = addressBuilder.Build();
+                    SetAddress();
                     System.Console.WriteLine("address has been set");
                     break;
                 case "set_p":
@@ -80,5 +62,28 @@ public class ConsoleClientInterface
                     break;
             }
         }
+    }
+
+    private void SetPassportNumber()
+    {
+        while (true)
+        {
+            try
+            {
+                _client.PassportNumber = PassportNumber.FromString(Utils.GetStringInput());
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"exception: {ex.Message}");
+            }
+        }
+    }
+
+    private void SetAddress()
+    {
+        var addressBuilder = new ConsoleAddressBuilder(new AddressBuilder());
+        addressBuilder.InputAllData();
+        _client.Address = addressBuilder.Build();
     }
 }
