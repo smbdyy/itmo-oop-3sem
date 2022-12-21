@@ -1,4 +1,5 @@
 ﻿using Banks.Builders;
+using Banks.Entities;
 using Banks.Interfaces;
 using Banks.Models;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
@@ -71,5 +72,12 @@ public class ConsoleClientBuilder
                 System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
+    }
+
+    public BankClient Build()
+    {
+        BankClient client = _builder.Build();
+        _centralBank.RegisterClient(client);
+        return client;
     }
 }
