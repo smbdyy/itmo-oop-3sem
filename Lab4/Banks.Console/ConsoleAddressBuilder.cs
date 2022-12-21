@@ -13,6 +13,14 @@ public class ConsoleAddressBuilder
         _builder = builder;
     }
 
+    public void InputAllData()
+    {
+        InputCountry();
+        InputTown();
+        InputStreet();
+        InputHouseNumber();
+    }
+
     public void InputCountry()
     {
         System.Console.WriteLine("country:");

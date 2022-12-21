@@ -19,6 +19,13 @@ public class ConsoleClientBuilder
         _builder.AddNotificationReceiver(new ConsoleNotificationReceiver());
     }
 
+    public void InputAllData()
+    {
+        InputName();
+        InputAddress();
+        InputPassportNumber();
+    }
+
     public void InputName()
     {
         System.Console.WriteLine("input name:");
@@ -43,10 +50,7 @@ public class ConsoleClientBuilder
         if (!Utils.GetYesNoAnswerAsBool()) return;
 
         var builder = new ConsoleAddressBuilder(new AddressBuilder());
-        builder.InputCountry();
-        builder.InputTown();
-        builder.InputStreet();
-        builder.InputHouseNumber();
+        builder.InputAllData();
         _builder.SetAddress(builder.Build());
     }
 

@@ -10,6 +10,14 @@ public class CentralBankConsoleInterface
     public CentralBankConsoleInterface(ICentralBank centralBank)
         => _centralBank = centralBank;
 
+    public void InputAllData()
+    {
+        InputDepositAccountTerm();
+        InputCreditAccountCommission();
+        InputCreditAccountLimit();
+        InputUnverifiedClientWithdrawalLimit();
+    }
+
     public void InputDepositAccountTerm()
     {
         System.Console.WriteLine("input deposit account term:");
