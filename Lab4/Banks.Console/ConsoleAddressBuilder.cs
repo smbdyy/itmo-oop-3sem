@@ -71,7 +71,7 @@ public class ConsoleAddressBuilder
         {
             try
             {
-                _builder.SetTown(Utils.GetStringInput());
+                _builder.SetHouseNumber(Utils.GetStringInput());
                 return;
             }
             catch (ArgumentException ex)
