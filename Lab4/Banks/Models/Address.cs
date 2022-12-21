@@ -17,6 +17,7 @@ public class Address
     public string Town { get; }
     public string Street { get; }
     public string HouseNumber { get; }
+    public string AsString => $"{Country}, {Town}, {Street}, {HouseNumber}";
 
     private static string ValidateNotEmpty(string value)
     {
