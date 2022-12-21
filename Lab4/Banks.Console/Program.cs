@@ -15,28 +15,33 @@ Console.WriteLine(
     select_c - select client to manage
 ");
 
-string input = Utils.GetStringInput();
-switch (input)
+while (true)
 {
-    case "create_b":
-        centralBankInterface.InputDepositAccountTerm();
-        centralBankInterface.InputCreditAccountCommission();
-        centralBankInterface.InputCreditAccountLimit();
-        centralBankInterface.InputUnverifiedClientWithdrawalLimit();
-        IBank bank = centralBankInterface.InputNameCreateBank();
-        Console.WriteLine($"bank created, id: {bank.Id}");
-        break;
+    string input = Utils.GetStringInput();
+    switch (input)
+    {
+        case "exit":
+            return;
+        case "create_b":
+            centralBankInterface.InputDepositAccountTerm();
+            centralBankInterface.InputCreditAccountCommission();
+            centralBankInterface.InputCreditAccountLimit();
+            centralBankInterface.InputUnverifiedClientWithdrawalLimit();
+            IBank bank = centralBankInterface.InputNameCreateBank();
+            Console.WriteLine($"bank created, id: {bank.Id}");
+            break;
 
-    case "create_c":
-        var builder = new ConsoleClientBuilder(centralBank, new BankClientBuilder());
-        builder.InputName();
-        builder.InputAddress();
-        builder.InputPassportNumber();
-        BankClient client = builder.Build();
-        Console.WriteLine($"client created, id: {client.Id}");
-        break;
+        case "create_c":
+            var builder = new ConsoleClientBuilder(centralBank, new BankClientBuilder());
+            builder.InputName();
+            builder.InputAddress();
+            builder.InputPassportNumber();
+            BankClient client = builder.Build();
+            Console.WriteLine($"client created, id: {client.Id}");
+            break;
 
-    default:
-        Console.WriteLine("incorrect input");
-        break;
+        default:
+            Console.WriteLine("incorrect input");
+            break;
+    }
 }
