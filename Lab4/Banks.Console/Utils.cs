@@ -26,11 +26,7 @@ public static class Utils
         {
             try
             {
-                decimal value = Convert.ToDecimal(input);
-                if (value >= 0)
-                {
-                    return value;
-                }
+                return Convert.ToDecimal(input);
             }
             catch
             {
