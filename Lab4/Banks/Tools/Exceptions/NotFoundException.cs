@@ -20,6 +20,11 @@ public class NotFoundException : Exception
         return new NotFoundException($"client {client.Name.AsString} is not found");
     }
 
+    public static NotFoundException BankClientById(Guid clientId)
+    {
+        return new NotFoundException($"client {clientId} is not found");
+    }
+
     public static NotFoundException BankClientInBank(BankClient client, IBank bank)
     {
         return new NotFoundException($"client {client.Name.AsString} is not found in bank {bank.Name}");
