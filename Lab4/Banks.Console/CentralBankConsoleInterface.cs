@@ -12,6 +12,7 @@ public class CentralBankConsoleInterface
 
     public void InputDepositAccountTerm()
     {
+        System.Console.WriteLine("input deposit account term:");
         while (true)
         {
             try
@@ -28,6 +29,7 @@ public class CentralBankConsoleInterface
 
     public void InputCreditAccountCommission()
     {
+        System.Console.WriteLine("input credit account commission:");
         while (true)
         {
             try
@@ -44,6 +46,7 @@ public class CentralBankConsoleInterface
 
     public void InputCreditAccountLimit()
     {
+        System.Console.WriteLine("input credit account limit:");
         while (true)
         {
             try
@@ -60,6 +63,7 @@ public class CentralBankConsoleInterface
 
     public void InputUnverifiedClientWithdrawalLimit()
     {
+        System.Console.WriteLine("input unverified client withdrawal limit");
         while (true)
         {
             try
@@ -76,6 +80,7 @@ public class CentralBankConsoleInterface
 
     public IBank InputNameCreateBank()
     {
+        System.Console.WriteLine("input bank name");
         while (true)
         {
             try

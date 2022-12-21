@@ -19,6 +19,7 @@ public class ConsoleClientBuilder
 
     public void InputName()
     {
+        System.Console.WriteLine("input name:");
         while (true)
         {
             string value = Utils.GetStringInput();
@@ -40,18 +41,10 @@ public class ConsoleClientBuilder
         if (!Utils.GetYesNoAnswerAsBool()) return;
 
         var builder = new ConsoleAddressBuilder(new AddressBuilder());
-        System.Console.WriteLine("country:");
         builder.InputCountry();
-
-        System.Console.WriteLine("town:");
-        builder.InputCountry();
-
-        System.Console.WriteLine("street:");
+        builder.InputTown();
         builder.InputStreet();
-
-        System.Console.WriteLine("house number");
         builder.InputHouseNumber();
-
         _builder.SetAddress(builder.Build());
     }
 

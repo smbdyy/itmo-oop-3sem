@@ -15,6 +15,7 @@ public class ConsoleAddressBuilder
 
     public void InputCountry()
     {
+        System.Console.WriteLine("country:");
         while (true)
         {
             try
@@ -31,6 +32,7 @@ public class ConsoleAddressBuilder
 
     public void InputTown()
     {
+        System.Console.WriteLine("town:");
         while (true)
         {
             try
@@ -47,6 +49,7 @@ public class ConsoleAddressBuilder
 
     public void InputStreet()
     {
+        System.Console.WriteLine("street:");
         while (true)
         {
             try
@@ -63,6 +66,7 @@ public class ConsoleAddressBuilder
 
     public void InputHouseNumber()
     {
+        System.Console.WriteLine("house number");
         while (true)
         {
             try
