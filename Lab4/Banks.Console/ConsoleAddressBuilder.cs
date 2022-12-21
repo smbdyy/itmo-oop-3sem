@@ -24,7 +24,7 @@ public class ConsoleAddressBuilder
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
     }
@@ -40,7 +40,7 @@ public class ConsoleAddressBuilder
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
     }
@@ -56,7 +56,7 @@ public class ConsoleAddressBuilder
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
     }
@@ -72,7 +72,7 @@ public class ConsoleAddressBuilder
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
     }
