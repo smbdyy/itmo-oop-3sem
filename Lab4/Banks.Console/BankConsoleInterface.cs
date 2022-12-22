@@ -75,10 +75,40 @@ public class BankConsoleInterface
                 case "add_pair":
                     AddPair();
                     break;
+                case "create_deb":
+                    CreateDebitAccount();
+                    break;
+                case "create_dep":
+                    CreateDepositAccount();
+                    break;
+                case "create_cred":
+                    CreateCreditAccount();
+                    break;
+                case "list_acc":
+                    WriteAccountsList();
+                    break;
+                case "select_acc":
+
+                    break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
             }
+        }
+    }
+
+    private void WriteAccountsList()
+    {
+        if (_bank.Accounts.Count == 0)
+        {
+            System.Console.WriteLine("no accounts found");
+            return;
+        }
+
+        var accounts = _bank.Accounts.ToList();
+        for (int i = 0; i < accounts.Count; i++)
+        {
+            System.Console.WriteLine($"{i}. Client: {accounts[i].Client.Name.AsString}, account id: {accounts[i].Id}");
         }
     }
 
