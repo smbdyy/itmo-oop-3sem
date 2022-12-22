@@ -89,7 +89,7 @@ public class BankConsoleInterface
                     WriteAccountsList();
                     break;
                 case "select_acc":
-
+                    SelectAccount();
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
