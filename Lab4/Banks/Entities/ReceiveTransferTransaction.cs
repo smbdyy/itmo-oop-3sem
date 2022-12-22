@@ -9,11 +9,13 @@ public class ReceiveTransferTransaction : ITransaction
         Id = transaction.Id;
         Amount = transaction.Amount;
         Commission = commission;
+        Sender = transaction.Sender;
     }
 
     public Guid Id { get; }
     public decimal Amount { get; }
     public decimal Commission { get; }
+    public IBankAccount Sender { get; }
 
     public decimal GetUndoResult(decimal accountMoney)
     {
