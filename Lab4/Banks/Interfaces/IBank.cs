@@ -12,6 +12,8 @@ public interface IBank
     public IReadOnlyCollection<BankClient> Subscribers { get; }
     public int DepositAccountTerm { get; }
     public decimal CreditAccountCommission { get; }
+    public decimal CreditAccountLimit { get; }
+    public decimal UnverifiedClientWithdrawalLimit { get; }
     public DateOnly CurrentDate { get; }
 
     public void NotifyNextDay();
