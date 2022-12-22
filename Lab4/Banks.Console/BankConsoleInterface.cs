@@ -98,21 +98,6 @@ public class BankConsoleInterface
         }
     }
 
-    private void SelectAccount()
-    {
-        if (Bank.Accounts.Count == 0)
-        {
-            System.Console.WriteLine("no account found");
-            return;
-        }
-
-        WriteAccountsList();
-        IBankAccount account = GetAccountByInputNumber();
-        IEnumerable<IBankAccount> recipients = _mainConsoleInterface.GetAllAccountsExceptGiven(account);
-        var accountInterface = new AccountConsoleInterface(account, Bank, recipients);
-        accountInterface.Start();
-    }
-
     public IBankAccount GetAccountByInputNumber()
     {
         var accounts = Bank.Accounts.ToList();
@@ -141,6 +126,21 @@ public class BankConsoleInterface
         {
             System.Console.WriteLine($"{i}. Client: {accounts[i].Client.Name.AsString}, account id: {accounts[i].Id}");
         }
+    }
+
+    private void SelectAccount()
+    {
+        if (Bank.Accounts.Count == 0)
+        {
+            System.Console.WriteLine("no account found");
+            return;
+        }
+
+        WriteAccountsList();
+        IBankAccount account = GetAccountByInputNumber();
+        IEnumerable<IBankAccount> recipients = _mainConsoleInterface.GetAllAccountsExceptGiven(account);
+        var accountInterface = new AccountConsoleInterface(account, Bank, recipients);
+        accountInterface.Start();
     }
 
     private void CreateDebitAccount()
