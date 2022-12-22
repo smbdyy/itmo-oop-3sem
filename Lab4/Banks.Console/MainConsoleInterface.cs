@@ -66,6 +66,17 @@ public class MainConsoleInterface
         }
     }
 
+    public IEnumerable<IBankAccount> GetAllAccountsExceptGiven(IBankAccount account)
+    {
+        var accounts = new List<IBankAccount>();
+        foreach (IBank bank in CentralBank.Banks)
+        {
+            accounts.AddRange(bank.Accounts.Where(a => a != account));
+        }
+
+        return accounts;
+    }
+
     public void WriteClientsList()
     {
         if (CentralBank.Clients.Count == 0)

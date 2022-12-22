@@ -8,13 +8,13 @@ public class AccountConsoleInterface
 {
     private readonly IBankAccount _account;
     private readonly IBank _bank;
-    private readonly BankConsoleInterface _bankConsoleInterface;
+    private readonly List<IBankAccount> _recipients;
 
-    public AccountConsoleInterface(IBankAccount account, BankConsoleInterface consoleInterface)
+    public AccountConsoleInterface(IBankAccount account, IBank bank, IEnumerable<IBankAccount> recipients)
     {
         _account = account;
-        _bank = consoleInterface.Bank;
-        _bankConsoleInterface = consoleInterface;
+        _bank = bank;
+        _recipients = recipients.ToList();
     }
 
     public void Start()
@@ -58,8 +58,19 @@ public class AccountConsoleInterface
         }
     }
 
+    private void Send()
+    {
+        while (true)
+        {
+            System.Console.WriteLine("enter amount:");
+            decimal amount = Utils.GetDecimalInput();
+            System.Console.WriteLine("choose recipient:");
+        }
+    }
+
     private void Replenish()
     {
+        System.Console.WriteLine("enter amount:");
         while (true)
         {
             decimal amount = Utils.GetDecimalInput();
@@ -82,6 +93,7 @@ public class AccountConsoleInterface
 
     private void Withdraw()
     {
+        System.Console.WriteLine("enter amount:");
         while (true)
         {
             decimal amount = Utils.GetDecimalInput();
