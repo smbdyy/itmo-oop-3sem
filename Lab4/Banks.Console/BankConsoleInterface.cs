@@ -94,6 +94,50 @@ public class BankConsoleInterface
         _mainConsoleInterface.WriteClientsList();
         BankClient client = _mainConsoleInterface.GetClientByInputNumber();
         _bank.CreateDebitAccount(client);
+        System.Console.WriteLine("debit account has been created");
+    }
+
+    private void CreateDepositAccount()
+    {
+        if (_centralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
+        System.Console.WriteLine("choose client:");
+        _mainConsoleInterface.WriteClientsList();
+        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
+        System.Console.WriteLine("input start money amount");
+        while (true)
+        {
+            try
+            {
+                decimal startAmount = Utils.GetDecimalInput();
+                _bank.CreateDepositAccount(client, startAmount);
+                System.Console.WriteLine("deposit account has been created");
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
+            }
+        }
+    }
+
+    public void CreateCreditAccount()
+    {
+        if (_centralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
+        System.Console.WriteLine("choose client");
+        _mainConsoleInterface.WriteClientsList();
+        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
+        _bank.CreateCreditAccount(client);
+        System.Console.WriteLine("credit account has been created");
     }
 
     private void AddPair()
