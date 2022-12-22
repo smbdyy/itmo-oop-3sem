@@ -57,10 +57,43 @@ public class AccountConsoleInterface
                 case "hist":
                     WriteTransactionHistory();
                     break;
+                case "undo":
+                    Undo();
+                    break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
             }
+        }
+    }
+
+    private void Undo()
+    {
+        if (_account.TransactionHistory.Count == 0)
+        {
+            System.Console.WriteLine("no transactions found");
+            return;
+        }
+
+        ITransactionInfo transaction = GetTransactionByInputNumber();
+        _account.Undo(transaction.TransactionId);
+        System.Console.WriteLine("success");
+    }
+
+    private ITransactionInfo GetTransactionByInputNumber()
+    {
+        WriteTransactionHistory();
+        var transactions = _account.TransactionHistory.ToList();
+        System.Console.WriteLine("enter number:");
+        while (true)
+        {
+            int number = Utils.GetIntInput();
+            if (number >= 0 && number < transactions.Count)
+            {
+                return transactions[number];
+            }
+
+            System.Console.WriteLine("incorrect input");
         }
     }
 
