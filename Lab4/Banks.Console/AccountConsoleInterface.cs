@@ -1,5 +1,6 @@
-﻿using Banks.Entities;
-using Banks.Interfaces;
+﻿using Banks.Interfaces;
+using Banks.Tools.Exceptions;
+using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
 
@@ -44,9 +45,59 @@ public class AccountConsoleInterface
                 case "info":
                     WriteAccountInfo();
                     break;
+                case "with":
+                    Withdraw();
+                    break;
+                case "repl":
+                    Replenish();
+                    break;
                 case "hist":
                     WriteTransactionHistory();
                     break;
+            }
+        }
+    }
+
+    private void Replenish()
+    {
+        while (true)
+        {
+            decimal amount = Utils.GetDecimalInput();
+            try
+            {
+                _account.Replenish(amount);
+                System.Console.WriteLine(_account.TransactionHistory.Last().Description);
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
+            }
+            catch (TransactionValidationException ex)
+            {
+                System.Console.WriteLine($"transaction failed: {ex.Message}");
+            }
+        }
+    }
+
+    private void Withdraw()
+    {
+        while (true)
+        {
+            decimal amount = Utils.GetDecimalInput();
+            try
+            {
+                _account.Withdraw(amount);
+                System.Console.WriteLine(_account.TransactionHistory.Last().Description);
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
+            }
+            catch (TransactionValidationException ex)
+            {
+                System.Console.WriteLine($"transaction failed: {ex.Message}");
             }
         }
     }
