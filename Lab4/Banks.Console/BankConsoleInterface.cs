@@ -36,6 +36,10 @@ public class BankConsoleInterface
                 case "info":
                     WriteInfo();
                     break;
+                case "del":
+                    _centralBank.DeleteBank(_bank);
+                    System.Console.WriteLine("bank has been deleted, returning to main menu");
+                    return;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;

@@ -54,7 +54,7 @@ public class ClientConsoleInterface
                     break;
                 case "del":
                     _centralBank.DeleteClientAndAccounts(_client);
-                    System.Console.WriteLine("client deleted, returning to main menu");
+                    System.Console.WriteLine("client has been deleted, returning to main menu");
                     return;
                 case "set_a":
                     SetAddress();
