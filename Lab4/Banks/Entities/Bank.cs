@@ -44,13 +44,21 @@ public class Bank : IBank
     public int DepositAccountTerm
     {
         get => _depositAccountTerm;
-        set => _depositAccountTerm = ValidateNotNegative(value);
+        set
+        {
+            _depositAccountTerm = ValidateNotNegative(value);
+            NotifySubscribers();
+        }
     }
 
     public decimal CreditAccountCommission
     {
         get => _creditAccountCommission;
-        set => _creditAccountCommission = ValidateNotNegative(value);
+        set
+        {
+            _creditAccountCommission = ValidateNotNegative(value);
+            NotifySubscribers();
+        }
     }
 
     public decimal CreditAccountLimit
@@ -64,13 +72,18 @@ public class Bank : IBank
             }
 
             _creditAccountLimit = value;
+            NotifySubscribers();
         }
     }
 
     public decimal UnverifiedClientWithdrawalLimit
     {
         get => _unverifiedClientWithdrawalLimit;
-        set => _unverifiedClientWithdrawalLimit = ValidateNotNegative(value);
+        set
+        {
+            _unverifiedClientWithdrawalLimit = ValidateNotNegative(value);
+            NotifySubscribers();
+        }
     }
 
     public void NotifyNextDay()
