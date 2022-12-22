@@ -1,4 +1,5 @@
-﻿using Banks.Interfaces;
+﻿using Banks.Entities;
+using Banks.Interfaces;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
@@ -61,12 +62,62 @@ public class BankConsoleInterface
                     System.Console.WriteLine("unverified client withdrawal limit has been set");
                     break;
                 case "sub":
-
+                    SubscribeClient();
+                    System.Console.WriteLine("client has been subscribed");
+                    break;
+                case "unsub":
+                    UnsubscribeClient();
+                    break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
             }
         }
+    }
+
+    private void UnsubscribeClient()
+    {
+        if (_bank.Subscribers.Count == 0)
+        {
+            System.Console.WriteLine("no subscribers found");
+            return;
+        }
+
+        WriteSubscribersList();
+        _bank.UnsubscribeFromNotifications(GetSubscriberByInputNumber());
+        System.Console.WriteLine("client has been unsubscribed");
+    }
+
+    private void WriteSubscribersList()
+    {
+        var subscribers = _bank.Subscribers.ToList();
+        for (int i = 0; i < subscribers.Count; i++)
+        {
+            System.Console.WriteLine($"{i}. {subscribers[i].Name.AsString} {subscribers[i].Id}");
+        }
+    }
+
+    private BankClient GetSubscriberByInputNumber()
+    {
+        var subscribers = _bank.Subscribers.ToList();
+        while (true)
+        {
+            int number = Utils.GetIntInput();
+            if (number >= 0 && number < subscribers.Count)
+            {
+                return subscribers[number];
+            }
+
+            System.Console.WriteLine("incorrect input");
+        }
+    }
+
+    private void SubscribeClient()
+    {
+        System.Console.WriteLine("choose client:");
+        _mainConsoleInterface.WriteClientsList();
+        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
+        _bank.SubscribeToNotifications(client);
     }
 
     private void WriteInfo()
