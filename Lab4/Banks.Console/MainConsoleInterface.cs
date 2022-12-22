@@ -42,6 +42,9 @@ public class MainConsoleInterface
                 case "select_c":
                     SelectClient();
                     break;
+                case "select_b":
+                    SelectBank();
+                    break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
@@ -78,6 +81,20 @@ public class MainConsoleInterface
         clientInterface.Start();
     }
 
+    private void SelectBank()
+    {
+        if (_centralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no banks found");
+            return;
+        }
+
+        WriteBanksList();
+        IBank bank = GetBankByInputNumber();
+        var bankInterface = new BankConsoleInterface(_centralBank, bank);
+        bankInterface.Start();
+    }
+
     private void WriteClientsList()
     {
         var clients = _centralBank.Clients.ToList();
@@ -97,6 +114,31 @@ public class MainConsoleInterface
             if (number >= 0 && number < clients.Count)
             {
                 return clients[number];
+            }
+
+            System.Console.WriteLine("incorrect input");
+        }
+    }
+
+    private void WriteBanksList()
+    {
+        var banks = _centralBank.Banks.ToList();
+        for (int i = 0; i < banks.Count; i++)
+        {
+            System.Console.WriteLine($"{i}. {banks[i].Name}, id {banks[i].Id}");
+        }
+    }
+
+    private IBank GetBankByInputNumber()
+    {
+        var banks = _centralBank.Banks.ToList();
+        System.Console.WriteLine("input a number:");
+        while (true)
+        {
+            int number = Utils.GetIntInput();
+            if (number >= 0 && number < banks.Count)
+            {
+                return banks[number];
             }
 
             System.Console.WriteLine("incorrect input");
