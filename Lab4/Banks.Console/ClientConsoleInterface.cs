@@ -9,8 +9,8 @@ namespace Banks.Console;
 
 public class ClientConsoleInterface
 {
-    private ICentralBank _centralBank;
-    private BankClient _client;
+    private readonly ICentralBank _centralBank;
+    private readonly BankClient _client;
 
     public ClientConsoleInterface(ICentralBank centralBank, BankClient client)
     {

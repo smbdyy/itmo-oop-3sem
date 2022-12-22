@@ -5,7 +5,7 @@ namespace Banks.Console;
 
 public class BankCreatorConsoleInterface
 {
-    private ICentralBank _centralBank;
+    private readonly ICentralBank _centralBank;
 
     public BankCreatorConsoleInterface(ICentralBank centralBank)
         => _centralBank = centralBank;

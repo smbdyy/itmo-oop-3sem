@@ -8,9 +8,9 @@ namespace Banks.Console;
 
 public class BankConsoleInterface
 {
-    private MainConsoleInterface _mainConsoleInterface;
-    private ICentralBank _centralBank;
-    private IBank _bank;
+    private readonly MainConsoleInterface _mainConsoleInterface;
+    private readonly ICentralBank _centralBank;
+    private readonly IBank _bank;
 
     public BankConsoleInterface(MainConsoleInterface mainConsoleInterface, IBank bank)
     {
