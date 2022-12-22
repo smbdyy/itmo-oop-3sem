@@ -32,7 +32,12 @@ public class BankConsoleInterface
             set_unv_l - set unverified client withdrawal limit
             add_pair - add start amount -- deposit account percent pair
             sub - subscribe client to bank notifications
-            unsub - unsubscribe client from bank notifications");
+            unsub - unsubscribe client from bank notifications
+            create_dep - create deposit account
+            create_deb - create debit account
+            create_cred - create credit account
+            list_acc - list all accounts
+            select_acc - select account to manage");
 
         while (true)
         {
@@ -75,6 +80,20 @@ public class BankConsoleInterface
                     break;
             }
         }
+    }
+
+    private void CreateDebitAccount()
+    {
+        if (_centralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
+        System.Console.WriteLine("choose client:");
+        _mainConsoleInterface.WriteClientsList();
+        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
+        _bank.CreateDebitAccount(client);
     }
 
     private void AddPair()
