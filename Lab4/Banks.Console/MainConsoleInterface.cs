@@ -24,6 +24,7 @@ public class MainConsoleInterface
                 select_b - select bank to manage
                 create_c - create client
                 select_c - select client to manage
+                next_day - notify banks about next day
         ");
 
         while (true)
@@ -44,6 +45,10 @@ public class MainConsoleInterface
                     break;
                 case "select_b":
                     SelectBank();
+                    break;
+                case "next_day":
+                    _centralBank.NotifyNextDay();
+                    System.Console.WriteLine($"success, current date: {_centralBank.CurrentDate.ToString()}");
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
