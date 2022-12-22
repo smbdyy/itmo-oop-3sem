@@ -89,6 +89,7 @@ public class BankConsoleInterface
             {
                 var pair = new StartAmountPercentPair(amount, percent);
                 _bank.AddDepositAccountPercent(pair);
+                System.Console.WriteLine("pair has been added");
                 return;
             }
             catch (ArgumentException ex)
@@ -157,6 +158,14 @@ public class BankConsoleInterface
         System.Console.WriteLine($"Credit commission: {_bank.CreditAccountCommission}");
         System.Console.WriteLine($"Credit account limit: {_bank.CreditAccountLimit}");
         System.Console.WriteLine($"Unverified client withdrawal limit: {_bank.UnverifiedClientWithdrawalLimit}");
+        if (_bank.StartAmountPercentPairs.Count > 0)
+        {
+            System.Console.WriteLine("Start amount -- percent pairs:");
+            foreach (StartAmountPercentPair pair in _bank.StartAmountPercentPairs)
+            {
+                System.Console.WriteLine($"amount: {pair.StartAmount}, percent: {pair.Percent}");
+            }
+        }
     }
 
     private void SetDepositAccountTerm()
