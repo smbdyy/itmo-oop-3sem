@@ -97,7 +97,35 @@ public class BankConsoleInterface
         }
     }
 
-    private void WriteAccountsList()
+    private void SelectAccount()
+    {
+        if (_bank.Accounts.Count == 0)
+        {
+            System.Console.WriteLine("no account found");
+            return;
+        }
+
+        WriteAccountsList();
+        var accountInterface = new AccountConsoleInterface(GetAccountByInputNumber(), _bank);
+        accountInterface.Start();
+    }
+
+    public IBankAccount GetAccountByInputNumber()
+    {
+        var accounts = _bank.Accounts.ToList();
+        while (true)
+        {
+            int number = Utils.GetIntInput();
+            if (number >= 0 && number < accounts.Count)
+            {
+                return accounts[number];
+            }
+
+            System.Console.WriteLine("incorrect input");
+        }
+    }
+
+    public void WriteAccountsList()
     {
         if (_bank.Accounts.Count == 0)
         {
