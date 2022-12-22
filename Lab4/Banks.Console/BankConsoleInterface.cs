@@ -10,19 +10,20 @@ public class BankConsoleInterface
 {
     private readonly MainConsoleInterface _mainConsoleInterface;
     private readonly ICentralBank _centralBank;
-    private readonly IBank _bank;
 
     public BankConsoleInterface(MainConsoleInterface mainConsoleInterface, IBank bank)
     {
         _mainConsoleInterface = mainConsoleInterface;
         _centralBank = mainConsoleInterface.CentralBank;
-        _bank = bank;
+        Bank = bank;
     }
+
+    public IBank Bank { get; }
 
     public void Start()
     {
         System.Console.WriteLine(
-            $@"managing bank {_bank.Name} {_bank.Id}, commands:
+            $@"managing bank {Bank.Name} {Bank.Id}, commands:
             exit - go back to main menu
             info - write bank info
             del - delete bank
@@ -51,7 +52,7 @@ public class BankConsoleInterface
                     WriteInfo();
                     break;
                 case "del":
-                    _centralBank.DeleteBank(_bank);
+                    _centralBank.DeleteBank(Bank);
                     System.Console.WriteLine("bank has been deleted, returning to main menu");
                     return;
                 case "set_term":
@@ -99,20 +100,20 @@ public class BankConsoleInterface
 
     private void SelectAccount()
     {
-        if (_bank.Accounts.Count == 0)
+        if (Bank.Accounts.Count == 0)
         {
             System.Console.WriteLine("no account found");
             return;
         }
 
         WriteAccountsList();
-        var accountInterface = new AccountConsoleInterface(GetAccountByInputNumber(), _bank);
+        var accountInterface = new AccountConsoleInterface(GetAccountByInputNumber(), Bank);
         accountInterface.Start();
     }
 
     public IBankAccount GetAccountByInputNumber()
     {
-        var accounts = _bank.Accounts.ToList();
+        var accounts = Bank.Accounts.ToList();
         while (true)
         {
             int number = Utils.GetIntInput();
@@ -127,13 +128,13 @@ public class BankConsoleInterface
 
     public void WriteAccountsList()
     {
-        if (_bank.Accounts.Count == 0)
+        if (Bank.Accounts.Count == 0)
         {
             System.Console.WriteLine("no accounts found");
             return;
         }
 
-        var accounts = _bank.Accounts.ToList();
+        var accounts = Bank.Accounts.ToList();
         for (int i = 0; i < accounts.Count; i++)
         {
             System.Console.WriteLine($"{i}. Client: {accounts[i].Client.Name.AsString}, account id: {accounts[i].Id}");
@@ -151,7 +152,7 @@ public class BankConsoleInterface
         System.Console.WriteLine("choose client:");
         _mainConsoleInterface.WriteClientsList();
         BankClient client = _mainConsoleInterface.GetClientByInputNumber();
-        _bank.CreateDebitAccount(client);
+        Bank.CreateDebitAccount(client);
         System.Console.WriteLine("debit account has been created");
     }
 
@@ -172,7 +173,7 @@ public class BankConsoleInterface
             try
             {
                 decimal startAmount = Utils.GetDecimalInput();
-                _bank.CreateDepositAccount(client, startAmount);
+                Bank.CreateDepositAccount(client, startAmount);
                 System.Console.WriteLine("deposit account has been created");
                 return;
             }
@@ -194,7 +195,7 @@ public class BankConsoleInterface
         System.Console.WriteLine("choose client");
         _mainConsoleInterface.WriteClientsList();
         BankClient client = _mainConsoleInterface.GetClientByInputNumber();
-        _bank.CreateCreditAccount(client);
+        Bank.CreateCreditAccount(client);
         System.Console.WriteLine("credit account has been created");
     }
 
@@ -209,7 +210,7 @@ public class BankConsoleInterface
             try
             {
                 var pair = new StartAmountPercentPair(amount, percent);
-                _bank.AddDepositAccountPercent(pair);
+                Bank.AddDepositAccountPercent(pair);
                 System.Console.WriteLine("pair has been added");
                 return;
             }
@@ -226,20 +227,20 @@ public class BankConsoleInterface
 
     private void UnsubscribeClient()
     {
-        if (_bank.Subscribers.Count == 0)
+        if (Bank.Subscribers.Count == 0)
         {
             System.Console.WriteLine("no subscribers found");
             return;
         }
 
         WriteSubscribersList();
-        _bank.UnsubscribeFromNotifications(GetSubscriberByInputNumber());
+        Bank.UnsubscribeFromNotifications(GetSubscriberByInputNumber());
         System.Console.WriteLine("client has been unsubscribed");
     }
 
     private void WriteSubscribersList()
     {
-        var subscribers = _bank.Subscribers.ToList();
+        var subscribers = Bank.Subscribers.ToList();
         for (int i = 0; i < subscribers.Count; i++)
         {
             System.Console.WriteLine($"{i}. {subscribers[i].Name.AsString} {subscribers[i].Id}");
@@ -248,7 +249,7 @@ public class BankConsoleInterface
 
     private BankClient GetSubscriberByInputNumber()
     {
-        var subscribers = _bank.Subscribers.ToList();
+        var subscribers = Bank.Subscribers.ToList();
         while (true)
         {
             int number = Utils.GetIntInput();
@@ -266,23 +267,23 @@ public class BankConsoleInterface
         System.Console.WriteLine("choose client:");
         _mainConsoleInterface.WriteClientsList();
         BankClient client = _mainConsoleInterface.GetClientByInputNumber();
-        _bank.SubscribeToNotifications(client);
+        Bank.SubscribeToNotifications(client);
         System.Console.WriteLine("client has been subscribed");
     }
 
     private void WriteInfo()
     {
-        System.Console.WriteLine($"Id: {_bank.Id}");
-        System.Console.WriteLine($"Name: {_bank.Name}");
-        System.Console.WriteLine($"Current dage: {_bank.CurrentDate}");
-        System.Console.WriteLine($"Deposit account term: {_bank.DepositAccountTerm}");
-        System.Console.WriteLine($"Credit commission: {_bank.CreditAccountCommission}");
-        System.Console.WriteLine($"Credit account limit: {_bank.CreditAccountLimit}");
-        System.Console.WriteLine($"Unverified client withdrawal limit: {_bank.UnverifiedClientWithdrawalLimit}");
-        if (_bank.StartAmountPercentPairs.Count > 0)
+        System.Console.WriteLine($"Id: {Bank.Id}");
+        System.Console.WriteLine($"Name: {Bank.Name}");
+        System.Console.WriteLine($"Current dage: {Bank.CurrentDate}");
+        System.Console.WriteLine($"Deposit account term: {Bank.DepositAccountTerm}");
+        System.Console.WriteLine($"Credit commission: {Bank.CreditAccountCommission}");
+        System.Console.WriteLine($"Credit account limit: {Bank.CreditAccountLimit}");
+        System.Console.WriteLine($"Unverified client withdrawal limit: {Bank.UnverifiedClientWithdrawalLimit}");
+        if (Bank.StartAmountPercentPairs.Count > 0)
         {
             System.Console.WriteLine("Start amount -- percent pairs:");
-            foreach (StartAmountPercentPair pair in _bank.StartAmountPercentPairs)
+            foreach (StartAmountPercentPair pair in Bank.StartAmountPercentPairs)
             {
                 System.Console.WriteLine($"amount: {pair.StartAmount}, percent: {pair.Percent}");
             }
@@ -295,7 +296,7 @@ public class BankConsoleInterface
         {
             try
             {
-                _bank.DepositAccountTerm = Utils.GetIntInput();
+                Bank.DepositAccountTerm = Utils.GetIntInput();
                 System.Console.WriteLine("deposit account term has been set");
                 return;
             }
@@ -312,7 +313,7 @@ public class BankConsoleInterface
         {
             try
             {
-                _bank.CreditAccountCommission = Utils.GetDecimalInput();
+                Bank.CreditAccountCommission = Utils.GetDecimalInput();
                 System.Console.WriteLine("credit account commission has been set");
                 return;
             }
@@ -329,7 +330,7 @@ public class BankConsoleInterface
         {
             try
             {
-                _bank.CreditAccountLimit = Utils.GetDecimalInput();
+                Bank.CreditAccountLimit = Utils.GetDecimalInput();
                 System.Console.WriteLine("credit account limit has been set");
                 return;
             }
@@ -346,7 +347,7 @@ public class BankConsoleInterface
         {
             try
             {
-                _bank.UnverifiedClientWithdrawalLimit = Utils.GetDecimalInput();
+                Bank.UnverifiedClientWithdrawalLimit = Utils.GetDecimalInput();
                 System.Console.WriteLine("unverified client withdrawal limit has been set");
                 return;
             }
