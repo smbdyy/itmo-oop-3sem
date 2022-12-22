@@ -28,7 +28,8 @@ public class BankConsoleInterface
             set_cred_c - set credit account commission
             set_cred_l - set credit account limit
             set_unv_l - set unverified client withdrawal limit
-            sub - subscribe client to bank notifications");
+            sub - subscribe client to bank notifications
+            unsub - unsubscribe client from bank notifications");
 
         while (true)
         {
