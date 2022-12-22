@@ -98,7 +98,7 @@ public class BankConsoleInterface
         }
     }
 
-    public IBankAccount GetAccountByInputNumber()
+    private IBankAccount GetAccountByInputNumber()
     {
         var accounts = Bank.Accounts.ToList();
         while (true)
@@ -113,7 +113,7 @@ public class BankConsoleInterface
         }
     }
 
-    public void WriteAccountsList()
+    private void WriteAccountsList()
     {
         if (Bank.Accounts.Count == 0)
         {
@@ -126,6 +126,21 @@ public class BankConsoleInterface
         {
             System.Console.WriteLine($"{i}. Client: {accounts[i].Client.Name.AsString}, account id: {accounts[i].Id}");
         }
+    }
+
+    private void CreateCreditAccount()
+    {
+        if (_centralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
+        System.Console.WriteLine("choose client");
+        _mainConsoleInterface.WriteClientsList();
+        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
+        Bank.CreateCreditAccount(client);
+        System.Console.WriteLine("credit account has been created");
     }
 
     private void SelectAccount()
@@ -184,21 +199,6 @@ public class BankConsoleInterface
                 System.Console.WriteLine($"incorrect input: {ex.Message}");
             }
         }
-    }
-
-    public void CreateCreditAccount()
-    {
-        if (_centralBank.Clients.Count == 0)
-        {
-            System.Console.WriteLine("no clients found");
-            return;
-        }
-
-        System.Console.WriteLine("choose client");
-        _mainConsoleInterface.WriteClientsList();
-        BankClient client = _mainConsoleInterface.GetClientByInputNumber();
-        Bank.CreateCreditAccount(client);
-        System.Console.WriteLine("credit account has been created");
     }
 
     private void AddPair()
