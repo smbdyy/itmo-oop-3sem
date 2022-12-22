@@ -47,23 +47,18 @@ public class BankConsoleInterface
                     return;
                 case "set_term":
                     SetDepositAccountTerm();
-                    System.Console.WriteLine("deposit account term has been set");
                     break;
                 case "set_cred_c":
                     SetCreditAccountCommission();
-                    System.Console.WriteLine("credit account commission has been set");
                     break;
                 case "set_cred_l":
                     SetCreditAccountLimit();
-                    System.Console.WriteLine("credit account limit has been set");
                     break;
                 case "set_unv_l":
                     SetUnverifiedClientWithdrawalLimit();
-                    System.Console.WriteLine("unverified client withdrawal limit has been set");
                     break;
                 case "sub":
                     SubscribeClient();
-                    System.Console.WriteLine("client has been subscribed");
                     break;
                 case "unsub":
                     UnsubscribeClient();
@@ -118,6 +113,7 @@ public class BankConsoleInterface
         _mainConsoleInterface.WriteClientsList();
         BankClient client = _mainConsoleInterface.GetClientByInputNumber();
         _bank.SubscribeToNotifications(client);
+        System.Console.WriteLine("client has been subscribed");
     }
 
     private void WriteInfo()
@@ -138,6 +134,7 @@ public class BankConsoleInterface
             try
             {
                 _bank.DepositAccountTerm = Utils.GetIntInput();
+                System.Console.WriteLine("deposit account term has been set");
             }
             catch (ArgumentException ex)
             {
@@ -153,6 +150,7 @@ public class BankConsoleInterface
             try
             {
                 _bank.CreditAccountCommission = Utils.GetDecimalInput();
+                System.Console.WriteLine("credit account commission has been set");
             }
             catch (ArgumentException ex)
             {
@@ -168,6 +166,7 @@ public class BankConsoleInterface
             try
             {
                 _bank.CreditAccountLimit = Utils.GetDecimalInput();
+                System.Console.WriteLine("credit account limit has been set");
             }
             catch (ArgumentException ex)
             {
@@ -183,6 +182,7 @@ public class BankConsoleInterface
             try
             {
                 _bank.UnverifiedClientWithdrawalLimit = Utils.GetDecimalInput();
+                System.Console.WriteLine("unverified client withdrawal limit has been set");
             }
             catch (ArgumentException ex)
             {
