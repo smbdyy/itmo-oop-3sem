@@ -57,6 +57,9 @@ public class AccountConsoleInterface
                 case "hist":
                     WriteTransactionHistory();
                     break;
+                default:
+                    System.Console.WriteLine("incorrect input");
+                    break;
             }
         }
     }
