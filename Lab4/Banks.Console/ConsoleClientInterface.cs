@@ -31,7 +31,7 @@ public class ConsoleClientInterface
         _client = client ?? throw NotFoundException.BankClientById(clientId);
     }
 
-    public void Init()
+    public void Start()
     {
         System.Console.WriteLine(
             $@"managing client {_client.Name.AsString} {_client.Id}, commands:
