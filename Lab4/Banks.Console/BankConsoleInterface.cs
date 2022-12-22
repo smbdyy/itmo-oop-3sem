@@ -1,5 +1,7 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
+using Banks.Models;
+using Banks.Tools.Exceptions;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
@@ -28,6 +30,7 @@ public class BankConsoleInterface
             set_cred_c - set credit account commission
             set_cred_l - set credit account limit
             set_unv_l - set unverified client withdrawal limit
+            add_pair - add start amount -- deposit account percent pair
             sub - subscribe client to bank notifications
             unsub - unsubscribe client from bank notifications");
 
@@ -64,9 +67,37 @@ public class BankConsoleInterface
                 case "unsub":
                     UnsubscribeClient();
                     break;
+                case "add_pair":
+                    AddPair();
+                    break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
+            }
+        }
+    }
+
+    private void AddPair()
+    {
+        while (true)
+        {
+            System.Console.WriteLine("input start amount:");
+            decimal amount = Utils.GetDecimalInput();
+            System.Console.WriteLine("input percent:");
+            decimal percent = Utils.GetDecimalInput();
+            try
+            {
+                var pair = new StartAmountPercentPair(amount, percent);
+                _bank.AddDepositAccountPercent(pair);
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
+            }
+            catch (AlreadyExistsException ex)
+            {
+                System.Console.WriteLine($"exception: {ex.Message}");
             }
         }
     }
