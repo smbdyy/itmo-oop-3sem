@@ -5,12 +5,14 @@ namespace Banks.Console;
 
 public class BankConsoleInterface
 {
+    private MainConsoleInterface _mainConsoleInterface;
     private ICentralBank _centralBank;
     private IBank _bank;
 
-    public BankConsoleInterface(ICentralBank centralBank, IBank bank)
+    public BankConsoleInterface(MainConsoleInterface mainConsoleInterface, IBank bank)
     {
-        _centralBank = centralBank;
+        _mainConsoleInterface = mainConsoleInterface;
+        _centralBank = mainConsoleInterface.CentralBank;
         _bank = bank;
     }
 
@@ -24,7 +26,8 @@ public class BankConsoleInterface
             set_term - set deposit account term
             set_cred_c - set credit account commission
             set_cred_l - set credit account limit
-            set_unv_l - set unverified client withdrawal limit");
+            set_unv_l - set unverified client withdrawal limit
+            sub - subscribe client to bank notifications");
 
         while (true)
         {
@@ -57,6 +60,8 @@ public class BankConsoleInterface
                     SetUnverifiedClientWithdrawalLimit();
                     System.Console.WriteLine("unverified client withdrawal limit has been set");
                     break;
+                case "sub":
+
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;

@@ -7,14 +7,15 @@ namespace Banks.Console;
 
 public class MainConsoleInterface
 {
-    private ICentralBank _centralBank;
     private BankCreatorConsoleInterface _bankCreatorInterface;
 
     public MainConsoleInterface(ICentralBank centralBank)
     {
-        _centralBank = centralBank;
-        _bankCreatorInterface = new BankCreatorConsoleInterface(_centralBank);
+        CentralBank = centralBank;
+        _bankCreatorInterface = new BankCreatorConsoleInterface(CentralBank);
     }
+
+    public ICentralBank CentralBank { get; }
 
     public void Start()
     {
@@ -49,7 +50,7 @@ public class MainConsoleInterface
                     break;
                 case var _ when Regex.IsMatch(input, "^add_days\\s[1-9][0-9]*$"):
                     AddDays(Convert.ToInt32(input.Split(' ')[1]));
-                    System.Console.WriteLine($"success, current date: {_centralBank.CurrentDate.ToString()}");
+                    System.Console.WriteLine($"success, current date: {CentralBank.CurrentDate.ToString()}");
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
@@ -58,69 +59,18 @@ public class MainConsoleInterface
         }
     }
 
-    private void AddDays(int number)
+    public void WriteClientsList()
     {
-        for (int i = 0; i < number; i++)
-        {
-            _centralBank.NotifyNextDay();
-        }
-    }
-
-    private void CreateBank()
-    {
-        _bankCreatorInterface.InputAllBankData();
-        IBank bank = _bankCreatorInterface.InputNameCreateBank();
-        System.Console.WriteLine($"bank created, id: {bank.Id}");
-    }
-
-    private void CreateClient()
-    {
-        var builder = new ConsoleClientBuilder(_centralBank, new BankClientBuilder());
-        builder.InputAllData();
-        BankClient client = builder.Build();
-        System.Console.WriteLine($"client created, id: {client.Id}");
-    }
-
-    private void SelectClient()
-    {
-        if (_centralBank.Clients.Count == 0)
-        {
-            System.Console.WriteLine("no clients found");
-            return;
-        }
-
-        WriteClientsList();
-        BankClient selectedClient = GetClientByInputNumber();
-        var clientInterface = new ClientConsoleInterface(_centralBank, selectedClient);
-        clientInterface.Start();
-    }
-
-    private void SelectBank()
-    {
-        if (_centralBank.Clients.Count == 0)
-        {
-            System.Console.WriteLine("no banks found");
-            return;
-        }
-
-        WriteBanksList();
-        IBank bank = GetBankByInputNumber();
-        var bankInterface = new BankConsoleInterface(_centralBank, bank);
-        bankInterface.Start();
-    }
-
-    private void WriteClientsList()
-    {
-        var clients = _centralBank.Clients.ToList();
+        var clients = CentralBank.Clients.ToList();
         for (int i = 0; i < clients.Count; i++)
         {
             System.Console.WriteLine($"{i}. {clients[i].Name.AsString}, id {clients[i].Id}");
         }
     }
 
-    private BankClient GetClientByInputNumber()
+    public BankClient GetClientByInputNumber()
     {
-        var clients = _centralBank.Clients.ToList();
+        var clients = CentralBank.Clients.ToList();
         System.Console.WriteLine("input a number:");
         while (true)
         {
@@ -134,9 +84,60 @@ public class MainConsoleInterface
         }
     }
 
+    private void AddDays(int number)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            CentralBank.NotifyNextDay();
+        }
+    }
+
+    private void CreateBank()
+    {
+        _bankCreatorInterface.InputAllBankData();
+        IBank bank = _bankCreatorInterface.InputNameCreateBank();
+        System.Console.WriteLine($"bank created, id: {bank.Id}");
+    }
+
+    private void CreateClient()
+    {
+        var builder = new ConsoleClientBuilder(CentralBank, new BankClientBuilder());
+        builder.InputAllData();
+        BankClient client = builder.Build();
+        System.Console.WriteLine($"client created, id: {client.Id}");
+    }
+
+    private void SelectClient()
+    {
+        if (CentralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
+        WriteClientsList();
+        BankClient selectedClient = GetClientByInputNumber();
+        var clientInterface = new ClientConsoleInterface(CentralBank, selectedClient);
+        clientInterface.Start();
+    }
+
+    private void SelectBank()
+    {
+        if (CentralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no banks found");
+            return;
+        }
+
+        WriteBanksList();
+        IBank bank = GetBankByInputNumber();
+        var bankInterface = new BankConsoleInterface(this, bank);
+        bankInterface.Start();
+    }
+
     private void WriteBanksList()
     {
-        var banks = _centralBank.Banks.ToList();
+        var banks = CentralBank.Banks.ToList();
         for (int i = 0; i < banks.Count; i++)
         {
             System.Console.WriteLine($"{i}. {banks[i].Name}, id {banks[i].Id}");
@@ -145,7 +146,7 @@ public class MainConsoleInterface
 
     private IBank GetBankByInputNumber()
     {
-        var banks = _centralBank.Banks.ToList();
+        var banks = CentralBank.Banks.ToList();
         System.Console.WriteLine("input a number:");
         while (true)
         {
