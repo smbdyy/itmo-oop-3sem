@@ -10,7 +10,7 @@ public class CentralBankConsoleInterface
     public CentralBankConsoleInterface(ICentralBank centralBank)
         => _centralBank = centralBank;
 
-    public void InputAllData()
+    public void InputAllBankData()
     {
         InputDepositAccountTerm();
         InputCreditAccountCommission();

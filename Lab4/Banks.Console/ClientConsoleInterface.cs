@@ -7,12 +7,12 @@ using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
 
-public class ConsoleClientInterface
+public class ClientConsoleInterface
 {
     private ICentralBank _centralBank;
     private BankClient _client;
 
-    public ConsoleClientInterface(ICentralBank centralBank, BankClient client)
+    public ClientConsoleInterface(ICentralBank centralBank, BankClient client)
     {
         if (!centralBank.Clients.Contains(client))
         {
@@ -23,7 +23,7 @@ public class ConsoleClientInterface
         _client = client;
     }
 
-    public ConsoleClientInterface(ICentralBank centralBank, Guid clientId)
+    public ClientConsoleInterface(ICentralBank centralBank, Guid clientId)
     {
         BankClient? client = centralBank.Clients.FirstOrDefault(c => c.Id == clientId);
 
