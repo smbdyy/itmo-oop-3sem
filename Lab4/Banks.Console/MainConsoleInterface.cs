@@ -22,8 +22,10 @@ public class MainConsoleInterface
         System.Console.WriteLine(
             @"initialized, commands:
                 exit
+                list_b   - list all banks
                 create_b - create new bank
                 select_b - select bank to manage
+                list_c   - list all clients
                 create_c - create client
                 select_c - select client to manage
                 add_days [number] - add [number] days to current date and notify banks
@@ -47,6 +49,14 @@ public class MainConsoleInterface
                     break;
                 case "select_b":
                     SelectBank();
+                    break;
+                case "list_b":
+                    if (CentralBank.Banks.Count == 0) break;
+                    WriteBanksList();
+                    break;
+                case "list_c":
+                    if (CentralBank.Clients.Count == 0) break;
+                    WriteClientsList();
                     break;
                 case var _ when Regex.IsMatch(input, "^add_days\\s[1-9][0-9]*$"):
                     AddDays(Convert.ToInt32(input.Split(' ')[1]));
