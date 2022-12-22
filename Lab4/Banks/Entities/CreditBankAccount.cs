@@ -68,6 +68,11 @@ public class CreditBankAccount : IBankAccount
 
     public void Send(decimal amount, IBankAccount recipient)
     {
+        if (recipient == this)
+        {
+            throw TransactionValidationException.RecipientIsSender();
+        }
+
         var transaction = new TransferTransaction(amount, Commission, this, recipient);
         MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);

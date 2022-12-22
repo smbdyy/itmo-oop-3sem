@@ -25,4 +25,9 @@ public class TransactionValidationException : Exception
         return new TransactionValidationException(
             $"unverified client {account.Client.Name.AsString} cannot withdraw {requiredAmount}");
     }
+
+    public static TransactionValidationException RecipientIsSender()
+    {
+        return new TransactionValidationException("recipient cannot be the same account as sender");
+    }
 }
