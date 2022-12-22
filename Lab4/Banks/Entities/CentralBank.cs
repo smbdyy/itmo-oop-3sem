@@ -30,6 +30,7 @@ public class CentralBank : ICentralBank
     }
 
     public IReadOnlyCollection<BankClient> Clients => _clients;
+    public IReadOnlyCollection<IBank> Banks => _banks;
 
     public void SetDefaultDepositAccountTerm(int term)
     {
@@ -67,11 +68,6 @@ public class CentralBank : ICentralBank
         }
 
         _banks.Remove(bank);
-    }
-
-    public IBank? FindBankById(Guid id)
-    {
-        return _banks.FirstOrDefault(b => b.Id == id);
     }
 
     public void RegisterClient(BankClient client)
