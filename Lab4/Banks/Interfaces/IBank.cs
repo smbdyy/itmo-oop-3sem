@@ -10,10 +10,10 @@ public interface IBank
     public IReadOnlyCollection<IBankAccount> Accounts { get; }
     public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs { get; }
     public IReadOnlyCollection<BankClient> Subscribers { get; }
-    public int DepositAccountTerm { get; }
-    public decimal CreditAccountCommission { get; }
-    public decimal CreditAccountLimit { get; }
-    public decimal UnverifiedClientWithdrawalLimit { get; }
+    public int DepositAccountTerm { get; set; }
+    public decimal CreditAccountCommission { get; set; }
+    public decimal CreditAccountLimit { get; set; }
+    public decimal UnverifiedClientWithdrawalLimit { get; set; }
     public DateOnly CurrentDate { get; }
 
     public void NotifyNextDay();
