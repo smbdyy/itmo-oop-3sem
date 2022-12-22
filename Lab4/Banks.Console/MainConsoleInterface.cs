@@ -50,7 +50,6 @@ public class MainConsoleInterface
                     break;
                 case var _ when Regex.IsMatch(input, "^add_days\\s[1-9][0-9]*$"):
                     AddDays(Convert.ToInt32(input.Split(' ')[1]));
-                    System.Console.WriteLine($"success, current date: {CentralBank.CurrentDate.ToString()}");
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
@@ -90,6 +89,8 @@ public class MainConsoleInterface
         {
             CentralBank.NotifyNextDay();
         }
+
+        System.Console.WriteLine($"success, current date: {CentralBank.CurrentDate.ToString()}");
     }
 
     private void CreateBank()

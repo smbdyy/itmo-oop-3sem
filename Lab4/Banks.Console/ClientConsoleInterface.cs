@@ -58,11 +58,9 @@ public class ClientConsoleInterface
                     return;
                 case "set_a":
                     SetAddress();
-                    System.Console.WriteLine("address has been set");
                     break;
                 case "set_p":
                     SetPassportNumber();
-                    System.Console.WriteLine("passport number has been set");
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
@@ -78,6 +76,7 @@ public class ClientConsoleInterface
             try
             {
                 _client.PassportNumber = PassportNumber.FromString(Utils.GetStringInput());
+                System.Console.WriteLine("passport number has been set");
                 return;
             }
             catch (ArgumentException ex)
@@ -92,6 +91,7 @@ public class ClientConsoleInterface
         var addressBuilder = new ConsoleAddressBuilder(new AddressBuilder());
         addressBuilder.InputAllData();
         _client.Address = addressBuilder.Build();
+        System.Console.WriteLine("address has been set");
     }
 
     private void WriteInfo()
