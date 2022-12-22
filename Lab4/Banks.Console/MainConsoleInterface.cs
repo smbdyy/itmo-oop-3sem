@@ -1,4 +1,5 @@
-﻿using Banks.Builders;
+﻿using System.Text.RegularExpressions;
+using Banks.Builders;
 using Banks.Entities;
 using Banks.Interfaces;
 
@@ -24,7 +25,7 @@ public class MainConsoleInterface
                 select_b - select bank to manage
                 create_c - create client
                 select_c - select client to manage
-                next_day - notify banks about next day
+                add_days [number] - add [number] days to current date and notify banks
         ");
 
         while (true)
@@ -46,14 +47,22 @@ public class MainConsoleInterface
                 case "select_b":
                     SelectBank();
                     break;
-                case "next_day":
-                    _centralBank.NotifyNextDay();
+                case var _ when Regex.IsMatch(input, "^add_days\\s[1-9][0-9]*$"):
+                    AddDays(Convert.ToInt32(input.Split(' ')[1]));
                     System.Console.WriteLine($"success, current date: {_centralBank.CurrentDate.ToString()}");
                     break;
                 default:
                     System.Console.WriteLine("incorrect input");
                     break;
             }
+        }
+    }
+
+    private void AddDays(int number)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            _centralBank.NotifyNextDay();
         }
     }
 
