@@ -51,6 +51,9 @@ public class AccountConsoleInterface
                 case "repl":
                     Replenish();
                     break;
+                case "send":
+                    Send();
+                    break;
                 case "hist":
                     WriteTransactionHistory();
                     break;
@@ -65,6 +68,22 @@ public class AccountConsoleInterface
             System.Console.WriteLine("enter amount:");
             decimal amount = Utils.GetDecimalInput();
             System.Console.WriteLine("choose recipient:");
+            WriteRecipients();
+            IBankAccount recipient = GetRecipientByInputNumber();
+            try
+            {
+                _account.Send(amount, recipient);
+                System.Console.WriteLine(_account.TransactionHistory.Last().Description);
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
+            }
+            catch (TransactionValidationException ex)
+            {
+                System.Console.WriteLine($"transaction failed: {ex.Message}");
+            }
         }
     }
 
@@ -111,6 +130,35 @@ public class AccountConsoleInterface
             {
                 System.Console.WriteLine($"transaction failed: {ex.Message}");
             }
+        }
+    }
+
+    private IBankAccount GetRecipientByInputNumber()
+    {
+        System.Console.WriteLine("enter number:");
+        while (true)
+        {
+            int number = Utils.GetIntInput();
+            if (number >= 0 && number < _recipients.Count)
+            {
+                return _recipients[number];
+            }
+
+            System.Console.WriteLine("incorrect input");
+        }
+    }
+
+    private void WriteRecipients()
+    {
+        if (_recipients.Count == 0)
+        {
+            System.Console.WriteLine("no recipients found");
+            return;
+        }
+
+        for (int i = 0; i < _recipients.Count; i++)
+        {
+            System.Console.WriteLine($"{i}. {_recipients[i].Client.Name.AsString} account {_recipients[i].Id}");
         }
     }
 
