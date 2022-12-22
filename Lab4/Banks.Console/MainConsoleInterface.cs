@@ -8,12 +8,12 @@ namespace Banks.Console;
 public class MainConsoleInterface
 {
     private ICentralBank _centralBank;
-    private CentralBankConsoleInterface _centralBankInterface;
+    private BankCreatorConsoleInterface _bankCreatorInterface;
 
     public MainConsoleInterface(ICentralBank centralBank)
     {
         _centralBank = centralBank;
-        _centralBankInterface = new CentralBankConsoleInterface(_centralBank);
+        _bankCreatorInterface = new BankCreatorConsoleInterface(_centralBank);
     }
 
     public void Start()
@@ -68,8 +68,8 @@ public class MainConsoleInterface
 
     private void CreateBank()
     {
-        _centralBankInterface.InputAllBankData();
-        IBank bank = _centralBankInterface.InputNameCreateBank();
+        _bankCreatorInterface.InputAllBankData();
+        IBank bank = _bankCreatorInterface.InputNameCreateBank();
         System.Console.WriteLine($"bank created, id: {bank.Id}");
     }
 

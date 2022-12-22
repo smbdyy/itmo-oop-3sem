@@ -3,11 +3,11 @@ using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Console;
 
-public class CentralBankConsoleInterface
+public class BankCreatorConsoleInterface
 {
     private ICentralBank _centralBank;
 
-    public CentralBankConsoleInterface(ICentralBank centralBank)
+    public BankCreatorConsoleInterface(ICentralBank centralBank)
         => _centralBank = centralBank;
 
     public void InputAllBankData()
