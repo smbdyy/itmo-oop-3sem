@@ -11,6 +11,7 @@ public class TransferTransactionInfo : ITransactionInfo
         Commission = transaction.Commission;
         Sender = transaction.Sender;
         Recipient = transaction.Recipient;
+        Description = $"send {Amount} to {Recipient.Client.Name.AsString}, commission {Commission}";
     }
 
     public Guid TransactionId { get; }
@@ -18,4 +19,5 @@ public class TransferTransactionInfo : ITransactionInfo
     public decimal Commission { get; }
     public IBankAccount Sender { get; }
     public IBankAccount Recipient { get; }
+    public string Description { get; }
 }

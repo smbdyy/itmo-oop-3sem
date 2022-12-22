@@ -9,9 +9,11 @@ public class WithdrawalTransactionInfo : ITransactionInfo
         TransactionId = transaction.Id;
         Amount = transaction.Amount;
         Commission = transaction.Commission;
+        Description = $"withdraw {Amount}, commission {Commission}";
     }
 
     public Guid TransactionId { get; }
     public decimal Amount { get; }
     public decimal Commission { get; }
+    public string Description { get; }
 }
