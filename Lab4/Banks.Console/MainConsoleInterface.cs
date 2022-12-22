@@ -51,11 +51,9 @@ public class MainConsoleInterface
                     SelectBank();
                     break;
                 case "list_b":
-                    if (CentralBank.Banks.Count == 0) break;
                     WriteBanksList();
                     break;
                 case "list_c":
-                    if (CentralBank.Clients.Count == 0) break;
                     WriteClientsList();
                     break;
                 case var _ when Regex.IsMatch(input, "^add_days\\s[1-9][0-9]*$"):
@@ -70,6 +68,12 @@ public class MainConsoleInterface
 
     public void WriteClientsList()
     {
+        if (CentralBank.Clients.Count == 0)
+        {
+            System.Console.WriteLine("no clients found");
+            return;
+        }
+
         var clients = CentralBank.Clients.ToList();
         for (int i = 0; i < clients.Count; i++)
         {
@@ -148,6 +152,12 @@ public class MainConsoleInterface
 
     private void WriteBanksList()
     {
+        if (CentralBank.Banks.Count == 0)
+        {
+            System.Console.WriteLine("no banks found");
+            return;
+        }
+
         var banks = CentralBank.Banks.ToList();
         for (int i = 0; i < banks.Count; i++)
         {
