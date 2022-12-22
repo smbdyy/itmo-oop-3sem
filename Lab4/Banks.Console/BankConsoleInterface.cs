@@ -107,7 +107,7 @@ public class BankConsoleInterface
         }
 
         WriteAccountsList();
-        var accountInterface = new AccountConsoleInterface(GetAccountByInputNumber(), Bank);
+        var accountInterface = new AccountConsoleInterface(GetAccountByInputNumber(), this);
         accountInterface.Start();
     }
 
