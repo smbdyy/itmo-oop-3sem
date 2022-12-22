@@ -9,6 +9,7 @@ namespace Banks.Entities;
 public class DepositBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
+    private readonly List<ITransactionInfo> _transactionHistory = new ();
     private readonly TransactionValidator _validationChain;
     private decimal _moneyToAdd;
 
@@ -49,17 +50,22 @@ public class DepositBankAccount : IBankAccount
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public Guid Id { get; } = Guid.NewGuid();
+    public IReadOnlyCollection<ITransactionInfo> TransactionHistory => _transactionHistory;
 
     public void Withdraw(decimal amount)
     {
         MoneyAmount = _validationChain.Withdraw(this, amount);
-        _transactions.Add(new WithdrawalTransaction(amount, 0));
+        var transaction = new WithdrawalTransaction(amount, 0);
+        _transactions.Add(transaction);
+        _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
     }
 
     public void Replenish(decimal amount)
     {
         MoneyAmount = _validationChain.Replenish(this, amount);
-        _transactions.Add(new ReplenishmentTransaction(amount, 0));
+        var transaction = new ReplenishmentTransaction(amount, 0);
+        _transactions.Add(transaction);
+        _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
     }
 
     public void Send(decimal amount, IBankAccount recipient)
@@ -67,6 +73,7 @@ public class DepositBankAccount : IBankAccount
         var transaction = new TransferTransaction(amount, 0, this, recipient);
         MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
+        _transactionHistory.Add(new TransferTransactionInfo(transaction));
     }
 
     public void Receive(TransferTransaction transaction)
@@ -74,6 +81,7 @@ public class DepositBankAccount : IBankAccount
         var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
         MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
+        _transactionHistory.Add(new ReceiveTransferTransactionInfo(receiveTransaction));
     }
 
     public void Undo(Guid transactionId)
@@ -88,11 +96,6 @@ public class DepositBankAccount : IBankAccount
         _transactions.Remove(transaction);
     }
 
-    public ITransaction? FindTransaction(Guid id)
-    {
-        return _transactions.FirstOrDefault(t => t.Id == id);
-    }
-
     public void NotifyNextDay()
     {
         CurrentDate = CurrentDate.AddDays(1);
@@ -102,5 +105,10 @@ public class DepositBankAccount : IBankAccount
             MoneyAmount += _moneyToAdd;
             _moneyToAdd = 0;
         }
+    }
+
+    private ITransaction? FindTransaction(Guid id)
+    {
+        return _transactions.FirstOrDefault(t => t.Id == id);
     }
 }

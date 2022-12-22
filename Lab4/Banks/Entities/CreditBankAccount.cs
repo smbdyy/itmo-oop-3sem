@@ -9,6 +9,7 @@ namespace Banks.Entities;
 public class CreditBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
+    private readonly List<ITransactionInfo> _transactionHistory = new ();
     private readonly TransactionValidator _validationChain;
 
     public CreditBankAccount(
@@ -47,17 +48,22 @@ public class CreditBankAccount : IBankAccount
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
     public Guid Id { get; } = Guid.NewGuid();
+    public IReadOnlyCollection<ITransactionInfo> TransactionHistory => _transactionHistory;
 
     public void Withdraw(decimal amount)
     {
         MoneyAmount = _validationChain.Withdraw(this, amount + Commission);
-        _transactions.Add(new WithdrawalTransaction(amount, Commission));
+        var transaction = new WithdrawalTransaction(amount, Commission);
+        _transactions.Add(transaction);
+        _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
     }
 
     public void Replenish(decimal amount)
     {
         MoneyAmount = _validationChain.Replenish(this, amount);
-        _transactions.Add(new ReplenishmentTransaction(amount, 0));
+        var transaction = new ReplenishmentTransaction(amount, 0);
+        _transactions.Add(transaction);
+        _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
     }
 
     public void Send(decimal amount, IBankAccount recipient)
@@ -65,6 +71,7 @@ public class CreditBankAccount : IBankAccount
         var transaction = new TransferTransaction(amount, Commission, this, recipient);
         MoneyAmount = _validationChain.Send(transaction);
         _transactions.Add(transaction);
+        _transactionHistory.Add(new TransferTransactionInfo(transaction));
     }
 
     public void Receive(TransferTransaction transaction)
@@ -72,6 +79,7 @@ public class CreditBankAccount : IBankAccount
         var receiveTransaction = new ReceiveTransferTransaction(transaction, 0);
         MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
+        _transactionHistory.Add(new ReceiveTransferTransactionInfo(receiveTransaction));
     }
 
     public void Undo(Guid transactionId)
@@ -86,13 +94,13 @@ public class CreditBankAccount : IBankAccount
         _transactions.Remove(transaction);
     }
 
-    public ITransaction? FindTransaction(Guid id)
-    {
-        return _transactions.FirstOrDefault(t => t.Id == id);
-    }
-
     public void NotifyNextDay()
     {
         CurrentDate.AddDays(1);
+    }
+
+    private ITransaction? FindTransaction(Guid id)
+    {
+        return _transactions.FirstOrDefault(t => t.Id == id);
     }
 }
