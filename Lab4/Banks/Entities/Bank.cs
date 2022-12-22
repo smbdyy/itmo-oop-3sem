@@ -108,6 +108,7 @@ public class Bank : IBank
         }
 
         _depositAmountPercentPairs.Add(depositAmountPercentPair);
+        NotifySubscribers();
     }
 
     public void DeleteDepositAccountPercent(StartAmountPercentPair depositAmountPercentPair)
