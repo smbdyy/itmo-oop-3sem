@@ -9,6 +9,7 @@ public interface IBankAccount
     public DateOnly CurrentDate { get; }
     public DateOnly CreationDate { get; }
     public Guid Id { get; }
+    public IReadOnlyCollection<ITransactionInfo> TransactionHistory { get; }
     public void Withdraw(decimal amount);
     public void Replenish(decimal amount);
     public void Send(decimal amount, IBankAccount recipient);
