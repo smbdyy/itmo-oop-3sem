@@ -180,7 +180,7 @@ public class BankConsoleInterface
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine($"exception: {ex.Message}");
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
             }
         }
     }
@@ -197,7 +197,7 @@ public class BankConsoleInterface
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine($"exception: {ex.Message}");
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
             }
         }
     }
@@ -214,7 +214,7 @@ public class BankConsoleInterface
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine($"exception: {ex.Message}");
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
             }
         }
     }
@@ -231,7 +231,7 @@ public class BankConsoleInterface
             }
             catch (ArgumentException ex)
             {
-                System.Console.WriteLine($"exception: {ex.Message}");
+                System.Console.WriteLine($"incorrect input: {ex.Message}");
             }
         }
     }
