@@ -138,7 +138,7 @@ public class MainConsoleInterface
 
     private void SelectBank()
     {
-        if (CentralBank.Clients.Count == 0)
+        if (CentralBank.Banks.Count == 0)
         {
             System.Console.WriteLine("no banks found");
             return;
