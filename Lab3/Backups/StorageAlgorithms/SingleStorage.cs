@@ -13,4 +13,9 @@ public class SingleStorage : IStorage
     }
 
     public IReadOnlyCollection<IRepositoryObject> GetEntries() => _archive.GetEntries();
+
+    public IEnumerable<string> GetArchiveNames()
+    {
+        return new List<string> { _archive.Name };
+    }
 }

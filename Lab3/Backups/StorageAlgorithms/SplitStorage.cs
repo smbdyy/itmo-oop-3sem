@@ -22,4 +22,9 @@ public class SplitStorage : IStorage
 
         return entries;
     }
+
+    public IEnumerable<string> GetArchiveNames()
+    {
+        return _archives.Select(archive => archive.Name);
+    }
 }
