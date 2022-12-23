@@ -37,7 +37,9 @@ public class BackupTask : IBackupTask
 
     public void CreateRestorePoint()
     {
-        IStorage storage = _storageAlgorithm.MakeStorage(GetNewRestorePointId(), Repository, _archiver, BackupObjects);
+        IEnumerable<IRepositoryObject> repositoryObjects =
+            _backupObjects.Select(b => Repository.GetRepositoryObject(b.Path));
+        IStorage storage = _storageAlgorithm.MakeStorage(GetNewRestorePointId(), Repository, _archiver, repositoryObjects);
         _restorePoints.Add(_restorePointCreator.Create(_backupObjects, storage));
     }
 

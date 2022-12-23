@@ -6,13 +6,13 @@ namespace Backups.StorageAlgorithms;
 
 public class SplitStorageAlgorithm : IStorageAlgorithm
 {
-    public IStorage MakeStorage(int id, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IBackupObject> objects)
+    public IStorage MakeStorage(int id, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IRepositoryObject> objects)
     {
         var archives = new List<IStorageArchive>();
-        foreach (IBackupObject backupObject in objects)
+        foreach (IRepositoryObject repositoryObject in objects)
         {
-            string archiveName = $"{Path.GetFileName(backupObject.Path)}({id})";
-            archives.Add(storageArchiver.CreateArchive(archiveName, repository, backupObject));
+            string archiveName = $"{Path.GetFileName(repositoryObject.Path)}({id})";
+            archives.Add(storageArchiver.CreateArchive(archiveName, repository, repositoryObject));
         }
 
         return new SplitStorage(archives);
