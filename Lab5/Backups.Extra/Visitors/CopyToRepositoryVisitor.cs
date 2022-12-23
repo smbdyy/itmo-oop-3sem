@@ -14,11 +14,12 @@ public class CopyToRepositoryVisitor : IRepositoryVisitor
 
     public void Visit(IRepositoryFolder repositoryFolder)
     {
-        if (!_repository.DirectoryExists(repositoryFolder.Path))
+        if (_repository.DirectoryExists(repositoryFolder.Path))
         {
-            _repository.CreateDirectory(repositoryFolder.Path);
+            _repository.DeleteDirectory(repositoryFolder.Path);
         }
 
+        _repository.CreateDirectory(repositoryFolder.Path);
         foreach (IRepositoryObject repositoryObject in repositoryFolder.Entries)
         {
             repositoryObject.Accept(this);
