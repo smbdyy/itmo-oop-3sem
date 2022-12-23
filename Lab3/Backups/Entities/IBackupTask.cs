@@ -10,6 +10,7 @@ public interface IBackupTask
     public IReadOnlyCollection<IRestorePoint> RestorePoints { get; }
     public IReadOnlyCollection<IBackupObject> BackupObjects { get; }
     public void CreateRestorePoint();
+    public void DeleteRestorePoint(IRestorePoint restorePoint);
     public void AddBackupObject(IBackupObject backupObject);
     public void RemoveBackupObject(IBackupObject backupObject);
 }

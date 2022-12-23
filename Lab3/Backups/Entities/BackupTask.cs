@@ -41,6 +41,22 @@ public class BackupTask : IBackupTask
         _restorePoints.Add(_restorePointCreator.Create(_backupObjects, storage));
     }
 
+    public void DeleteRestorePoint(IRestorePoint restorePoint)
+    {
+        if (!_restorePoints.Contains(restorePoint))
+        {
+            throw new BackupTaskException("restore point is not found");
+        }
+
+        var archiveNames = restorePoint.Storage.GetArchiveNames().ToList();
+        foreach (string name in archiveNames)
+        {
+            Repository.DeleteFile(Path.Combine(Repository.RestorePointsPath, name));
+        }
+
+        _restorePoints.Remove(restorePoint);
+    }
+
     public void AddBackupObject(IBackupObject backupObject)
     {
         if (_backupObjects.Any(obj => obj.Path == backupObject.Path))
