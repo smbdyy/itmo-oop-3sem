@@ -27,9 +27,11 @@ public class CopyToRepositoryVisitor : IRepositoryVisitor
 
     public void Visit(IRepositoryFile repositoryFile)
     {
-        if (_repository.FileExists(repositoryFile.Path)) return;
+        if (!_repository.FileExists(repositoryFile.Path))
+        {
+            _repository.CreateFile(repositoryFile.Path);
+        }
 
-        _repository.CreateFile(repositoryFile.Path);
         using Stream createdFileStream = _repository.OpenWrite(repositoryFile.Path);
         using Stream repositoryFileStream = repositoryFile.Open();
         repositoryFileStream.CopyTo(createdFileStream);
