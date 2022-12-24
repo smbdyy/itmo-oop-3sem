@@ -8,11 +8,6 @@ public class DefaultBankBuilder : BankBuilder
 {
     public override IBank Build()
     {
-        if (Name is null)
-        {
-            throw new RequiredFieldInBuilderIsNullException();
-        }
-
         return new Bank(
             Name,
             DepositAccountTerm,

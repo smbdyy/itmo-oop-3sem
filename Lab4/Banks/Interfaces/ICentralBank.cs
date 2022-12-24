@@ -15,7 +15,8 @@ public interface ICentralBank
     public void SetDefaultCreditAccountCommission(MoneyAmount commission);
     public void SetDefaultCreditAccountLimit(NonPositiveMoneyAmount limit);
     public void SetDefaultUnverifiedClientWithdrawalLimit(MoneyAmount value);
-    public IBank CreateBank(string name);
+    public void SetNewBankName(string name);
+    public IBank CreateBank();
     public void DeleteBank(IBank bank);
     public void RegisterClient(BankClient client);
     public void NotifyNextDay();

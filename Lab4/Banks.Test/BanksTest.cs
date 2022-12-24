@@ -14,7 +14,7 @@ public class BanksTest
     public void ReplenishMoney_AccountHasMoney()
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -29,7 +29,7 @@ public class BanksTest
     public void WithdrawMoney_MoneySubtracted()
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -46,7 +46,7 @@ public class BanksTest
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
         centralBank.SetDefaultUnverifiedClientWithdrawalLimit(500);
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -62,7 +62,7 @@ public class BanksTest
     public void SendMoneyFromOneAccountToAnother_MoneySentMoneyReceived()
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -81,7 +81,7 @@ public class BanksTest
     public void TryWithdrawFromNonExpiredDepositAccount_ExceptionThrownMoneyRemained()
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -98,7 +98,7 @@ public class BanksTest
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
         centralBank.SetDefaultUnverifiedClientWithdrawalLimit(500);
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -122,7 +122,7 @@ public class BanksTest
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
         centralBank.SetDefaultDepositAccountTerm(10);
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
@@ -143,7 +143,7 @@ public class BanksTest
     public void SkipMonth_DepositAccountPercentPaid()
     {
         var centralBank = new CentralBank(new DefaultBankBuilder());
-        IBank bank = centralBank.CreateBank("bank");
+        IBank bank = centralBank.CreateBank();
         bank.AddDepositAccountPercent(new StartAmountPercentPair(1000, 3.65M));
         BankClient client = new BankClientBuilder()
             .SetName(PersonName.FromString("Ivan Ivanov"))

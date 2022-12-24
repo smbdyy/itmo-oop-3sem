@@ -6,7 +6,7 @@ namespace Banks.Builders;
 
 public abstract class BankBuilder
 {
-    protected string? Name { get; private set; } = null;
+    protected string Name { get; private set; } = "DefaultName";
     protected DepositTermDays DepositAccountTerm { get; private set; } = 10;
     protected MoneyAmount CreditAccountCommission { get; private set; } = 10;
     protected NonPositiveMoneyAmount CreditAccountLimit { get; private set; } = -1000;

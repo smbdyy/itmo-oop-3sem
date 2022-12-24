@@ -53,9 +53,13 @@ public class CentralBank : ICentralBank
         _bankBuilder.SetMaxUnverifiedClientWithdrawal(value);
     }
 
-    public IBank CreateBank(string name)
+    public void SetNewBankName(string name)
     {
         _bankBuilder.SetName(name);
+    }
+
+    public IBank CreateBank()
+    {
         IBank bank = _bankBuilder.Build();
         _banks.Add(bank);
         return bank;
