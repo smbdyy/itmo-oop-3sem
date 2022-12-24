@@ -6,7 +6,7 @@ namespace Banks.Interfaces;
 public interface IBankAccount
 {
     public BankClient Client { get; }
-    public MoneyAmount MoneyAmount { get; }
+    public decimal MoneyAmount { get; }
     public DateOnly CurrentDate { get; }
     public DateOnly CreationDate { get; }
     public Guid Id { get; }

@@ -35,7 +35,7 @@ public class DepositBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public MoneyAmount MoneyAmount { get; private set; }
+    public decimal MoneyAmount { get; private set; }
     public MoneyAmount Percent { get; }
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);

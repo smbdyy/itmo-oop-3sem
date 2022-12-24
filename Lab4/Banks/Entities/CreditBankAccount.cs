@@ -19,16 +19,6 @@ public class CreditBankAccount : IBankAccount
         MoneyAmount unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
-        if (limit > 0)
-        {
-            throw ArgumentException.InappropriateNonNegativeNumber(limit);
-        }
-
-        if (commission < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(commission);
-        }
-
         Client = client;
         Limit = limit;
         Commission = commission;
@@ -42,7 +32,7 @@ public class CreditBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public MoneyAmount MoneyAmount { get; private set; }
+    public decimal MoneyAmount { get; private set; }
     public NonPositiveMoneyAmount Limit { get; }
     public MoneyAmount Commission { get; }
     public DateOnly CreationDate { get; }

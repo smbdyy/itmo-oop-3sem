@@ -24,7 +24,7 @@ public class DebitBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public MoneyAmount MoneyAmount { get; private set; }
+    public decimal MoneyAmount { get; private set; }
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
     public Guid Id { get; } = Guid.NewGuid();
