@@ -2,18 +2,11 @@
 
 namespace Banks.Console;
 
-public class UserInputParser
+public static class UserInputParser
 {
-    private IUserInteractionInterface _interactionInterface;
-
-    public UserInputParser(IUserInteractionInterface interactionInterface)
+    public static int GetIntInput(IUserInteractionInterface interactionInterface)
     {
-        _interactionInterface = interactionInterface;
-    }
-
-    public int GetIntInput()
-    {
-        string? input = _interactionInterface.ReadLine();
+        string? input = interactionInterface.ReadLine();
         while (true)
         {
             try
@@ -22,15 +15,15 @@ public class UserInputParser
             }
             catch
             {
-                _interactionInterface.WriteLine("incorrect input");
-                input = _interactionInterface.ReadLine();
+                interactionInterface.WriteLine("incorrect input");
+                input = interactionInterface.ReadLine();
             }
         }
     }
 
-    public decimal GetDecimalInput()
+    public static decimal GetDecimalInput(IUserInteractionInterface interactionInterface)
     {
-        string? input = _interactionInterface.ReadLine();
+        string? input = interactionInterface.ReadLine();
         while (true)
         {
             try
@@ -39,26 +32,26 @@ public class UserInputParser
             }
             catch
             {
-                _interactionInterface.WriteLine("incorrect input");
+                interactionInterface.WriteLine("incorrect input");
             }
         }
     }
 
-    public string GetStringInput()
+    public static string GetStringInput(IUserInteractionInterface interactionInterface)
     {
-        string? input = _interactionInterface.ReadLine();
+        string? input = interactionInterface.ReadLine();
         while (input is null)
         {
-            _interactionInterface.WriteLine("incorrect input");
-            input = _interactionInterface.ReadLine();
+            interactionInterface.WriteLine("incorrect input");
+            input = interactionInterface.ReadLine();
         }
 
         return input;
     }
 
-    public bool GetYesNoAnswerAsBool()
+    public static bool GetYesNoAnswerAsBool(IUserInteractionInterface interactionInterface)
     {
-        string input = GetStringInput();
+        string input = GetStringInput(interactionInterface);
         while (true)
         {
             switch (input)
@@ -68,7 +61,7 @@ public class UserInputParser
                 case "n":
                     return false;
                 default:
-                    _interactionInterface.WriteLine("incorrect input");
+                    interactionInterface.WriteLine("incorrect input");
                     break;
             }
         }
