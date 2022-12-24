@@ -1,18 +1,19 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
 public class ReplenishmentTransaction : ITransaction
 {
-    public ReplenishmentTransaction(decimal amount, decimal commission)
+    public ReplenishmentTransaction(MoneyAmount amount, MoneyAmount commission)
     {
         Amount = amount;
         Commission = commission;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
 
     public decimal GetUndoResult(decimal accountMoney)
     {

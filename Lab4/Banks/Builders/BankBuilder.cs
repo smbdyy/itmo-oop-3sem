@@ -1,4 +1,5 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Builders;
@@ -6,10 +7,10 @@ namespace Banks.Builders;
 public abstract class BankBuilder
 {
     protected string? Name { get; private set; } = null;
-    protected int DepositAccountTerm { get; private set; } = 10;
-    protected decimal CreditAccountCommission { get; private set; } = 10;
-    protected decimal CreditAccountLimit { get; private set; } = -1000;
-    protected decimal MaxUnverifiedClientWithdrawal { get; private set; } = 1000;
+    protected DepositTermDays DepositAccountTerm { get; private set; } = 10;
+    protected MoneyAmount CreditAccountCommission { get; private set; } = 10;
+    protected NonPositiveMoneyAmount CreditAccountLimit { get; private set; } = -1000;
+    protected MoneyAmount MaxUnverifiedClientWithdrawal { get; private set; } = 1000;
     public abstract IBank Build();
     public void Reset()
     {
@@ -30,52 +31,27 @@ public abstract class BankBuilder
         return this;
     }
 
-    public BankBuilder SetDepositAccountTerm(int term)
+    public BankBuilder SetDepositAccountTerm(DepositTermDays term)
     {
-        DepositAccountTerm = ValidateNotNegative(term);
+        DepositAccountTerm = term;
         return this;
     }
 
-    public BankBuilder SetCreditAccountCommission(decimal commission)
+    public BankBuilder SetCreditAccountCommission(MoneyAmount commission)
     {
-        CreditAccountCommission = ValidateNotNegative(commission);
+        CreditAccountCommission = commission;
         return this;
     }
 
-    public BankBuilder SetCreditAccountLimit(decimal limit)
+    public BankBuilder SetCreditAccountLimit(NonPositiveMoneyAmount limit)
     {
-        if (limit > 0)
-        {
-            throw ArgumentException.InappropriateNonNegativeNumber(limit);
-        }
-
         CreditAccountLimit = limit;
         return this;
     }
 
-    public BankBuilder SetMaxUnverifiedClientWithdrawal(decimal value)
+    public BankBuilder SetMaxUnverifiedClientWithdrawal(MoneyAmount value)
     {
-        MaxUnverifiedClientWithdrawal = ValidateNotNegative(value);
+        MaxUnverifiedClientWithdrawal = value;
         return this;
-    }
-
-    private static decimal ValidateNotNegative(decimal value)
-    {
-        if (value < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(value);
-        }
-
-        return value;
-    }
-
-    private static int ValidateNotNegative(int value)
-    {
-        if (value < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(value);
-        }
-
-        return value;
     }
 }

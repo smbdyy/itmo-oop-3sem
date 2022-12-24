@@ -1,4 +1,5 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
@@ -14,8 +15,8 @@ public class ReceiveTransferTransactionInfo : ITransactionInfo
     }
 
     public Guid TransactionId { get; }
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
     public IBankAccount Sender { get; }
     public string Description { get; }
 }

@@ -11,7 +11,7 @@ public class DebitBankAccount : IBankAccount
     private readonly List<ITransactionInfo> _transactionHistory = new ();
     private readonly TransactionValidator _validationChain;
 
-    public DebitBankAccount(BankClient client, decimal unverifiedClientWithdrawalLimit, DateOnly currentDate)
+    public DebitBankAccount(BankClient client, MoneyAmount unverifiedClientWithdrawalLimit, DateOnly currentDate)
     {
         Client = client;
         CurrentDate = currentDate;
@@ -24,13 +24,13 @@ public class DebitBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public decimal MoneyAmount { get; private set; }
+    public MoneyAmount MoneyAmount { get; private set; }
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
     public Guid Id { get; } = Guid.NewGuid();
     public IReadOnlyCollection<ITransactionInfo> TransactionHistory => _transactionHistory;
 
-    public void Withdraw(decimal amount)
+    public void Withdraw(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Withdraw(this, amount);
         var transaction = new WithdrawalTransaction(amount, 0);
@@ -38,7 +38,7 @@ public class DebitBankAccount : IBankAccount
         _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
     }
 
-    public void Replenish(decimal amount)
+    public void Replenish(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Replenish(this, amount);
         var transaction = new ReplenishmentTransaction(amount, 0);
@@ -46,7 +46,7 @@ public class DebitBankAccount : IBankAccount
         _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
     }
 
-    public void Send(decimal amount, IBankAccount recipient)
+    public void Send(MoneyAmount amount, IBankAccount recipient)
     {
         if (recipient == this)
         {

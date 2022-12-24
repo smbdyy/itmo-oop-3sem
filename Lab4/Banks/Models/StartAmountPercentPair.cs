@@ -4,14 +4,9 @@ namespace Banks.Models;
 
 public class StartAmountPercentPair
 {
-    public StartAmountPercentPair(decimal startAmount, decimal percent)
+    public StartAmountPercentPair(MoneyAmount startAmount, MoneyAmount percent)
     {
         if (startAmount < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(startAmount);
-        }
-
-        if (percent < 0)
         {
             throw ArgumentException.InappropriateNegativeNumber(startAmount);
         }
@@ -20,6 +15,6 @@ public class StartAmountPercentPair
         Percent = percent;
     }
 
-    public decimal StartAmount { get; }
-    public decimal Percent { get; }
+    public MoneyAmount StartAmount { get; }
+    public MoneyAmount Percent { get; }
 }

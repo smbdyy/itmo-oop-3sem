@@ -12,16 +12,16 @@ public class Bank : IBank
     private readonly List<StartAmountPercentPair> _depositAmountPercentPairs = new ();
     private readonly List<BankClient> _subscribers = new ();
     private int _depositAccountTerm;
-    private decimal _creditAccountCommission;
-    private decimal _creditAccountLimit;
-    private decimal _unverifiedClientWithdrawalLimit;
+    private MoneyAmount _creditAccountCommission;
+    private NonPositiveMoneyAmount _creditAccountLimit;
+    private MoneyAmount _unverifiedClientWithdrawalLimit;
 
     public Bank(
         string name,
         int depositAccountTerm,
-        decimal creditAccountCommission,
-        decimal creditAccountLimit,
-        decimal unverifiedClientWithdrawalLimit)
+        MoneyAmount creditAccountCommission,
+        NonPositiveMoneyAmount creditAccountLimit,
+        MoneyAmount unverifiedClientWithdrawalLimit)
     {
         if (name == string.Empty)
         {
@@ -46,42 +46,37 @@ public class Bank : IBank
         get => _depositAccountTerm;
         set
         {
-            _depositAccountTerm = ValidateNotNegative(value);
+            _depositAccountTerm = value;
             NotifySubscribers();
         }
     }
 
-    public decimal CreditAccountCommission
+    public MoneyAmount CreditAccountCommission
     {
         get => _creditAccountCommission;
         set
         {
-            _creditAccountCommission = ValidateNotNegative(value);
+            _creditAccountCommission = value;
             NotifySubscribers();
         }
     }
 
-    public decimal CreditAccountLimit
+    public NonPositiveMoneyAmount CreditAccountLimit
     {
         get => _creditAccountLimit;
         set
         {
-            if (value > 0)
-            {
-                throw ArgumentException.InappropriateNonNegativeNumber(value);
-            }
-
             _creditAccountLimit = value;
             NotifySubscribers();
         }
     }
 
-    public decimal UnverifiedClientWithdrawalLimit
+    public MoneyAmount UnverifiedClientWithdrawalLimit
     {
         get => _unverifiedClientWithdrawalLimit;
         set
         {
-            _unverifiedClientWithdrawalLimit = ValidateNotNegative(value);
+            _unverifiedClientWithdrawalLimit = value;
             NotifySubscribers();
         }
     }
@@ -143,7 +138,7 @@ public class Bank : IBank
         return account;
     }
 
-    public DepositBankAccount CreateDepositAccount(BankClient client, decimal startMoneyAmount)
+    public DepositBankAccount CreateDepositAccount(BankClient client, MoneyAmount startMoneyAmount)
     {
         var account = new DepositBankAccount(
             client,
@@ -197,29 +192,9 @@ public class Bank : IBank
         _subscribers.Remove(client);
     }
 
-    private static decimal ValidateNotNegative(decimal value)
+    private MoneyAmount CalculateDepositAccountPercent(MoneyAmount startAmount)
     {
-        if (value < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(value);
-        }
-
-        return value;
-    }
-
-    private static int ValidateNotNegative(int value)
-    {
-        if (value < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(value);
-        }
-
-        return value;
-    }
-
-    private decimal CalculateDepositAccountPercent(decimal startAmount)
-    {
-        decimal percent = 0;
+        MoneyAmount percent = 0;
         foreach (StartAmountPercentPair amountPercent in _depositAmountPercentPairs)
         {
             if (startAmount >= amountPercent.StartAmount)

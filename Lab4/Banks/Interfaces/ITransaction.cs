@@ -1,9 +1,11 @@
-﻿namespace Banks.Interfaces;
+﻿using Banks.Models;
+
+namespace Banks.Interfaces;
 
 public interface ITransaction
 {
     public Guid Id { get; }
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
     public decimal GetUndoResult(decimal accountMoney);
 }

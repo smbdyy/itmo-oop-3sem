@@ -1,9 +1,11 @@
-﻿namespace Banks.Interfaces;
+﻿using Banks.Models;
+
+namespace Banks.Interfaces;
 
 public interface ITransactionInfo
 {
     public Guid TransactionId { get; }
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
     public string Description { get; }
 }

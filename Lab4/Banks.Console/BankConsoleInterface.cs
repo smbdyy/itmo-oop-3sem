@@ -189,7 +189,7 @@ public class BankConsoleInterface
         {
             try
             {
-                decimal startAmount = Utils.GetDecimalInput();
+                MoneyAmount startAmount = Utils.GetDecimalInput();
                 Bank.CreateDepositAccount(client, startAmount);
                 System.Console.WriteLine("deposit account has been created");
                 return;
@@ -206,9 +206,9 @@ public class BankConsoleInterface
         while (true)
         {
             System.Console.WriteLine("input start amount:");
-            decimal amount = Utils.GetDecimalInput();
+            MoneyAmount amount = Utils.GetDecimalInput();
             System.Console.WriteLine("input percent:");
-            decimal percent = Utils.GetDecimalInput();
+            MoneyAmount percent = Utils.GetDecimalInput();
             try
             {
                 var pair = new StartAmountPercentPair(amount, percent);

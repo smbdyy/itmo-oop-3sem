@@ -1,10 +1,11 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 
 namespace Banks.Entities;
 
 public class ReceiveTransferTransaction : ITransaction
 {
-    public ReceiveTransferTransaction(TransferTransaction transaction, decimal commission)
+    public ReceiveTransferTransaction(TransferTransaction transaction, MoneyAmount commission)
     {
         Id = transaction.Id;
         Amount = transaction.Amount;
@@ -13,8 +14,8 @@ public class ReceiveTransferTransaction : ITransaction
     }
 
     public Guid Id { get; }
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
     public IBankAccount Sender { get; }
 
     public decimal GetUndoResult(decimal accountMoney)

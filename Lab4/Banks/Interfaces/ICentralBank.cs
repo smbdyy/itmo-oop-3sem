@@ -1,5 +1,6 @@
 ﻿using Banks.Builders;
 using Banks.Entities;
+using Banks.Models;
 
 namespace Banks.Interfaces;
 
@@ -10,10 +11,10 @@ public interface ICentralBank
     public IReadOnlyCollection<BankClient> Clients { get; }
     public IReadOnlyCollection<IBank> Banks { get; }
 
-    public void SetDefaultDepositAccountTerm(int term);
-    public void SetDefaultCreditAccountCommission(decimal commission);
-    public void SetDefaultCreditAccountLimit(decimal limit);
-    public void SetDefaultUnverifiedClientWithdrawalLimit(decimal value);
+    public void SetDefaultDepositAccountTerm(DepositTermDays term);
+    public void SetDefaultCreditAccountCommission(MoneyAmount commission);
+    public void SetDefaultCreditAccountLimit(NonPositiveMoneyAmount limit);
+    public void SetDefaultUnverifiedClientWithdrawalLimit(MoneyAmount value);
     public IBank CreateBank(string name);
     public void DeleteBank(IBank bank);
     public void RegisterClient(BankClient client);

@@ -11,14 +11,14 @@ public class DepositBankAccount : IBankAccount
     private readonly List<ITransaction> _transactions = new ();
     private readonly List<ITransactionInfo> _transactionHistory = new ();
     private readonly TransactionValidator _validationChain;
-    private decimal _moneyToAdd;
+    private MoneyAmount _moneyToAdd;
 
     public DepositBankAccount(
         BankClient client,
-        decimal moneyAmount,
-        decimal percent,
+        MoneyAmount moneyAmount,
+        MoneyAmount percent,
         int daysToExpire,
-        decimal unverifiedClientWithdrawalLimit,
+        MoneyAmount unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
         if (moneyAmount < 0)
@@ -45,14 +45,14 @@ public class DepositBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public decimal MoneyAmount { get; private set; }
-    public decimal Percent { get; }
+    public MoneyAmount MoneyAmount { get; private set; }
+    public MoneyAmount Percent { get; }
     public DateOnly CreationDate { get; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public Guid Id { get; } = Guid.NewGuid();
     public IReadOnlyCollection<ITransactionInfo> TransactionHistory => _transactionHistory;
 
-    public void Withdraw(decimal amount)
+    public void Withdraw(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Withdraw(this, amount);
         var transaction = new WithdrawalTransaction(amount, 0);
@@ -60,7 +60,7 @@ public class DepositBankAccount : IBankAccount
         _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
     }
 
-    public void Replenish(decimal amount)
+    public void Replenish(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Replenish(this, amount);
         var transaction = new ReplenishmentTransaction(amount, 0);
@@ -68,7 +68,7 @@ public class DepositBankAccount : IBankAccount
         _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
     }
 
-    public void Send(decimal amount, IBankAccount recipient)
+    public void Send(MoneyAmount amount, IBankAccount recipient)
     {
         if (recipient == this)
         {

@@ -15,7 +15,7 @@ public class EnoughMoneyValidator : TransactionValidator
         _limit = limit;
     }
 
-    public override decimal Withdraw(IBankAccount account, decimal moneyAmount)
+    public override decimal Withdraw(IBankAccount account, MoneyAmount moneyAmount)
     {
         Validate(account, moneyAmount);
         return base.Withdraw(account, moneyAmount);

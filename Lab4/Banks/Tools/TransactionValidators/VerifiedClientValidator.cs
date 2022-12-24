@@ -1,19 +1,20 @@
 ﻿using Banks.Entities;
 using Banks.Interfaces;
+using Banks.Models;
 using Banks.Tools.Exceptions;
 
 namespace Banks.Tools.TransactionValidators;
 
 public class VerifiedClientValidator : TransactionValidator
 {
-    private decimal _limit;
+    private MoneyAmount _limit;
 
-    public VerifiedClientValidator(decimal limit)
+    public VerifiedClientValidator(MoneyAmount limit)
     {
         _limit = limit;
     }
 
-    public override decimal Withdraw(IBankAccount account, decimal moneyAmount)
+    public override decimal Withdraw(IBankAccount account, MoneyAmount moneyAmount)
     {
         Validate(account, moneyAmount);
         return base.Withdraw(account, moneyAmount);
@@ -25,7 +26,7 @@ public class VerifiedClientValidator : TransactionValidator
         return base.Send(transaction);
     }
 
-    private void Validate(IBankAccount account, decimal moneyAmount)
+    private void Validate(IBankAccount account, MoneyAmount moneyAmount)
     {
         if (account.Client.Address is not null && account.Client.PassportNumber is not null) return;
         if (moneyAmount > _limit)

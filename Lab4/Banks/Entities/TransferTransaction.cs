@@ -1,11 +1,12 @@
 ﻿using Banks.Interfaces;
+using Banks.Models;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Entities;
 
 public class TransferTransaction : ITransaction
 {
-    public TransferTransaction(decimal amount, decimal commission, IBankAccount sender, IBankAccount recipient)
+    public TransferTransaction(MoneyAmount amount, MoneyAmount commission, IBankAccount sender, IBankAccount recipient)
     {
         if (amount < 0)
         {
@@ -24,8 +25,8 @@ public class TransferTransaction : ITransaction
     }
 
     public Guid Id { get; } = Guid.NewGuid();
-    public decimal Amount { get; }
-    public decimal Commission { get; }
+    public MoneyAmount Amount { get; }
+    public MoneyAmount Commission { get; }
     public IBankAccount Sender { get; }
     public IBankAccount Recipient { get; }
 

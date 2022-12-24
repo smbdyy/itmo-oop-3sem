@@ -1,5 +1,6 @@
 ﻿using Banks.Builders;
 using Banks.Interfaces;
+using Banks.Models;
 using Banks.Tools.Exceptions;
 
 namespace Banks.Entities;
@@ -32,22 +33,22 @@ public class CentralBank : ICentralBank
     public IReadOnlyCollection<BankClient> Clients => _clients;
     public IReadOnlyCollection<IBank> Banks => _banks;
 
-    public void SetDefaultDepositAccountTerm(int term)
+    public void SetDefaultDepositAccountTerm(DepositTermDays term)
     {
         _bankBuilder.SetDepositAccountTerm(term);
     }
 
-    public void SetDefaultCreditAccountCommission(decimal commission)
+    public void SetDefaultCreditAccountCommission(MoneyAmount commission)
     {
         _bankBuilder.SetCreditAccountCommission(commission);
     }
 
-    public void SetDefaultCreditAccountLimit(decimal limit)
+    public void SetDefaultCreditAccountLimit(NonPositiveMoneyAmount limit)
     {
         _bankBuilder.SetCreditAccountLimit(limit);
     }
 
-    public void SetDefaultUnverifiedClientWithdrawalLimit(decimal value)
+    public void SetDefaultUnverifiedClientWithdrawalLimit(MoneyAmount value)
     {
         _bankBuilder.SetMaxUnverifiedClientWithdrawal(value);
     }

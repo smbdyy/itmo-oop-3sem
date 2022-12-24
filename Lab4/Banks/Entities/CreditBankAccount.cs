@@ -14,9 +14,9 @@ public class CreditBankAccount : IBankAccount
 
     public CreditBankAccount(
         BankClient client,
-        decimal limit,
-        decimal commission,
-        decimal unverifiedClientWithdrawalLimit,
+        NonPositiveMoneyAmount limit,
+        MoneyAmount commission,
+        MoneyAmount unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
         if (limit > 0)
@@ -42,15 +42,15 @@ public class CreditBankAccount : IBankAccount
     }
 
     public BankClient Client { get; }
-    public decimal MoneyAmount { get; private set; }
-    public decimal Limit { get; }
-    public decimal Commission { get; }
+    public MoneyAmount MoneyAmount { get; private set; }
+    public NonPositiveMoneyAmount Limit { get; }
+    public MoneyAmount Commission { get; }
     public DateOnly CreationDate { get; }
     public DateOnly CurrentDate { get; }
     public Guid Id { get; } = Guid.NewGuid();
     public IReadOnlyCollection<ITransactionInfo> TransactionHistory => _transactionHistory;
 
-    public void Withdraw(decimal amount)
+    public void Withdraw(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Withdraw(this, amount + Commission);
         var transaction = new WithdrawalTransaction(amount, Commission);
@@ -58,7 +58,7 @@ public class CreditBankAccount : IBankAccount
         _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
     }
 
-    public void Replenish(decimal amount)
+    public void Replenish(MoneyAmount amount)
     {
         MoneyAmount = _validationChain.Replenish(this, amount);
         var transaction = new ReplenishmentTransaction(amount, 0);
@@ -66,7 +66,7 @@ public class CreditBankAccount : IBankAccount
         _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
     }
 
-    public void Send(decimal amount, IBankAccount recipient)
+    public void Send(MoneyAmount amount, IBankAccount recipient)
     {
         if (recipient == this)
         {
