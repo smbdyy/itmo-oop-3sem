@@ -57,7 +57,7 @@ public static class UserInputParser
     public static string GetStringInput(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
-        while (input is null)
+        while (input is null || input == string.Empty)
         {
             interactionInterface.WriteLine("incorrect input");
             input = interactionInterface.ReadLine();
