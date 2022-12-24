@@ -28,12 +28,11 @@ public class DepositBankAccountBuilder : BankAccountBuilder
     private MoneyAmount CalculateDepositAccountPercent()
     {
         MoneyAmount percent = 0;
-        foreach (StartAmountPercentPair amountPercent in Bank!.StartAmountPercentPairs)
+        IReadOnlyCollection<StartAmountPercentPair> pairs = Bank!.StartAmountPercentPairs;
+        if (pairs.Count != 0)
         {
-            if (_startMoneyAmount >= amountPercent.StartAmount)
-            {
-                percent = amountPercent.Percent;
-            }
+            percent = pairs.Where(pair => pair.StartAmount <= _startMoneyAmount)
+                .MaxBy(pair => pair.StartAmount) !.Percent;
         }
 
         return percent;
