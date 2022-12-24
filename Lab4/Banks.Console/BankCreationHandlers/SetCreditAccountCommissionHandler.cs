@@ -11,7 +11,7 @@ public class SetCreditAccountCommissionHandler : BankCreationCommandHandler
     public override IBank Handle()
     {
         InteractionInterface.WriteLine("enter credit account commission:");
-        CentralBank.SetDefaultCreditAccountCommission(UserInputParser.GetMoneyAmountInput(InteractionInterface));
+        CentralBank.SetDefaultCreditAccountCommission(UserInputParser.GetUnsignedDecimal(InteractionInterface));
         return base.Handle();
     }
 }

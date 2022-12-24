@@ -19,13 +19,13 @@ public class SetPassportNumberHandler : ClientCreationCommandHandler
             return base.Handle();
         }
 
-        string value = UserInputParser.GetStringInput(InteractionInterface);
+        string value = UserInputParser.GetLine(InteractionInterface);
         while (true)
         {
             try
             {
                 Builder.SetPassportNumber(PassportNumber
-                    .FromString(UserInputParser.GetStringInput(InteractionInterface)));
+                    .FromString(UserInputParser.GetLine(InteractionInterface)));
                 return base.Handle();
             }
             catch (ArgumentException ex)

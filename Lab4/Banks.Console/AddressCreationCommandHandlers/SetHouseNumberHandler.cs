@@ -12,7 +12,7 @@ public class SetHouseNumberHandler : AddressCreationCommandHandler
     public override Address Handle()
     {
         InteractionInterface.WriteLine("enter house number:");
-        Builder.SetHouseNumber(UserInputParser.GetStringInput(InteractionInterface));
+        Builder.SetHouseNumber(UserInputParser.GetLine(InteractionInterface));
         return base.Handle();
     }
 }

@@ -16,7 +16,7 @@ public class SetClientNameHandler : ClientCreationCommandHandler
         InteractionInterface.WriteLine("enter client name and surname:");
         while (true)
         {
-            string value = UserInputParser.GetStringInput(InteractionInterface);
+            string value = UserInputParser.GetLine(InteractionInterface);
             try
             {
                 Builder.SetName(PersonName.FromString(value));

@@ -12,7 +12,7 @@ public class SetTownHandler : AddressCreationCommandHandler
     public override Address Handle()
     {
         InteractionInterface.WriteLine("enter town:");
-        Builder.SetTown(UserInputParser.GetStringInput(InteractionInterface));
+        Builder.SetTown(UserInputParser.GetLine(InteractionInterface));
         return base.Handle();
     }
 }

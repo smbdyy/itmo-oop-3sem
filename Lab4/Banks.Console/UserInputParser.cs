@@ -5,7 +5,7 @@ namespace Banks.Console;
 
 public static class UserInputParser
 {
-    public static DepositTermDays GetDepositTermDaysInput(IUserInteractionInterface interactionInterface)
+    public static int GetUnsignedInt(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
         while (true)
@@ -22,7 +22,7 @@ public static class UserInputParser
         }
     }
 
-    public static MoneyAmount GetMoneyAmountInput(IUserInteractionInterface interactionInterface)
+    public static decimal GetUnsignedDecimal(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
         while (true)
@@ -38,7 +38,7 @@ public static class UserInputParser
         }
     }
 
-    public static NonPositiveMoneyAmount GetNonPositiveMoneyAmount(IUserInteractionInterface interactionInterface)
+    public static decimal GetNonPositiveDecimal(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
         while (true)
@@ -54,7 +54,7 @@ public static class UserInputParser
         }
     }
 
-    public static string GetStringInput(IUserInteractionInterface interactionInterface)
+    public static string GetLine(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
         while (input is null || input == string.Empty)
@@ -68,7 +68,7 @@ public static class UserInputParser
 
     public static bool GetYesNoAnswerAsBool(IUserInteractionInterface interactionInterface)
     {
-        string input = GetStringInput(interactionInterface);
+        string input = GetLine(interactionInterface);
         while (true)
         {
             switch (input)

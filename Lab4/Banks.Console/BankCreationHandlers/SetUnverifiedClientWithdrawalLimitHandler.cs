@@ -13,7 +13,7 @@ public class SetUnverifiedClientWithdrawalLimitHandler : BankCreationCommandHand
     {
         InteractionInterface.WriteLine("enter unverified client withdrawal limit");
         CentralBank.SetDefaultUnverifiedClientWithdrawalLimit(
-            UserInputParser.GetMoneyAmountInput(InteractionInterface));
+            UserInputParser.GetUnsignedDecimal(InteractionInterface));
         return base.Handle();
     }
 }

@@ -11,7 +11,7 @@ public class SetNameHandler : BankCreationCommandHandler
     public override IBank Handle()
     {
         InteractionInterface.WriteLine("enter bank name:");
-        CentralBank.SetNewBankName(UserInputParser.GetStringInput(InteractionInterface));
+        CentralBank.SetNewBankName(UserInputParser.GetLine(InteractionInterface));
         return base.Handle();
     }
 }

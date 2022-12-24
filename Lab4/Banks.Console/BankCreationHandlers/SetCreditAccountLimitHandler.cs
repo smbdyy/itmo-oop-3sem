@@ -11,7 +11,7 @@ public class SetCreditAccountLimitHandler : BankCreationCommandHandler
     public override IBank Handle()
     {
         InteractionInterface.WriteLine("enter credit account limit:");
-        CentralBank.SetDefaultCreditAccountLimit(UserInputParser.GetNonPositiveMoneyAmount(InteractionInterface));
+        CentralBank.SetDefaultCreditAccountLimit(UserInputParser.GetNonPositiveDecimal(InteractionInterface));
         return base.Handle();
     }
 }

@@ -11,7 +11,7 @@ public class SetDepositAccountTermHandler : BankCreationCommandHandler
     public override IBank Handle()
     {
         InteractionInterface.WriteLine("enter deposit account term:");
-        CentralBank.SetDefaultDepositAccountTerm(UserInputParser.GetDepositTermDaysInput(InteractionInterface));
+        CentralBank.SetDefaultDepositAccountTerm(UserInputParser.GetUnsignedInt(InteractionInterface));
         return base.Handle();
     }
 }

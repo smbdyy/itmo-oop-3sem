@@ -12,7 +12,7 @@ public class SetStreetHandler : AddressCreationCommandHandler
     public override Address Handle()
     {
         InteractionInterface.WriteLine("enter street:");
-        Builder.SetStreet(UserInputParser.GetStringInput(InteractionInterface));
+        Builder.SetStreet(UserInputParser.GetLine(InteractionInterface));
         return base.Handle();
     }
 }

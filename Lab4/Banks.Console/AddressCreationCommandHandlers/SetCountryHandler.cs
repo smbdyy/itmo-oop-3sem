@@ -12,7 +12,7 @@ public class SetCountryHandler : AddressCreationCommandHandler
     public override Address Handle()
     {
         InteractionInterface.WriteLine("enter country:");
-        Builder.SetCountry(UserInputParser.GetStringInput(InteractionInterface));
+        Builder.SetCountry(UserInputParser.GetLine(InteractionInterface));
         return base.Handle();
     }
 }
