@@ -1,4 +1,4 @@
-﻿using System.Net.NetworkInformation;
+﻿using Banks.Builders;
 using Banks.Interfaces;
 using Banks.Models;
 using Banks.Tools.Exceptions;
@@ -11,7 +11,7 @@ public class Bank : IBank
     private readonly List<IBankAccount> _accounts = new ();
     private readonly List<StartAmountPercentPair> _depositAmountPercentPairs = new ();
     private readonly List<BankClient> _subscribers = new ();
-    private int _depositAccountTerm;
+    private DepositTermDays _depositAccountTerm;
     private MoneyAmount _creditAccountCommission;
     private NonPositiveMoneyAmount _creditAccountLimit;
     private MoneyAmount _unverifiedClientWithdrawalLimit;
@@ -41,7 +41,7 @@ public class Bank : IBank
     public IReadOnlyCollection<IBankAccount> Accounts => _accounts;
     public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs => _depositAmountPercentPairs;
     public IReadOnlyCollection<BankClient> Subscribers => _subscribers;
-    public int DepositAccountTerm
+    public DepositTermDays DepositAccountTerm
     {
         get => _depositAccountTerm;
         set
@@ -118,36 +118,10 @@ public class Bank : IBank
         _depositAmountPercentPairs.Remove(found);
     }
 
-    public CreditBankAccount CreateCreditAccount(BankClient client)
+    public IBankAccount CreateAccount(BankClient client, BankAccountBuilder builder)
     {
-        var account = new CreditBankAccount(
-            client,
-            _creditAccountLimit,
-            _creditAccountCommission,
-            _unverifiedClientWithdrawalLimit,
-            CurrentDate);
-
-        _accounts.Add(account);
-        return account;
-    }
-
-    public DebitBankAccount CreateDebitAccount(BankClient client)
-    {
-        var account = new DebitBankAccount(client, _unverifiedClientWithdrawalLimit, CurrentDate);
-        _accounts.Add(account);
-        return account;
-    }
-
-    public DepositBankAccount CreateDepositAccount(BankClient client, MoneyAmount startMoneyAmount)
-    {
-        var account = new DepositBankAccount(
-            client,
-            startMoneyAmount,
-            CalculateDepositAccountPercent(startMoneyAmount),
-            DepositAccountTerm,
-            _unverifiedClientWithdrawalLimit,
-            CurrentDate);
-
+        builder.SetBank(this).SetClient(client);
+        IBankAccount account = builder.Build();
         _accounts.Add(account);
         return account;
     }
@@ -190,20 +164,6 @@ public class Bank : IBank
         }
 
         _subscribers.Remove(client);
-    }
-
-    private MoneyAmount CalculateDepositAccountPercent(MoneyAmount startAmount)
-    {
-        MoneyAmount percent = 0;
-        foreach (StartAmountPercentPair amountPercent in _depositAmountPercentPairs)
-        {
-            if (startAmount >= amountPercent.StartAmount)
-            {
-                percent = amountPercent.Percent;
-            }
-        }
-
-        return percent;
     }
 
     private void NotifySubscribers()

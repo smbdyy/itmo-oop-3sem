@@ -1,4 +1,5 @@
-﻿using Banks.Entities;
+﻿using Banks.Builders;
+using Banks.Entities;
 using Banks.Models;
 
 namespace Banks.Interfaces;
@@ -10,7 +11,7 @@ public interface IBank
     public IReadOnlyCollection<IBankAccount> Accounts { get; }
     public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs { get; }
     public IReadOnlyCollection<BankClient> Subscribers { get; }
-    public int DepositAccountTerm { get; set; }
+    public DepositTermDays DepositAccountTerm { get; set; }
     public MoneyAmount CreditAccountCommission { get; set; }
     public NonPositiveMoneyAmount CreditAccountLimit { get; set; }
     public MoneyAmount UnverifiedClientWithdrawalLimit { get; set; }
@@ -18,9 +19,7 @@ public interface IBank
 
     public void NotifyNextDay();
     public void AddDepositAccountPercent(StartAmountPercentPair depositAmountPercentPair);
-    public CreditBankAccount CreateCreditAccount(BankClient client);
-    public DebitBankAccount CreateDebitAccount(BankClient client);
-    public DepositBankAccount CreateDepositAccount(BankClient client, MoneyAmount startMoneyAmount);
+    public IBankAccount CreateAccount(BankClient client, BankAccountBuilder builder);
     public void DeleteAccount(IBankAccount account);
     public void DeleteAllClientAccounts(BankClient client);
     public void SubscribeToNotifications(BankClient client);
