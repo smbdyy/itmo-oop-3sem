@@ -6,7 +6,7 @@ public struct NonPositiveMoneyAmount
 {
     public NonPositiveMoneyAmount(decimal value)
     {
-        if (value < 0)
+        if (value > 0)
         {
             throw ArgumentException.InappropriateNonNegativeNumber(value);
         }
