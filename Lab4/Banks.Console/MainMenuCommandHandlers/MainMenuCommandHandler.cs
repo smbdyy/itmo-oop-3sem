@@ -1,14 +1,13 @@
 ﻿using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
 using Banks.Interfaces;
 
-namespace Banks.Console.CommandHandlers;
+namespace Banks.Console.MainMenuCommandHandlers;
 
-public abstract class CommandHandler
+public abstract class MainMenuCommandHandler
 {
-    private CommandHandler? _next;
+    private MainMenuCommandHandler? _next;
 
-    public CommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
+    public MainMenuCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
     {
         CentralBank = centralBank;
         InteractionInterface = interactionInterface;
@@ -28,7 +27,7 @@ public abstract class CommandHandler
         _next.Handle(command);
     }
 
-    public CommandHandler SetNext(CommandHandler nextHandler)
+    public MainMenuCommandHandler SetNext(MainMenuCommandHandler nextHandler)
     {
         _next = nextHandler;
         return _next;

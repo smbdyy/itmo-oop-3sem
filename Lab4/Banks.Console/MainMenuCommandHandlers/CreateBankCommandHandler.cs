@@ -2,9 +2,9 @@
 using Banks.Console.UserInteractionInterfaces;
 using Banks.Interfaces;
 
-namespace Banks.Console.CommandHandlers;
+namespace Banks.Console.MainMenuCommandHandlers;
 
-public class CreateBankCommandHandler : CommandHandler
+public class CreateBankCommandHandler : MainMenuCommandHandler
 {
     public CreateBankCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
         : base(centralBank, interactionInterface) { }

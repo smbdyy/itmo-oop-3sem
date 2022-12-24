@@ -1,9 +1,9 @@
 ﻿using Banks.Console.UserInteractionInterfaces;
 using Banks.Interfaces;
 
-namespace Banks.Console.CommandHandlers;
+namespace Banks.Console.MainMenuCommandHandlers;
 
-public class ExitCommandHandler : CommandHandler
+public class ExitCommandHandler : MainMenuCommandHandler
 {
     public ExitCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
         : base(centralBank, interactionInterface) { }
