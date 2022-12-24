@@ -17,20 +17,10 @@ public class DepositBankAccount : IBankAccount
         BankClient client,
         MoneyAmount moneyAmount,
         MoneyAmount percent,
-        int daysToExpire,
+        DepositTermDays daysToExpire,
         MoneyAmount unverifiedClientWithdrawalLimit,
         DateOnly currentDate)
     {
-        if (moneyAmount < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(moneyAmount);
-        }
-
-        if (percent < 0)
-        {
-            throw ArgumentException.InappropriateNegativeNumber(percent);
-        }
-
         Client = client;
         MoneyAmount = moneyAmount;
         Percent = percent;
