@@ -20,7 +20,8 @@ public class CreateBankCommandHandler : MainMenuCommandHandler
                 .SetNext(new SetDepositAccountTermHandler(CentralBank, InteractionInterface))
                 .SetNext(new SetUnverifiedClientWithdrawalLimitHandler(CentralBank, InteractionInterface));
 
-            creationHandlersChain.Handle();
+            IBank bank = creationHandlersChain.Handle();
+            InteractionInterface.WriteLine($"bank created, id: {bank.Id}");
             return;
         }
 
