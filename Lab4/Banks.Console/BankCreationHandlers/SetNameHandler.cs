@@ -10,7 +10,7 @@ public class SetNameHandler : BankCreationCommandHandler
 
     public override IBank Handle()
     {
-        InteractionInterface.WriteLine("input bank name:");
+        InteractionInterface.WriteLine("enter bank name:");
         CentralBank.SetNewBankName(UserInputParser.GetStringInput(InteractionInterface));
         return base.Handle();
     }

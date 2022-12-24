@@ -11,7 +11,7 @@ public class SetUnverifiedClientWithdrawalLimitHandler : BankCreationCommandHand
 
     public override IBank Handle()
     {
-        InteractionInterface.WriteLine("input unverified client withdrawal limit");
+        InteractionInterface.WriteLine("enter unverified client withdrawal limit");
         CentralBank.SetDefaultUnverifiedClientWithdrawalLimit(
             UserInputParser.GetMoneyAmountInput(InteractionInterface));
         return base.Handle();
