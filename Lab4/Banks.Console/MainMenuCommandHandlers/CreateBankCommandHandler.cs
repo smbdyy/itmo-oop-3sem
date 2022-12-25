@@ -6,21 +6,17 @@ namespace Banks.Console.MainMenuCommandHandlers;
 
 public class CreateBankCommandHandler : MainMenuCommandHandler
 {
-    public CreateBankCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
-        : base(centralBank, interactionInterface) { }
+    private readonly BankCreationCommandHandler _bankCreationChain;
+
+    public CreateBankCommandHandler(
+        IUserInteractionInterface interactionInterface, BankCreationCommandHandler bankCreationChain)
+        : base(interactionInterface) => _bankCreationChain = bankCreationChain;
 
     public override void Handle(string command)
     {
         if (command == "create_b")
         {
-            BankCreationCommandHandler creationHandlersChain = new SetNameHandler(CentralBank, InteractionInterface);
-            creationHandlersChain
-                .SetNext(new SetCreditAccountCommissionHandler(CentralBank, InteractionInterface))
-                .SetNext(new SetCreditAccountLimitHandler(CentralBank, InteractionInterface))
-                .SetNext(new SetDepositAccountTermHandler(CentralBank, InteractionInterface))
-                .SetNext(new SetUnverifiedClientWithdrawalLimitHandler(CentralBank, InteractionInterface));
-
-            IBank bank = creationHandlersChain.Handle();
+            IBank bank = _bankCreationChain.Handle();
             InteractionInterface.WriteLine($"bank created, id: {bank.Id}");
             return;
         }

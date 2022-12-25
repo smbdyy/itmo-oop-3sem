@@ -7,13 +7,11 @@ public abstract class MainMenuCommandHandler
 {
     private MainMenuCommandHandler? _next;
 
-    public MainMenuCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
+    public MainMenuCommandHandler(IUserInteractionInterface interactionInterface)
     {
-        CentralBank = centralBank;
         InteractionInterface = interactionInterface;
     }
 
-    protected ICentralBank CentralBank { get; }
     protected IUserInteractionInterface InteractionInterface { get; }
 
     public virtual void Handle(string command)
