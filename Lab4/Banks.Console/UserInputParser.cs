@@ -5,6 +5,20 @@ namespace Banks.Console;
 
 public static class UserInputParser
 {
+    public static int GetIntInRange(int left, int right, IUserInteractionInterface interactionInterface)
+    {
+        while (true)
+        {
+            int value = GetUnsignedInt(interactionInterface);
+            if (value >= left && value <= right)
+            {
+                return value;
+            }
+
+            interactionInterface.WriteLine($"value must be in range [{left}; {right})");
+        }
+    }
+
     public static int GetUnsignedInt(IUserInteractionInterface interactionInterface)
     {
         string? input = interactionInterface.ReadLine();
