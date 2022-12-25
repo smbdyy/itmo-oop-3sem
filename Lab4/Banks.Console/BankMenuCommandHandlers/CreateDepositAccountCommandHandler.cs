@@ -6,9 +6,9 @@ using Banks.Models;
 
 namespace Banks.Console.BankMenuCommandHandlers;
 
-public class CreateAccountCommandHandler : BankMenuCommandHandler
+public class CreateDepositAccountCommandHandler : BankMenuCommandHandler
 {
-    public CreateAccountCommandHandler(ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
+    public CreateDepositAccountCommandHandler(ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
         : base(centralBank, bank, interactionInterface) { }
 
     public override void Handle(string command)
