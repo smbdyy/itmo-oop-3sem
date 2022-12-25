@@ -9,15 +9,13 @@ public abstract class AccountCreationCommandHandler
     private AccountCreationCommandHandler? _next;
 
     public AccountCreationCommandHandler(
-        BankAccountBuilder builder, ICentralBank centralBank, IUserInteractionInterface interactionInterface)
+        BankAccountBuilder builder, IUserInteractionInterface interactionInterface)
     {
         Builder = builder;
-        CentralBank = centralBank;
         InteractionInterface = interactionInterface;
     }
 
     protected BankAccountBuilder Builder { get; }
-    protected ICentralBank CentralBank { get; }
     protected IUserInteractionInterface InteractionInterface { get; }
 
     public AccountCreationCommandHandler SetNext(AccountCreationCommandHandler next)

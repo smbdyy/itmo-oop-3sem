@@ -7,8 +7,13 @@ namespace Banks.Console.ClientCreationCommandHandlers;
 
 public class SetAddressHandler : ClientCreationCommandHandler
 {
-    public SetAddressHandler(BankClientBuilder builder, IUserInteractionInterface interactionInterface)
-        : base(builder, interactionInterface) { }
+    private readonly AddressCreationCommandHandler _addressCreationChain;
+
+    public SetAddressHandler(
+        BankClientBuilder builder,
+        IUserInteractionInterface interactionInterface,
+        AddressCreationCommandHandler addressCreationChain)
+        : base(builder, interactionInterface) => _addressCreationChain = addressCreationChain;
 
     public override BankClient Handle()
     {
@@ -18,15 +23,7 @@ public class SetAddressHandler : ClientCreationCommandHandler
             return base.Handle();
         }
 
-        var builder = new AddressBuilder();
-        AddressCreationCommandHandler creationHandlersChain = new SetCountryHandler(
-            builder, InteractionInterface);
-
-        creationHandlersChain
-            .SetNext(new SetTownHandler(builder, InteractionInterface))
-            .SetNext(new SetStreetHandler(builder, InteractionInterface))
-            .SetNext(new SetHouseNumberHandler(builder, InteractionInterface));
-        Builder.SetAddress(creationHandlersChain.Handle());
+        Builder.SetAddress(_addressCreationChain.Handle());
 
         return base.Handle();
     }

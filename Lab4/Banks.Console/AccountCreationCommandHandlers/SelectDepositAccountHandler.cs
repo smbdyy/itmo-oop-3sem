@@ -1,24 +1,24 @@
 ﻿using Banks.Builders;
-using Banks.Console.AccountCreationCommandHandlers;
 using Banks.Console.UserInteractionInterfaces;
 using Banks.Interfaces;
 using Banks.Models;
 
-namespace Banks.Console.BankMenuCommandHandlers;
+namespace Banks.Console.AccountCreationCommandHandlers;
 
-public class CreateDepositAccountCommandHandler : BankMenuCommandHandler
+public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
 {
-    public CreateDepositAccountCommandHandler(ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
+    public SelectDepositAccountHandler(
+        ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
         : base(centralBank, bank, interactionInterface) { }
 
-    public override void Handle(string command)
+    public override void Handle(string accountType)
     {
-        if (command == "create_dep")
+        if (accountType == "deposit")
         {
             InteractionInterface.WriteLine("enter start money amount:");
             MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
             AccountCreationCommandHandler creationHandlersChain = new SetClientCommandHandler(
-                new DepositBankAccountBuilder(amount), CentralBank, InteractionInterface);
+                new DepositBankAccountBuilder(amount).SetBank(Bank), CentralBank, InteractionInterface);
 
             IBankAccount account = creationHandlersChain.Handle();
             InteractionInterface.WriteLine($"account created, id: {account.Id}");
@@ -26,6 +26,6 @@ public class CreateDepositAccountCommandHandler : BankMenuCommandHandler
             return;
         }
 
-        base.Handle(command);
+        base.Handle(accountType);
     }
 }
