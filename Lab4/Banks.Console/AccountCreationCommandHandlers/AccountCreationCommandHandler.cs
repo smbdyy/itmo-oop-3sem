@@ -8,14 +8,12 @@ public abstract class AccountCreationCommandHandler
 {
     private AccountCreationCommandHandler? _next;
 
-    public AccountCreationCommandHandler(
-        BankAccountBuilder builder, IUserInteractionInterface interactionInterface)
+    public AccountCreationCommandHandler(IUserInteractionInterface interactionInterface)
     {
-        Builder = builder;
         InteractionInterface = interactionInterface;
     }
 
-    protected BankAccountBuilder Builder { get; private set; }
+    protected BankAccountBuilder? Builder { get; private set; }
     protected IUserInteractionInterface InteractionInterface { get; }
 
     public AccountCreationCommandHandler SetNext(AccountCreationCommandHandler next)
@@ -35,7 +33,7 @@ public abstract class AccountCreationCommandHandler
     {
         if (_next is null)
         {
-            IBankAccount account = Builder.Build();
+            IBankAccount account = Builder!.Build();
             InteractionInterface.WriteLine($"account created, id: {account.Id}");
             return;
         }

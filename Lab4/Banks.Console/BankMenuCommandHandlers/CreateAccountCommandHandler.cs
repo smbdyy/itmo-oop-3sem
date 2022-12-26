@@ -31,6 +31,7 @@ public class CreateAccountCommandHandler : BankMenuCommandHandler
         }
 
         InteractionInterface.WriteLine("enter account type:");
+        _selectAccountTypeChain.SetBank(Bank!);
         _selectAccountTypeChain.Handle(UserInputParser.GetLine(InteractionInterface));
         return true;
     }
