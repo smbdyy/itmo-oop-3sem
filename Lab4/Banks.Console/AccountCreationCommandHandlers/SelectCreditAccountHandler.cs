@@ -7,19 +7,16 @@ namespace Banks.Console.AccountCreationCommandHandlers;
 
 public class SelectCreditAccountHandler : SelectAccountTypeCommandHandler
 {
-    public SelectCreditAccountHandler(
-        ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
-        : base(centralBank, bank, interactionInterface) { }
+    public SelectCreditAccountHandler(IUserInteractionInterface interactionInterface)
+        : base(interactionInterface) { }
 
     public override void Handle(string accountType)
     {
-        if (accountType == "debit")
+        if (accountType == "credit")
         {
-            AccountCreationCommandHandler creationHandlersChain = new SetClientCommandHandler(
-                new CreditBankAccountBuilder().SetBank(Bank), CentralBank, InteractionInterface);
-
-            IBankAccount account = creationHandlersChain.Handle();
-            InteractionInterface.WriteLine($"account created, id: {account.Id}");
+            AccountCreationChain!
+                .SetBuilder(new CreditBankAccountBuilder().SetBank(Bank!))
+                .Handle();
 
             return;
         }

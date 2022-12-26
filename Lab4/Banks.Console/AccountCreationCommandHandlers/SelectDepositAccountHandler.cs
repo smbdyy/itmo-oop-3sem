@@ -9,7 +9,7 @@ public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
 {
     public SelectDepositAccountHandler(
         ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
-        : base(centralBank, bank, interactionInterface) { }
+        : base(interactionInterface) { }
 
     public override void Handle(string accountType)
     {
@@ -17,11 +17,9 @@ public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
         {
             InteractionInterface.WriteLine("enter start money amount:");
             MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            AccountCreationCommandHandler creationHandlersChain = new SetClientCommandHandler(
-                new DepositBankAccountBuilder(amount).SetBank(Bank), CentralBank, InteractionInterface);
-
-            IBankAccount account = creationHandlersChain.Handle();
-            InteractionInterface.WriteLine($"account created, id: {account.Id}");
+            AccountCreationChain!
+                .SetBuilder(new DepositBankAccountBuilder().SetStartMoneyAmount(amount))
+                .Handle();
 
             return;
         }

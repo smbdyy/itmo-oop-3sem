@@ -15,7 +15,7 @@ public abstract class AccountCreationCommandHandler
         InteractionInterface = interactionInterface;
     }
 
-    protected BankAccountBuilder Builder { get; }
+    protected BankAccountBuilder Builder { get; private set; }
     protected IUserInteractionInterface InteractionInterface { get; }
 
     public AccountCreationCommandHandler SetNext(AccountCreationCommandHandler next)
@@ -24,8 +24,22 @@ public abstract class AccountCreationCommandHandler
         return _next;
     }
 
-    public virtual IBankAccount Handle()
+    public AccountCreationCommandHandler SetBuilder(BankAccountBuilder builder)
     {
-        return _next is null ? Builder.Build() : _next.Handle();
+        Builder = builder;
+        _next?.SetBuilder(builder);
+        return this;
+    }
+
+    public virtual void Handle()
+    {
+        if (_next is null)
+        {
+            IBankAccount account = Builder.Build();
+            InteractionInterface.WriteLine($"account created, id: {account.Id}");
+            return;
+        }
+
+        _next.Handle();
     }
 }

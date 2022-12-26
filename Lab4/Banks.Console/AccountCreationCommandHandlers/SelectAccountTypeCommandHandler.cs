@@ -8,21 +8,33 @@ public abstract class SelectAccountTypeCommandHandler
     private SelectAccountTypeCommandHandler? _next;
 
     public SelectAccountTypeCommandHandler(
-        ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
+        IUserInteractionInterface interactionInterface)
     {
-        CentralBank = centralBank;
-        Bank = bank;
         InteractionInterface = interactionInterface;
     }
 
-    protected ICentralBank CentralBank { get; }
-    protected IBank Bank { get; }
     protected IUserInteractionInterface InteractionInterface { get; }
+    protected AccountCreationCommandHandler? AccountCreationChain { get; private set; }
+    protected IBank? Bank { get; private set; }
 
     public SelectAccountTypeCommandHandler SetNext(SelectAccountTypeCommandHandler next)
     {
         _next = next;
         return _next;
+    }
+
+    public SelectAccountTypeCommandHandler SetAccountCreationChain(AccountCreationCommandHandler accountCreationChain)
+    {
+        AccountCreationChain = accountCreationChain;
+        _next?.SetAccountCreationChain(accountCreationChain);
+        return this;
+    }
+
+    public SelectAccountTypeCommandHandler SetBank(IBank bank)
+    {
+        Bank = bank;
+        _next?.SetBank(bank);
+        return this;
     }
 
     public virtual void Handle(string accountType)
