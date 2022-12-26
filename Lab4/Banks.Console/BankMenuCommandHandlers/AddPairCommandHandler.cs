@@ -13,33 +13,30 @@ public class AddPairCommandHandler : BankMenuCommandHandler
     public AddPairCommandHandler(IUserInteractionInterface interactionInterface, IBank bank)
         : base(interactionInterface) => _bank = bank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "add_pair")
-        {
-            System.Console.WriteLine("input start amount:");
-            MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            System.Console.WriteLine("input percent:");
-            MoneyAmount percent = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            try
-            {
-                var pair = new StartAmountPercentPair(amount, percent);
-                _bank.AddDepositAccountPercent(pair);
-                System.Console.WriteLine("pair has been added");
-                return;
-            }
-            catch (ArgumentException ex)
-            {
-                System.Console.WriteLine($"incorrect input: {ex.Message}");
-            }
-            catch (AlreadyExistsException ex)
-            {
-                System.Console.WriteLine($"exception: {ex.Message}");
-            }
+        if (command != "add_pair") return base.Handle(command);
 
-            return;
+        System.Console.WriteLine("input start amount:");
+        MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
+        System.Console.WriteLine("input percent:");
+        MoneyAmount percent = UserInputParser.GetUnsignedDecimal(InteractionInterface);
+        try
+        {
+            var pair = new StartAmountPercentPair(amount, percent);
+            _bank.AddDepositAccountPercent(pair);
+            System.Console.WriteLine("pair has been added");
+            return true;
+        }
+        catch (ArgumentException ex)
+        {
+            System.Console.WriteLine($"incorrect input: {ex.Message}");
+        }
+        catch (AlreadyExistsException ex)
+        {
+            System.Console.WriteLine($"exception: {ex.Message}");
         }
 
-        base.Handle(command);
+        return true;
     }
 }

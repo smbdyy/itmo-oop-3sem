@@ -10,15 +10,12 @@ public class SetCommissionCommandHandler : BankMenuCommandHandler
     public SetCommissionCommandHandler(IUserInteractionInterface interactionInterface, IBank bank)
         : base(interactionInterface) => _bank = bank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "set_cred_c")
-        {
-            InteractionInterface.WriteLine("enter new credit account commission:");
-            _bank.CreditAccountCommission = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            return;
-        }
+        if (command != "set_cred_c") return base.Handle(command);
 
-        base.Handle(command);
+        InteractionInterface.WriteLine("enter new credit account commission:");
+        _bank.CreditAccountCommission = UserInputParser.GetUnsignedDecimal(InteractionInterface);
+        return true;
     }
 }

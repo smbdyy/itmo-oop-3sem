@@ -20,21 +20,18 @@ public class SubscribeCommandHandler : BankMenuCommandHandler
         _bank = bank;
     }
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "sub")
-        {
-            if (_centralBank.Clients.Count == 0)
-            {
-                InteractionInterface.WriteLine("no clients found");
-                return;
-            }
+        if (command != "sub") return base.Handle(command);
 
-            BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
-            _bank.SubscribeToNotifications(client);
-            return;
+        if (_centralBank.Clients.Count == 0)
+        {
+            InteractionInterface.WriteLine("no clients found");
+            return true;
         }
 
-        base.Handle(command);
+        BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
+        _bank.SubscribeToNotifications(client);
+        return true;
     }
 }

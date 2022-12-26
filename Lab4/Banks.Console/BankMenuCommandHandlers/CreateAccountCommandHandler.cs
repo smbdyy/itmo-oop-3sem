@@ -20,21 +20,18 @@ public class CreateAccountCommandHandler : BankMenuCommandHandler
         _centralBank = centralBank;
     }
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "create_acc")
-        {
-            if (_centralBank.Clients.Count == 0)
-            {
-                InteractionInterface.WriteLine("no client found");
-                return;
-            }
+        if (command != "create_acc") return base.Handle(command);
 
-            InteractionInterface.WriteLine("enter account type:");
-            _selectAccountTypeChain.Handle(UserInputParser.GetLine(InteractionInterface));
-            return;
+        if (_centralBank.Clients.Count == 0)
+        {
+            InteractionInterface.WriteLine("no client found");
+            return true;
         }
 
-        base.Handle(command);
+        InteractionInterface.WriteLine("enter account type:");
+        _selectAccountTypeChain.Handle(UserInputParser.GetLine(InteractionInterface));
+        return true;
     }
 }

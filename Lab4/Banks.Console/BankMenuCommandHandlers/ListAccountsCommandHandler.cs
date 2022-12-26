@@ -10,14 +10,11 @@ public class ListAccountsCommandHandler : BankMenuCommandHandler
     public ListAccountsCommandHandler(IUserInteractionInterface interactionInterface, IBank bank)
         : base(interactionInterface) => _bank = bank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "list_acc")
-        {
-            Utils.WriteAccountsList(_bank, InteractionInterface);
-            return;
-        }
+        if (command != "list_acc") return base.Handle(command);
 
-        base.Handle(command);
+        Utils.WriteAccountsList(_bank, InteractionInterface);
+        return true;
     }
 }

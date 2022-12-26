@@ -20,14 +20,11 @@ public abstract class BankMenuCommandHandler
         return _next;
     }
 
-    public virtual void Handle(string command)
+    public virtual bool Handle(string command)
     {
-        if (_next is null)
-        {
-            InteractionInterface.WriteLine("unknown command");
-            return;
-        }
+        if (_next is not null) return _next.Handle(command);
 
-        _next.Handle(command);
+        InteractionInterface.WriteLine("unknown command");
+        return true;
     }
 }

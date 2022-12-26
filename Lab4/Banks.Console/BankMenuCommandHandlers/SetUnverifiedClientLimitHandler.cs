@@ -10,15 +10,12 @@ public class SetUnverifiedClientLimitHandler : BankMenuCommandHandler
     public SetUnverifiedClientLimitHandler(IUserInteractionInterface interactionInterface, IBank bank)
         : base(interactionInterface) => _bank = bank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "set_unv_l")
-        {
-            InteractionInterface.WriteLine("enter new unverified client withdrawal limit:");
-            _bank.UnverifiedClientWithdrawalLimit = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            return;
-        }
+        if (command != "set_unv_l") return base.Handle(command);
 
-        base.Handle(command);
+        InteractionInterface.WriteLine("enter new unverified client withdrawal limit:");
+        _bank.UnverifiedClientWithdrawalLimit = UserInputParser.GetUnsignedDecimal(InteractionInterface);
+        return true;
     }
 }

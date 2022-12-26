@@ -10,15 +10,12 @@ public class SetCreditLimitCommandHandler : BankMenuCommandHandler
     public SetCreditLimitCommandHandler(IUserInteractionInterface interactionInterface, IBank bank)
         : base(interactionInterface) => _bank = bank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "set_cred_l")
-        {
-            InteractionInterface.WriteLine("enter new credit account limit:");
-            _bank.CreditAccountLimit = UserInputParser.GetNonPositiveDecimal(InteractionInterface);
-            return;
-        }
+        if (command != "set_cred_l") return base.Handle(command);
 
-        base.Handle(command);
+        InteractionInterface.WriteLine("enter new credit account limit:");
+        _bank.CreditAccountLimit = UserInputParser.GetNonPositiveDecimal(InteractionInterface);
+        return true;
     }
 }

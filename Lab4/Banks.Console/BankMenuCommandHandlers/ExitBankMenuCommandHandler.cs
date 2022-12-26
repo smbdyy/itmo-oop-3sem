@@ -8,14 +8,11 @@ public class ExitBankMenuCommandHandler : BankMenuCommandHandler
     public ExitBankMenuCommandHandler(IUserInteractionInterface interactionInterface)
         : base(interactionInterface) { }
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "exit")
-        {
-            InteractionInterface.WriteLine("returning to main menu");
-            return;
-        }
+        if (command != "exit") return base.Handle(command);
 
-        base.Handle(command);
+        InteractionInterface.WriteLine("returning to main menu");
+        return false;
     }
 }
