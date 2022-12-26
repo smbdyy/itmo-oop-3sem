@@ -29,6 +29,7 @@ public class SubscribeCommandHandler : BankMenuCommandHandler
 
         BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
         Bank!.SubscribeToNotifications(client);
+        InteractionInterface.WriteLine("subscribed!");
         return true;
     }
 }

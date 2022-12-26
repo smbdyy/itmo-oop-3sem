@@ -19,7 +19,6 @@ public class SetPassportNumberHandler : ClientCreationCommandHandler
             return base.Handle();
         }
 
-        string value = UserInputParser.GetLine(InteractionInterface);
         while (true)
         {
             try

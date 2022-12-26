@@ -18,6 +18,7 @@ public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
             MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
             AccountCreationChain!
                 .SetBuilder(new DepositBankAccountBuilder().SetStartMoneyAmount(amount))
+                .SetBank(Bank!)
                 .Handle();
 
             return;

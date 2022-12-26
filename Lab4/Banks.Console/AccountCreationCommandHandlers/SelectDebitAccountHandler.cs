@@ -15,6 +15,7 @@ public class SelectDebitAccountHandler : SelectAccountTypeCommandHandler
         {
             AccountCreationChain!
                 .SetBuilder(new DebitBankAccountBuilder().SetBank(Bank!))
+                .SetBank(Bank!)
                 .Handle();
 
             return;

@@ -16,10 +16,10 @@ public class InfoCommandHandler : BankMenuCommandHandler
         System.Console.WriteLine($"Id: {Bank!.Id}");
         System.Console.WriteLine($"Name: {Bank.Name}");
         System.Console.WriteLine($"Current date: {Bank.CurrentDate}");
-        System.Console.WriteLine($"Deposit account term: {Bank.DepositAccountTerm}");
-        System.Console.WriteLine($"Credit commission: {Bank.CreditAccountCommission}");
-        System.Console.WriteLine($"Credit account limit: {Bank.CreditAccountLimit}");
-        System.Console.WriteLine($"Unverified client withdrawal limit: {Bank.UnverifiedClientWithdrawalLimit}");
+        System.Console.WriteLine($"Deposit account term: {Bank.DepositAccountTerm.Value}");
+        System.Console.WriteLine($"Credit commission: {Bank.CreditAccountCommission.Value}");
+        System.Console.WriteLine($"Credit account limit: {Bank.CreditAccountLimit.Value}");
+        System.Console.WriteLine($"Unverified client withdrawal limit: {Bank.UnverifiedClientWithdrawalLimit.Value}");
 
         if (Bank.StartAmountPercentPairs.Count == 0) return true;
         System.Console.WriteLine("Start amount -- percent pairs:");

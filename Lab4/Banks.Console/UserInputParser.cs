@@ -21,54 +21,53 @@ public static class UserInputParser
 
     public static int GetUnsignedInt(IUserInteractionInterface interactionInterface)
     {
-        string? input = interactionInterface.ReadLine();
         while (true)
         {
             try
             {
-                return Convert.ToInt32(input);
+                int value = Convert.ToInt32(interactionInterface.ReadLine());
+                if (value >= 0) return value;
             }
             catch
             {
                 interactionInterface.WriteLine("incorrect input");
-                input = interactionInterface.ReadLine();
             }
         }
     }
 
     public static decimal GetUnsignedDecimal(IUserInteractionInterface interactionInterface)
     {
-        string? input = interactionInterface.ReadLine();
         while (true)
         {
             try
             {
-                return Convert.ToDecimal(input);
+                decimal value = Convert.ToDecimal(interactionInterface.ReadLine());
+                if (value >= 0) return value;
             }
             catch
             {
-                interactionInterface.WriteLine("incorrect input");
+                // ignored
             }
+
+            interactionInterface.WriteLine("incorrect input");
         }
     }
 
     public static decimal GetNonPositiveDecimal(IUserInteractionInterface interactionInterface)
     {
-        string? input = interactionInterface.ReadLine();
         while (true)
         {
             try
             {
-                decimal value = Convert.ToDecimal(input);
-                if (value <= 0)
-                {
-                    return value;
-                }
+                decimal value = Convert.ToDecimal(interactionInterface.ReadLine());
+                if (value <= 0) return value;
             }
             catch
             {
-                interactionInterface.WriteLine("incorrect input");
+                // ignored
             }
+
+            interactionInterface.WriteLine("incorrect input");
         }
     }
 
@@ -86,9 +85,9 @@ public static class UserInputParser
 
     public static bool GetYesNoAnswerAsBool(IUserInteractionInterface interactionInterface)
     {
-        string input = GetLine(interactionInterface);
         while (true)
         {
+            string input = GetLine(interactionInterface);
             switch (input)
             {
                 case "y":

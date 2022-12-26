@@ -29,6 +29,7 @@ public class UnsubscribeCommandHandler : BankMenuCommandHandler
         int number = UserInputParser.GetIntInRange(0, subscribers.Count, InteractionInterface);
         BankClient subscriber = subscribers[number];
         Bank.UnsubscribeFromNotifications(subscriber);
+        InteractionInterface.WriteLine("unsubscribed");
 
         return base.Handle(command);
     }

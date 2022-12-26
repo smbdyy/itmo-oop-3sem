@@ -26,7 +26,7 @@ public class CreateAccountCommandHandler : BankMenuCommandHandler
 
         if (_centralBank.Clients.Count == 0)
         {
-            InteractionInterface.WriteLine("no client found");
+            InteractionInterface.WriteLine("no clients found");
             return true;
         }
 
