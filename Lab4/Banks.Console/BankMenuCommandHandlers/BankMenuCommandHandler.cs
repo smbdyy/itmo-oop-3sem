@@ -13,11 +13,18 @@ public abstract class BankMenuCommandHandler
     }
 
     protected IUserInteractionInterface InteractionInterface { get; }
+    protected IBank? Bank { get; private set; }
 
     public BankMenuCommandHandler SetNext(BankMenuCommandHandler next)
     {
         _next = next;
         return _next;
+    }
+
+    public void SetBank(IBank bank)
+    {
+        Bank = bank;
+        _next?.SetBank(bank);
     }
 
     public virtual bool Handle(string command)

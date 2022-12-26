@@ -5,22 +5,20 @@ namespace Banks.Console.BankMenuCommandHandlers;
 
 public class SelectAccountCommandHandler : BankMenuCommandHandler
 {
-    private readonly IBank _bank;
-
-    public SelectAccountCommandHandler(IUserInteractionInterface interactionInterface, IBank bank)
-        : base(interactionInterface) => _bank = bank;
+    public SelectAccountCommandHandler(IUserInteractionInterface interactionInterface)
+        : base(interactionInterface) { }
 
     public override bool Handle(string command)
     {
         if (command != "select_acc") return base.Handle(command);
 
-        if (_bank.Accounts.Count == 0)
+        if (Bank!.Accounts.Count == 0)
         {
             InteractionInterface.WriteLine("no accounts found");
             return true;
         }
 
-        IBankAccount account = Utils.GetAccountByInputNumber(_bank, InteractionInterface);
+        IBankAccount account = Utils.GetAccountByInputNumber(Bank, InteractionInterface);
 
         // TODO account menu
         return base.Handle(command);

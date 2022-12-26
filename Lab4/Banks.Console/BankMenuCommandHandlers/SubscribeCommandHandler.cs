@@ -8,16 +8,13 @@ namespace Banks.Console.BankMenuCommandHandlers;
 public class SubscribeCommandHandler : BankMenuCommandHandler
 {
     private readonly ICentralBank _centralBank;
-    private readonly IBank _bank;
 
     public SubscribeCommandHandler(
         IUserInteractionInterface interactionInterface,
-        ICentralBank centralBank,
-        IBank bank)
+        ICentralBank centralBank)
         : base(interactionInterface)
     {
         _centralBank = centralBank;
-        _bank = bank;
     }
 
     public override bool Handle(string command)
@@ -31,7 +28,7 @@ public class SubscribeCommandHandler : BankMenuCommandHandler
         }
 
         BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
-        _bank.SubscribeToNotifications(client);
+        Bank!.SubscribeToNotifications(client);
         return true;
     }
 }
