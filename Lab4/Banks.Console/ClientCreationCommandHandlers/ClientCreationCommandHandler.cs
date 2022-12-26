@@ -5,7 +5,7 @@ using Banks.Tools.NotificationReceivers;
 
 namespace Banks.Console.ClientCreationCommandHandlers;
 
-public class ClientCreationCommandHandler
+public abstract class ClientCreationCommandHandler
 {
     private ClientCreationCommandHandler? _next;
 
