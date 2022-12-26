@@ -6,11 +6,12 @@ namespace Banks.Builders;
 
 public class DepositBankAccountBuilder : BankAccountBuilder
 {
-    private readonly MoneyAmount _startMoneyAmount;
+    private MoneyAmount _startMoneyAmount;
 
-    public DepositBankAccountBuilder(MoneyAmount startMoneyAmount)
+    public DepositBankAccountBuilder SetStartMoneyAmount(MoneyAmount amount)
     {
-        _startMoneyAmount = startMoneyAmount;
+        _startMoneyAmount = amount;
+        return this;
     }
 
     public override IBankAccount Build()
