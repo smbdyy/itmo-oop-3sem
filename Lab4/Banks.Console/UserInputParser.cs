@@ -59,7 +59,11 @@ public static class UserInputParser
         {
             try
             {
-                return Convert.ToDecimal(input);
+                decimal value = Convert.ToDecimal(input);
+                if (value <= 0)
+                {
+                    return value;
+                }
             }
             catch
             {
