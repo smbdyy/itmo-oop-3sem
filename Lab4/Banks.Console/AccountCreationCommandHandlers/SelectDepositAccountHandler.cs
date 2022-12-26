@@ -7,8 +7,7 @@ namespace Banks.Console.AccountCreationCommandHandlers;
 
 public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
 {
-    public SelectDepositAccountHandler(
-        ICentralBank centralBank, IBank bank, IUserInteractionInterface interactionInterface)
+    public SelectDepositAccountHandler(IUserInteractionInterface interactionInterface)
         : base(interactionInterface) { }
 
     public override void Handle(string accountType)
