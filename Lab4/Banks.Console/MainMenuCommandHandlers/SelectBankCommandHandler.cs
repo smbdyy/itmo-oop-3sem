@@ -17,12 +17,15 @@ public class SelectBankCommandHandler : MainMenuCommandHandler
             if (_centralBank.Banks.Count == 0)
             {
                 InteractionInterface.WriteLine("no banks found");
+                return;
             }
 
-            new ListBanksCommandHandler(_centralBank, InteractionInterface).Handle("list_b");
-            InteractionInterface.WriteLine("enter bank number:");
-            var banks = _centralBank.Banks.ToList();
-            IBank bank = banks[UserInputParser.GetIntInRange(0, banks.Count, InteractionInterface)];
+            IBank bank = Utils.GetBankByInputNumber(_centralBank, InteractionInterface);
+
+            // TODO bank menu
+            return;
         }
+
+        base.Handle(command);
     }
 }

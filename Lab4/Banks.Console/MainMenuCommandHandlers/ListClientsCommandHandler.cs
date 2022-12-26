@@ -14,18 +14,7 @@ public class ListClientsCommandHandler : MainMenuCommandHandler
     {
         if (command == "list_c")
         {
-            if (_centralBank.Clients.Count == 0)
-            {
-                InteractionInterface.WriteLine("no clients found");
-                return;
-            }
-
-            var clients = _centralBank.Clients.ToList();
-            for (int i = 0; i < clients.Count; i++)
-            {
-                InteractionInterface.WriteLine($"{i}. {clients[i].Name.AsString}, id {clients[i].Id}");
-            }
-
+            Utils.WriteClientsList(_centralBank, InteractionInterface);
             return;
         }
 

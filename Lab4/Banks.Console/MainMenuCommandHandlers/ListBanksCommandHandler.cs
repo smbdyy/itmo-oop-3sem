@@ -14,17 +14,7 @@ public class ListBanksCommandHandler : MainMenuCommandHandler
     {
         if (command == "list_b")
         {
-            if (_centralBank.Banks.Count == 0)
-            {
-                InteractionInterface.WriteLine("no banks found");
-            }
-
-            var banks = _centralBank.Banks.ToList();
-            for (int i = 0; i < banks.Count; i++)
-            {
-                InteractionInterface.WriteLine($"{i}. {banks[i].Name}, id {banks[i].Id}");
-            }
-
+            Utils.WriteBanksList(_centralBank, InteractionInterface);
             return;
         }
 
