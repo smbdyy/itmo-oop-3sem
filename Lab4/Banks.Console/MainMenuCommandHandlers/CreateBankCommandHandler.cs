@@ -12,15 +12,12 @@ public class CreateBankCommandHandler : MainMenuCommandHandler
         IUserInteractionInterface interactionInterface, BankCreationCommandHandler bankCreationChain)
         : base(interactionInterface) => _bankCreationChain = bankCreationChain;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "create_b")
-        {
-            IBank bank = _bankCreationChain.Handle();
-            InteractionInterface.WriteLine($"bank created, id: {bank.Id}");
-            return;
-        }
+        if (command != "create_b") return base.Handle(command);
 
-        base.Handle(command);
+        IBank bank = _bankCreationChain.Handle();
+        InteractionInterface.WriteLine($"bank created, id: {bank.Id}");
+        return true;
     }
 }

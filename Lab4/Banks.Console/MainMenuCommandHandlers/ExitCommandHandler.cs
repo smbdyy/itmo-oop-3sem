@@ -7,13 +7,8 @@ public class ExitCommandHandler : MainMenuCommandHandler
 {
     public ExitCommandHandler(IUserInteractionInterface interactionInterface)
         : base(interactionInterface) { }
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "exit")
-        {
-            return;
-        }
-
-        base.Handle(command);
+        return command != "exit" && base.Handle(command);
     }
 }

@@ -14,15 +14,12 @@ public abstract class MainMenuCommandHandler
 
     protected IUserInteractionInterface InteractionInterface { get; }
 
-    public virtual void Handle(string command)
+    public virtual bool Handle(string command)
     {
-        if (_next is null)
-        {
-            InteractionInterface.WriteLine("unknown command");
-            return;
-        }
+        if (_next is not null) return _next.Handle(command);
 
-        _next.Handle(command);
+        InteractionInterface.WriteLine("unknown command");
+        return true;
     }
 
     public MainMenuCommandHandler SetNext(MainMenuCommandHandler nextHandler)

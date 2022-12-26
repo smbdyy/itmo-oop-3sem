@@ -21,17 +21,13 @@ public class CreateClientCommandHandler : MainMenuCommandHandler
         _centralBank = centralBank;
     }
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "create_c")
-        {
-            BankClient client = _clientCreationChain.Handle();
-            _centralBank.RegisterClient(client);
+        if (command != "create_c") return base.Handle(command);
 
-            InteractionInterface.WriteLine($"client created, id: {client.Id}");
-            return;
-        }
-
-        base.Handle(command);
+        BankClient client = _clientCreationChain.Handle();
+        _centralBank.RegisterClient(client);
+        InteractionInterface.WriteLine($"client created, id: {client.Id}");
+        return true;
     }
 }

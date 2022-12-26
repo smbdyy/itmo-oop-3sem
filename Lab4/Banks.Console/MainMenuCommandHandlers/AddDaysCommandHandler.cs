@@ -11,20 +11,17 @@ public class AddDaysCommandHandler : MainMenuCommandHandler
     public AddDaysCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
         : base(interactionInterface) => _centralBank = centralBank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (Regex.IsMatch(command, "^add_days\\s[1-9][0-9]*$"))
-        {
-            int number = Convert.ToInt32(command.Split(' ')[1]);
-            for (int i = 0; i < number; i++)
-            {
-                _centralBank.NotifyNextDay();
-            }
+        if (!Regex.IsMatch(command, "^add_days\\s[1-9][0-9]*$")) return base.Handle(command);
 
-            InteractionInterface.WriteLine($"success, current date: {_centralBank.CurrentDate.ToString()}");
-            return;
+        int number = Convert.ToInt32(command.Split(' ')[1]);
+        for (int i = 0; i < number; i++)
+        {
+            _centralBank.NotifyNextDay();
         }
 
-        base.Handle(command);
+        InteractionInterface.WriteLine($"success, current date: {_centralBank.CurrentDate.ToString()}");
+        return true;
     }
 }

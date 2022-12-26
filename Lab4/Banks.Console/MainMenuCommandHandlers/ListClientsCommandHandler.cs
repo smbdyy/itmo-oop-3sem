@@ -10,14 +10,11 @@ public class ListClientsCommandHandler : MainMenuCommandHandler
     public ListClientsCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
         : base(interactionInterface) => _centralBank = centralBank;
 
-    public override void Handle(string command)
+    public override bool Handle(string command)
     {
-        if (command == "list_c")
-        {
-            Utils.WriteClientsList(_centralBank, InteractionInterface);
-            return;
-        }
+        if (command != "list_c") return base.Handle(command);
 
-        base.Handle(command);
+        Utils.WriteClientsList(_centralBank, InteractionInterface);
+        return true;
     }
 }
