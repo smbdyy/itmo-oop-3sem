@@ -31,7 +31,12 @@ public class SelectBankCommandHandler : MainMenuCommandHandler
 
         IBank bank = Utils.GetBankByInputNumber(_centralBank, InteractionInterface);
         InteractionInterface.WriteLine($"managing bank {bank.Name}, id {bank.Id}");
-        _bankMenuChain.Handle(UserInputParser.GetLine(InteractionInterface));
+
+        _bankMenuChain.SetBank(bank);
+        while (_bankMenuChain.Handle(UserInputParser.GetLine(InteractionInterface)))
+        {
+        }
+
         return true;
     }
 }
