@@ -118,9 +118,9 @@ public class Bank : IBank
         _depositAmountPercentPairs.Remove(found);
     }
 
-    public IBankAccount CreateAccount(BankClient client, BankAccountBuilder builder)
+    public IBankAccount CreateAccount(BankAccountBuilder builder)
     {
-        builder.SetBank(this).SetClient(client);
+        builder.SetBank(this);
         IBankAccount account = builder.Build();
         _accounts.Add(account);
         return account;

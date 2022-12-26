@@ -19,7 +19,7 @@ public interface IBank
 
     public void NotifyNextDay();
     public void AddDepositAccountPercent(StartAmountPercentPair depositAmountPercentPair);
-    public IBankAccount CreateAccount(BankClient client, BankAccountBuilder builder);
+    public IBankAccount CreateAccount(BankAccountBuilder builder);
     public void DeleteAccount(IBankAccount account);
     public void DeleteAllClientAccounts(BankClient client);
     public void SubscribeToNotifications(BankClient client);

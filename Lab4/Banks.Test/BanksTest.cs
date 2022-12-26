@@ -19,7 +19,7 @@ public class BanksTest
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
             .Build();
-        IBankAccount account = bank.CreateAccount(client, new DebitBankAccountBuilder());
+        IBankAccount account = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
         account.Replenish(1000);
 
         Assert.Equal(1000, account.MoneyAmount);
@@ -34,7 +34,7 @@ public class BanksTest
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
             .Build();
-        IBankAccount account = bank.CreateAccount(client, new DebitBankAccountBuilder());
+        IBankAccount account = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
         account.Replenish(1000);
         account.Withdraw(100);
 
@@ -51,7 +51,7 @@ public class BanksTest
             .SetName(PersonName.FromString("Ivan Ivanov"))
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
             .Build();
-        IBankAccount account = bank.CreateAccount(client, new DebitBankAccountBuilder());
+        IBankAccount account = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
         account.Replenish(1000);
 
         Assert.Throws<TransactionValidationException>(() => account.Withdraw(501));
@@ -68,8 +68,8 @@ public class BanksTest
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
             .Build();
         centralBank.RegisterClient(client);
-        IBankAccount accountA = bank.CreateAccount(client, new DebitBankAccountBuilder());
-        IBankAccount accountB = bank.CreateAccount(client, new DebitBankAccountBuilder());
+        IBankAccount accountA = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
+        IBankAccount accountB = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
         accountA.Replenish(1000);
         accountA.Send(100, accountB);
 
@@ -88,7 +88,7 @@ public class BanksTest
             .Build();
         centralBank.RegisterClient(client);
         IBankAccount account = bank.CreateAccount(
-            client, new DepositBankAccountBuilder().SetStartMoneyAmount(1000));
+            new DepositBankAccountBuilder().SetStartMoneyAmount(1000).SetClient(client));
 
         Assert.Throws<TransactionValidationException>(() => account.Withdraw(1));
         Assert.Equal(1000, account.MoneyAmount);
@@ -105,7 +105,7 @@ public class BanksTest
             .AddNotificationReceiver(new ConsoleNotificationReceiver())
             .Build();
         centralBank.RegisterClient(client);
-        IBankAccount account = bank.CreateAccount(client, new DebitBankAccountBuilder());
+        IBankAccount account = bank.CreateAccount(new DebitBankAccountBuilder().SetClient(client));
         account.Replenish(1000);
         client.Address = new AddressBuilder()
             .SetCountry("Russia")
@@ -130,7 +130,7 @@ public class BanksTest
             .Build();
         centralBank.RegisterClient(client);
         IBankAccount account = bank.CreateAccount(
-            client, new DepositBankAccountBuilder().SetStartMoneyAmount(1000));
+            new DepositBankAccountBuilder().SetStartMoneyAmount(1000).SetClient(client));
         for (int i = 0; i < 11; i++)
         {
             centralBank.NotifyNextDay();
@@ -153,7 +153,7 @@ public class BanksTest
             .Build();
         centralBank.RegisterClient(client);
         IBankAccount account = bank.CreateAccount(
-            client, new DepositBankAccountBuilder().SetStartMoneyAmount(100_000));
+            new DepositBankAccountBuilder().SetStartMoneyAmount(100_000).SetClient(client));
         for (int i = 0; i < 31; i++)
         {
             centralBank.NotifyNextDay();
