@@ -45,7 +45,7 @@ BankMenuCommandHandler bankMenuChain = new AddPairCommandHandler(interactionInte
 bankMenuChain
     .SetNext(new CreateAccountCommandHandler(interactionInterface, selectAccountTypeChain, centralBank))
     .SetNext(new ExitBankMenuCommandHandler(interactionInterface))
-    .SetNext(new InfoCommandHandler(interactionInterface))
+    .SetNext(new BankInfoCommandHandler(interactionInterface))
     .SetNext(new ListAccountsCommandHandler(interactionInterface))
 
     // TODO select account

@@ -4,9 +4,9 @@ using Banks.Models;
 
 namespace Banks.Console.BankMenuCommandHandlers;
 
-public class InfoCommandHandler : BankMenuCommandHandler
+public class BankInfoCommandHandler : BankMenuCommandHandler
 {
-    public InfoCommandHandler(IUserInteractionInterface interactionInterface)
+    public BankInfoCommandHandler(IUserInteractionInterface interactionInterface)
         : base(interactionInterface) { }
 
     public override bool Handle(string command)
