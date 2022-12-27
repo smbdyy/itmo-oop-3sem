@@ -2,7 +2,7 @@
 using Banks.Entities;
 using Banks.Interfaces;
 
-namespace Banks.Console;
+namespace Banks.Console.Tools;
 
 public static class Utils
 {

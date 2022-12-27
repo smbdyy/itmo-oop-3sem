@@ -1,7 +1,6 @@
 ﻿using Banks.Console.UserInteractionInterfaces;
-using Banks.Models;
 
-namespace Banks.Console;
+namespace Banks.Console.Tools;
 
 public static class UserInputParser
 {

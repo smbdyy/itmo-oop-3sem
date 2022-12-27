@@ -8,6 +8,7 @@ using Banks.Console.BankMenuCommandHandlers;
 using Banks.Console.ClientCreationCommandHandlers;
 using Banks.Console.ClientMenuCommandHandlers;
 using Banks.Console.MainMenuCommandHandlers;
+using Banks.Console.Tools;
 using Banks.Console.UserInteractionInterfaces;
 using Banks.Entities;
 using Banks.Tools.NotificationReceivers;
