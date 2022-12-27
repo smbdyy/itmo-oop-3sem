@@ -36,42 +36,48 @@ clientCreationChain
     .SetNext(new SetAddressHandler(clientBuilder, interactionInterface, addressCreationChain))
     .SetNext(new SetPassportNumberHandler(clientBuilder, interactionInterface));
 
-AccountCreationCommandHandler accountCreationChain = new SetClientCommandHandler(centralBank, interactionInterface);
+var accountCreationContext = new AccountCreationContext();
+AccountCreationCommandHandler accountCreationChain =
+    new SetClientCommandHandler(centralBank, interactionInterface, accountCreationContext);
 
-SelectAccountTypeCommandHandler selectAccountTypeChain = new SelectCreditAccountHandler(interactionInterface);
+var selectAccountTypeContext = new SelectAccountTypeContext();
+SelectAccountTypeCommandHandler selectAccountTypeChain = new SelectCreditAccountHandler(interactionInterface, selectAccountTypeContext);
 selectAccountTypeChain
-    .SetNext(new SelectDebitAccountHandler(interactionInterface))
-    .SetNext(new SelectDepositAccountHandler(interactionInterface));
+    .SetNext(new SelectDebitAccountHandler(interactionInterface, selectAccountTypeContext))
+    .SetNext(new SelectDepositAccountHandler(interactionInterface, selectAccountTypeContext));
 selectAccountTypeChain.SetAccountCreationChain(accountCreationChain);
 
-AccountMenuCommandHandler accountMenuChain = new AccountInfoCommandHandler(interactionInterface);
+var accountMenuContext = new AccountMenuContext();
+AccountMenuCommandHandler accountMenuChain = new AccountInfoCommandHandler(interactionInterface, accountMenuContext);
 accountMenuChain
-    .SetNext(new ExitAccountMenuCommandHandler(interactionInterface))
-    .SetNext(new ReplenishCommandHandler(interactionInterface))
-    .SetNext(new SendMoneyCommandHandler(interactionInterface, centralBank))
-    .SetNext(new UndoCommandHandler(interactionInterface))
-    .SetNext(new WithdrawCommandHandler(interactionInterface))
-    .SetNext(new WriteHistoryCommandHandler(interactionInterface));
+    .SetNext(new ExitAccountMenuCommandHandler(interactionInterface, accountMenuContext))
+    .SetNext(new ReplenishCommandHandler(interactionInterface, accountMenuContext))
+    .SetNext(new SendMoneyCommandHandler(interactionInterface, accountMenuContext, centralBank))
+    .SetNext(new UndoCommandHandler(interactionInterface, accountMenuContext))
+    .SetNext(new WithdrawCommandHandler(interactionInterface, accountMenuContext))
+    .SetNext(new WriteHistoryCommandHandler(interactionInterface, accountMenuContext));
 
-BankMenuCommandHandler bankMenuChain = new AddPairCommandHandler(interactionInterface);
+var bankMenuContext = new BankMenuContext();
+BankMenuCommandHandler bankMenuChain = new AddPairCommandHandler(interactionInterface, bankMenuContext);
 bankMenuChain
-    .SetNext(new CreateAccountCommandHandler(interactionInterface, selectAccountTypeChain, centralBank))
-    .SetNext(new ExitBankMenuCommandHandler(interactionInterface))
-    .SetNext(new BankInfoCommandHandler(interactionInterface))
-    .SetNext(new ListAccountsCommandHandler(interactionInterface))
-    .SetNext(new SelectAccountCommandHandler(interactionInterface, accountMenuChain))
-    .SetNext(new SetCommissionCommandHandler(interactionInterface))
-    .SetNext(new SetCreditLimitCommandHandler(interactionInterface))
-    .SetNext(new SetTermCommandHandler(interactionInterface))
-    .SetNext(new SetUnverifiedClientLimitHandler(interactionInterface))
-    .SetNext(new SubscribeCommandHandler(interactionInterface, centralBank))
-    .SetNext(new UnsubscribeCommandHandler(interactionInterface));
+    .SetNext(new CreateAccountCommandHandler(interactionInterface, selectAccountTypeChain, centralBank, bankMenuContext))
+    .SetNext(new ExitBankMenuCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new BankInfoCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new ListAccountsCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new SelectAccountCommandHandler(interactionInterface, accountMenuChain, bankMenuContext))
+    .SetNext(new SetCommissionCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new SetCreditLimitCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new SetTermCommandHandler(interactionInterface, bankMenuContext))
+    .SetNext(new SetUnverifiedClientLimitHandler(interactionInterface, bankMenuContext))
+    .SetNext(new SubscribeCommandHandler(interactionInterface, centralBank, bankMenuContext))
+    .SetNext(new UnsubscribeCommandHandler(interactionInterface, bankMenuContext));
 
-ClientMenuCommandHandler clientMenuChain = new ClientInfoCommandHandler(interactionInterface);
+var clientMenuContext = new ClientMenuContext();
+ClientMenuCommandHandler clientMenuChain = new ClientInfoCommandHandler(interactionInterface, clientMenuContext);
 clientMenuChain
-    .SetNext(new ExitClientMenuCommandHandler(interactionInterface))
-    .SetNext(new SetAddressCommandHandler(interactionInterface, addressCreationChain))
-    .SetNext(new SetPassportNumberCommandHandler(interactionInterface));
+    .SetNext(new ExitClientMenuCommandHandler(interactionInterface, clientMenuContext))
+    .SetNext(new SetAddressCommandHandler(interactionInterface, addressCreationChain, clientMenuContext))
+    .SetNext(new SetPassportNumberCommandHandler(interactionInterface, clientMenuContext));
 
 MainMenuCommandHandler mainMenuChain = new AddDaysCommandHandler(centralBank, interactionInterface);
 mainMenuChain
