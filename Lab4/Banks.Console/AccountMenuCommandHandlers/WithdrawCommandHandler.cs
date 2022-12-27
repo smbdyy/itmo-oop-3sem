@@ -7,8 +7,10 @@ namespace Banks.Console.AccountMenuCommandHandlers;
 
 public class WithdrawCommandHandler : AccountMenuCommandHandler
 {
-    public WithdrawCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public WithdrawCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
@@ -18,7 +20,7 @@ public class WithdrawCommandHandler : AccountMenuCommandHandler
         MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
         try
         {
-            Account!.Withdraw(amount);
+            Context.Account.Withdraw(amount);
             InteractionInterface.WriteLine("success");
         }
         catch (TransactionValidationException ex)

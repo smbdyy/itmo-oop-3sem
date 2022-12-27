@@ -5,20 +5,22 @@ namespace Banks.Console.AccountMenuCommandHandlers;
 
 public class WriteHistoryCommandHandler : AccountMenuCommandHandler
 {
-    public WriteHistoryCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public WriteHistoryCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
         if (command != "hist") return base.Handle(command);
 
-        if (Account!.TransactionHistory.Count == 0)
+        if (Context.Account.TransactionHistory.Count == 0)
         {
             InteractionInterface.WriteLine("no transactions found");
             return true;
         }
 
-        var transactions = Account.TransactionHistory.ToList();
+        var transactions = Context.Account.TransactionHistory.ToList();
         for (int i = 0; i < transactions.Count; i++)
         {
             InteractionInterface.WriteLine($"{i}. {transactions[i].Description}");

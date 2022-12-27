@@ -4,8 +4,10 @@ namespace Banks.Console.AccountMenuCommandHandlers;
 
 public class ExitAccountMenuCommandHandler : AccountMenuCommandHandler
 {
-    public ExitAccountMenuCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public ExitAccountMenuCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {

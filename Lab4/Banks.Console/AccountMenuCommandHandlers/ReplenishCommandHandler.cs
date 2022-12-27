@@ -7,8 +7,10 @@ namespace Banks.Console.AccountMenuCommandHandlers;
 
 public class ReplenishCommandHandler : AccountMenuCommandHandler
 {
-    public ReplenishCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public ReplenishCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
@@ -18,7 +20,7 @@ public class ReplenishCommandHandler : AccountMenuCommandHandler
         MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
         try
         {
-            Account!.Replenish(amount);
+            Context.Account.Replenish(amount);
             InteractionInterface.WriteLine("success");
         }
         catch (TransactionValidationException ex)

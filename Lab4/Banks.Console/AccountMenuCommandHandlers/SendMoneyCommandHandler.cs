@@ -10,8 +10,11 @@ public class SendMoneyCommandHandler : AccountMenuCommandHandler
 {
     private readonly ICentralBank _centralBank;
 
-    public SendMoneyCommandHandler(IUserInteractionInterface interactionInterface, ICentralBank centralBank)
-        : base(interactionInterface) => _centralBank = centralBank;
+    public SendMoneyCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context,
+        ICentralBank centralBank)
+        : base(interactionInterface, context) => _centralBank = centralBank;
 
     public override bool Handle(string command)
     {
@@ -39,7 +42,7 @@ public class SendMoneyCommandHandler : AccountMenuCommandHandler
 
         try
         {
-            Account!.Send(amount, recipient);
+            Context.Account.Send(amount, recipient);
             InteractionInterface.WriteLine("success");
         }
         catch (TransactionValidationException ex)
@@ -55,7 +58,7 @@ public class SendMoneyCommandHandler : AccountMenuCommandHandler
         var accounts = new List<IBankAccount>();
         foreach (IBank bank in _centralBank.Banks)
         {
-            accounts.AddRange(bank.Accounts.Where(account => account != Account));
+            accounts.AddRange(bank.Accounts.Where(account => account != Context.Account));
         }
 
         return accounts;

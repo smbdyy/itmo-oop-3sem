@@ -7,11 +7,16 @@ public abstract class AccountMenuCommandHandler
 {
     private AccountMenuCommandHandler? _next;
 
-    public AccountMenuCommandHandler(IUserInteractionInterface interactionInterface)
-        => InteractionInterface = interactionInterface;
+    public AccountMenuCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuContext context)
+    {
+        InteractionInterface = interactionInterface;
+        Context = context;
+    }
 
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected IBankAccount? Account { get; private set; }
+    protected AccountMenuContext Context { get; }
 
     public AccountMenuCommandHandler SetNext(AccountMenuCommandHandler next)
     {
@@ -21,8 +26,7 @@ public abstract class AccountMenuCommandHandler
 
     public AccountMenuCommandHandler SetAccount(IBankAccount account)
     {
-        Account = account;
-        _next?.SetAccount(account);
+        Context.SetAccount(account);
         return this;
     }
 
