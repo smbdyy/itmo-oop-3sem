@@ -1,12 +1,17 @@
-﻿using Banks.Console.UserInteractionInterfaces;
+﻿using Banks.Console.AccountMenuCommandHandlers;
+using Banks.Console.UserInteractionInterfaces;
 using Banks.Interfaces;
 
 namespace Banks.Console.BankMenuCommandHandlers;
 
 public class SelectAccountCommandHandler : BankMenuCommandHandler
 {
-    public SelectAccountCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    private readonly AccountMenuCommandHandler _accountMenuChain;
+
+    public SelectAccountCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountMenuCommandHandler accountMenuChain)
+        : base(interactionInterface) => _accountMenuChain = accountMenuChain;
 
     public override bool Handle(string command)
     {
@@ -19,8 +24,11 @@ public class SelectAccountCommandHandler : BankMenuCommandHandler
         }
 
         IBankAccount account = Utils.GetAccountByInputNumber(Bank, InteractionInterface);
+        _accountMenuChain.SetAccount(account);
+        while (_accountMenuChain.Handle(UserInputParser.GetLine(InteractionInterface)))
+        {
+        }
 
-        // TODO account menu
         return base.Handle(command);
     }
 }
