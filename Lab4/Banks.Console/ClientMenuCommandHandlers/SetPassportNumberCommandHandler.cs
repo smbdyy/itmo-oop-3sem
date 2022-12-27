@@ -7,8 +7,8 @@ namespace Banks.Console.ClientMenuCommandHandlers;
 
 public class SetPassportNumberCommandHandler : ClientMenuCommandHandler
 {
-    public SetPassportNumberCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public SetPassportNumberCommandHandler(IUserInteractionInterface interactionInterface, ClientMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
@@ -18,7 +18,7 @@ public class SetPassportNumberCommandHandler : ClientMenuCommandHandler
         {
             try
             {
-                Client!.PassportNumber = PassportNumber.FromString(UserInputParser.GetLine(InteractionInterface));
+                Context.Client.PassportNumber = PassportNumber.FromString(UserInputParser.GetLine(InteractionInterface));
                 InteractionInterface.WriteLine("success");
                 return true;
             }

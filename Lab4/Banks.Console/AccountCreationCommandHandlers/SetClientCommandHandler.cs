@@ -19,9 +19,6 @@ public class SetClientCommandHandler : AccountCreationCommandHandler
         _centralBank = centralBank;
     }
 
-    public SetClientCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
-        : this(centralBank, interactionInterface, new AccountCreationContext()) { }
-
     public override void Handle()
     {
         InteractionInterface.WriteLine("select client:");

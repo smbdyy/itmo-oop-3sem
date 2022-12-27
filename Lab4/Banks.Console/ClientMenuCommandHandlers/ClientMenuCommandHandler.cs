@@ -7,11 +7,16 @@ public abstract class ClientMenuCommandHandler
 {
     private ClientMenuCommandHandler? _next;
 
-    public ClientMenuCommandHandler(IUserInteractionInterface interactionInterface)
-        => InteractionInterface = interactionInterface;
+    public ClientMenuCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        ClientMenuContext context)
+    {
+        InteractionInterface = interactionInterface;
+        Context = context;
+    }
 
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected BankClient? Client { get; private set; }
+    protected ClientMenuContext Context { get; }
 
     public ClientMenuCommandHandler SetNext(ClientMenuCommandHandler next)
     {
@@ -21,8 +26,7 @@ public abstract class ClientMenuCommandHandler
 
     public ClientMenuCommandHandler SetClient(BankClient client)
     {
-        Client = client;
-        _next?.SetClient(client);
+        Context.SetClient(client);
         return this;
     }
 

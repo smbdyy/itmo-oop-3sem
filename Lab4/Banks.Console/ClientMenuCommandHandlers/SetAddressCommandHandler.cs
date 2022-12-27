@@ -1,4 +1,5 @@
 ﻿using Banks.Console.AddressCreationCommandHandlers;
+using Banks.Console.BankMenuCommandHandlers;
 using Banks.Console.UserInteractionInterfaces;
 using Banks.Models;
 
@@ -10,15 +11,16 @@ public class SetAddressCommandHandler : ClientMenuCommandHandler
 
     public SetAddressCommandHandler(
         IUserInteractionInterface interactionInterface,
-        AddressCreationCommandHandler addressCreationChain)
-        : base(interactionInterface) => _addressCreationChain = addressCreationChain;
+        AddressCreationCommandHandler addressCreationChain,
+        ClientMenuContext context)
+        : base(interactionInterface, context) => _addressCreationChain = addressCreationChain;
 
     public override bool Handle(string command)
     {
         if (command != "set_address") return base.Handle(command);
 
         Address address = _addressCreationChain.Handle();
-        Client!.Address = address;
+        Context.Client.Address = address;
         InteractionInterface.WriteLine("success");
         return true;
     }

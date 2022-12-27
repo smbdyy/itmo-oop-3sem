@@ -15,9 +15,6 @@ public abstract class SelectAccountTypeCommandHandler
         Context = context;
     }
 
-    public SelectAccountTypeCommandHandler(IUserInteractionInterface interactionInterface)
-        : this(interactionInterface, new SelectAccountTypeContext()) { }
-
     protected IUserInteractionInterface InteractionInterface { get; }
     protected SelectAccountTypeContext Context { get; }
 

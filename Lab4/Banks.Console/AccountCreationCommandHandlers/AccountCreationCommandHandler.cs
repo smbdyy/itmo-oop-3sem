@@ -16,9 +16,6 @@ public abstract class AccountCreationCommandHandler
         Context = context;
     }
 
-    public AccountCreationCommandHandler(IUserInteractionInterface interactionInterface)
-        : this(interactionInterface, new AccountCreationContext()) { }
-
     protected IUserInteractionInterface InteractionInterface { get; }
     protected AccountCreationContext Context { get; }
 

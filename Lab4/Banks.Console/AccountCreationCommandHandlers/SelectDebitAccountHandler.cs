@@ -11,9 +11,6 @@ public class SelectDebitAccountHandler : SelectAccountTypeCommandHandler
         SelectAccountTypeContext context)
         : base(interactionInterface, context) { }
 
-    public SelectDebitAccountHandler(IUserInteractionInterface interactionInterface)
-        : this(interactionInterface, new SelectAccountTypeContext()) { }
-
     public override void Handle(string accountType)
     {
         if (accountType == "debit")

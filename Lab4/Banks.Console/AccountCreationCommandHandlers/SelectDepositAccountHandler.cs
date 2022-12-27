@@ -13,9 +13,6 @@ public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
         SelectAccountTypeContext context)
         : base(interactionInterface, context) { }
 
-    public SelectDepositAccountHandler(IUserInteractionInterface interactionInterface)
-        : this(interactionInterface, new SelectAccountTypeContext()) { }
-
     public override void Handle(string accountType)
     {
         if (accountType == "deposit")
