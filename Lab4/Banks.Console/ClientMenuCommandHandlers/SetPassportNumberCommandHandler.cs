@@ -11,7 +11,7 @@ public class SetPassportNumberCommandHandler : ClientMenuCommandHandler
 
     public override bool Handle(string command)
     {
-        if (command == "set_passport") return base.Handle(command);
+        if (command != "set_passport") return base.Handle(command);
 
         while (true)
         {

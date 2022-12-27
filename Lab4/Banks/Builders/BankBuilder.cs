@@ -19,6 +19,7 @@ public abstract class BankBuilder
         CreditAccountCommission = 10;
         CreditAccountLimit = -1000;
         MaxUnverifiedClientWithdrawal = 1000;
+        NotificationBuilder = new UpdateNotificationBuilder();
     }
 
     public BankBuilder SetName(string name)
@@ -53,6 +54,12 @@ public abstract class BankBuilder
     public BankBuilder SetMaxUnverifiedClientWithdrawal(MoneyAmount value)
     {
         MaxUnverifiedClientWithdrawal = value;
+        return this;
+    }
+
+    public BankBuilder SetNotificationBuilder(BankNotificationBuilder notificationBuilder)
+    {
+        NotificationBuilder = notificationBuilder;
         return this;
     }
 }

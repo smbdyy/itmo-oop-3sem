@@ -26,6 +26,7 @@ public class SelectClientCommandHandler : MainMenuCommandHandler
 
         BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
         _clientMenuChain.SetClient(client);
+        InteractionInterface.WriteLine($"managing client {client.Name.AsString}, id {client.Id}");
         while (_clientMenuChain.Handle(UserInputParser.GetLine(InteractionInterface)))
         {
         }

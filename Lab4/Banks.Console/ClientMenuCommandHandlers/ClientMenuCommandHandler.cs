@@ -3,7 +3,7 @@ using Banks.Entities;
 
 namespace Banks.Console.ClientMenuCommandHandlers;
 
-public class ClientMenuCommandHandler
+public abstract class ClientMenuCommandHandler
 {
     private ClientMenuCommandHandler? _next;
 
@@ -22,6 +22,7 @@ public class ClientMenuCommandHandler
     public ClientMenuCommandHandler SetClient(BankClient client)
     {
         Client = client;
+        _next?.SetClient(client);
         return this;
     }
 

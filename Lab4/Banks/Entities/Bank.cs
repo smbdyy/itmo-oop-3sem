@@ -30,12 +30,12 @@ public class Bank : IBank
             throw ArgumentException.EmptyString();
         }
 
+        _bankNotificationBuilder = bankNotificationBuilder;
         Name = name;
         DepositAccountTerm = depositAccountTerm;
         CreditAccountCommission = creditAccountCommission;
         CreditAccountLimit = creditAccountLimit;
         UnverifiedClientWithdrawalLimit = unverifiedClientWithdrawalLimit;
-        _bankNotificationBuilder = bankNotificationBuilder;
     }
 
     public Guid Id { get; } = Guid.NewGuid();

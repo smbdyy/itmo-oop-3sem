@@ -25,6 +25,7 @@ public class SelectAccountCommandHandler : BankMenuCommandHandler
 
         IBankAccount account = Utils.GetAccountByInputNumber(Bank, InteractionInterface);
         _accountMenuChain.SetAccount(account);
+        InteractionInterface.WriteLine($"managing account id {account.Id}");
         while (_accountMenuChain.Handle(UserInputParser.GetLine(InteractionInterface)))
         {
         }
