@@ -16,19 +16,18 @@ public class DepositBankAccountBuilder : BankAccountBuilder
 
     public override IBankAccount Build()
     {
-        ValidateNotNull();
         return new DepositBankAccount(
-            Client!,
+            Client,
             _startMoneyAmount,
             CalculateDepositAccountPercent(),
-            Bank!.DepositAccountTerm,
+            Bank.DepositAccountTerm,
             Bank.UnverifiedClientWithdrawalLimit,
             Bank.CurrentDate);
     }
 
     private MoneyAmount CalculateDepositAccountPercent()
     {
-        StartAmountPercentPair? pair = Bank!.StartAmountPercentPairs
+        StartAmountPercentPair? pair = Bank.StartAmountPercentPairs
             .Where(pair => pair.StartAmount <= _startMoneyAmount)
             .MaxBy(pair => pair.StartAmount);
 

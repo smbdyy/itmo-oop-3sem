@@ -8,7 +8,6 @@ public class DebitBankAccountBuilder : BankAccountBuilder
 {
     public override IBankAccount Build()
     {
-        ValidateNotNull();
-        return new DebitBankAccount(Client!, Bank!.UnverifiedClientWithdrawalLimit, Bank.CurrentDate);
+        return new DebitBankAccount(Client, Bank.UnverifiedClientWithdrawalLimit, Bank.CurrentDate);
     }
 }

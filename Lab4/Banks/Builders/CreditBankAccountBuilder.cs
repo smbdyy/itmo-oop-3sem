@@ -7,10 +7,9 @@ public class CreditBankAccountBuilder : BankAccountBuilder
 {
     public override IBankAccount Build()
     {
-        ValidateNotNull();
         return new CreditBankAccount(
-            Client!,
-            Bank!.CreditAccountLimit,
+            Client,
+            Bank.CreditAccountLimit,
             Bank.CreditAccountCommission,
             Bank.UnverifiedClientWithdrawalLimit,
             Bank.CurrentDate);

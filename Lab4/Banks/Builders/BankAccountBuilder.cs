@@ -6,28 +6,46 @@ namespace Banks.Builders;
 
 public abstract class BankAccountBuilder
 {
-    protected IBank? Bank { get; private set; }
-    protected BankClient? Client { get; private set; }
+    private IBank? _bank;
+    private BankClient? _client;
+
+    protected IBank Bank
+    {
+        get
+        {
+            if (_bank is null)
+            {
+                throw new RequiredFieldInBuilderIsNullException();
+            }
+
+            return _bank;
+        }
+    }
+
+    protected BankClient Client
+    {
+        get
+        {
+            if (_client is null)
+            {
+                throw new RequiredFieldInBuilderIsNullException();
+            }
+
+            return _client;
+        }
+    }
 
     public abstract IBankAccount Build();
 
     public BankAccountBuilder SetBank(IBank bank)
     {
-        Bank = bank;
+        _bank = bank;
         return this;
     }
 
     public BankAccountBuilder SetClient(BankClient client)
     {
-        Client = client;
+        _client = client;
         return this;
-    }
-
-    protected void ValidateNotNull()
-    {
-        if (Bank is null || Client is null)
-        {
-            throw new RequiredFieldInBuilderIsNullException();
-        }
     }
 }
