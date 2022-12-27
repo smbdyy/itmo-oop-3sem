@@ -9,8 +9,8 @@ namespace Banks.Console.BankMenuCommandHandlers;
 
 public class AddPairCommandHandler : BankMenuCommandHandler
 {
-    public AddPairCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public AddPairCommandHandler(IUserInteractionInterface interactionInterface, BankMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
@@ -23,7 +23,7 @@ public class AddPairCommandHandler : BankMenuCommandHandler
         try
         {
             var pair = new StartAmountPercentPair(amount, percent);
-            Bank!.AddDepositAccountPercent(pair);
+            Context.Bank.AddDepositAccountPercent(pair);
             System.Console.WriteLine("pair has been added");
             return true;
         }

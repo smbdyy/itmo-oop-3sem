@@ -14,8 +14,9 @@ public class CreateAccountCommandHandler : BankMenuCommandHandler
     public CreateAccountCommandHandler(
         IUserInteractionInterface interactionInterface,
         SelectAccountTypeCommandHandler selectAccountTypeChain,
-        ICentralBank centralBank)
-        : base(interactionInterface)
+        ICentralBank centralBank,
+        BankMenuContext context)
+        : base(interactionInterface, context)
     {
         _selectAccountTypeChain = selectAccountTypeChain;
         _centralBank = centralBank;
@@ -32,7 +33,7 @@ public class CreateAccountCommandHandler : BankMenuCommandHandler
         }
 
         InteractionInterface.WriteLine("enter account type:");
-        _selectAccountTypeChain.SetBank(Bank!);
+        _selectAccountTypeChain.SetBank(Context.Bank);
         _selectAccountTypeChain.Handle(UserInputParser.GetLine(InteractionInterface));
         return true;
     }

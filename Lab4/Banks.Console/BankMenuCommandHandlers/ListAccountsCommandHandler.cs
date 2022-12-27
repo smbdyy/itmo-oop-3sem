@@ -6,14 +6,14 @@ namespace Banks.Console.BankMenuCommandHandlers;
 
 public class ListAccountsCommandHandler : BankMenuCommandHandler
 {
-    public ListAccountsCommandHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public ListAccountsCommandHandler(IUserInteractionInterface interactionInterface, BankMenuContext context)
+        : base(interactionInterface, context) { }
 
     public override bool Handle(string command)
     {
         if (command != "list_acc") return base.Handle(command);
 
-        Utils.WriteAccountsList(Bank!, InteractionInterface);
+        Utils.WriteAccountsList(Context.Bank, InteractionInterface);
         return true;
     }
 }

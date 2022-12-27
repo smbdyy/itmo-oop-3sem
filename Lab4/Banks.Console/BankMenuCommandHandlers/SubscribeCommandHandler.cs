@@ -12,8 +12,9 @@ public class SubscribeCommandHandler : BankMenuCommandHandler
 
     public SubscribeCommandHandler(
         IUserInteractionInterface interactionInterface,
-        ICentralBank centralBank)
-        : base(interactionInterface)
+        ICentralBank centralBank,
+        BankMenuContext context)
+        : base(interactionInterface, context)
     {
         _centralBank = centralBank;
     }
@@ -29,7 +30,7 @@ public class SubscribeCommandHandler : BankMenuCommandHandler
         }
 
         BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
-        Bank!.SubscribeToNotifications(client);
+        Context.Bank.SubscribeToNotifications(client);
         InteractionInterface.WriteLine("subscribed!");
         return true;
     }
