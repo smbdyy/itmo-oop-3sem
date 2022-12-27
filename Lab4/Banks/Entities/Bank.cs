@@ -11,6 +11,7 @@ public class Bank : IBank
     private readonly List<IBankAccount> _accounts = new ();
     private readonly List<StartAmountPercentPair> _depositAmountPercentPairs = new ();
     private readonly List<BankClient> _subscribers = new ();
+    private readonly BankNotificationBuilder _bankNotificationBuilder;
     private DepositTermDays _depositAccountTerm;
     private MoneyAmount _creditAccountCommission;
     private NonPositiveMoneyAmount _creditAccountLimit;
@@ -21,7 +22,8 @@ public class Bank : IBank
         int depositAccountTerm,
         MoneyAmount creditAccountCommission,
         NonPositiveMoneyAmount creditAccountLimit,
-        MoneyAmount unverifiedClientWithdrawalLimit)
+        MoneyAmount unverifiedClientWithdrawalLimit,
+        BankNotificationBuilder bankNotificationBuilder)
     {
         if (name == string.Empty)
         {
@@ -33,6 +35,7 @@ public class Bank : IBank
         CreditAccountCommission = creditAccountCommission;
         CreditAccountLimit = creditAccountLimit;
         UnverifiedClientWithdrawalLimit = unverifiedClientWithdrawalLimit;
+        _bankNotificationBuilder = bankNotificationBuilder;
     }
 
     public Guid Id { get; } = Guid.NewGuid();
@@ -168,16 +171,8 @@ public class Bank : IBank
 
     private void NotifySubscribers()
     {
-        string message = @$"Our terms has been updated. Current terms: 
-                            Deposit account term: {_depositAccountTerm},
-                            Credit account commission: {_creditAccountCommission},
-                            Credit account limit: {_creditAccountLimit},
-                            Unverified client withdrawal limit: {_unverifiedClientWithdrawalLimit}.
-                            Deposit account percents:";
-        foreach (StartAmountPercentPair pair in _depositAmountPercentPairs)
-        {
-            message += Environment.NewLine + $"From {pair.StartAmount}: {pair.Percent}";
-        }
+        _bankNotificationBuilder.SetBank(this);
+        string message = _bankNotificationBuilder.GetNotificationMessage();
 
         foreach (BankClient client in _subscribers)
         {

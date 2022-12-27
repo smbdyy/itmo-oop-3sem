@@ -11,6 +11,7 @@ public abstract class BankBuilder
     protected MoneyAmount CreditAccountCommission { get; private set; } = 10;
     protected NonPositiveMoneyAmount CreditAccountLimit { get; private set; } = -1000;
     protected MoneyAmount MaxUnverifiedClientWithdrawal { get; private set; } = 1000;
+    protected BankNotificationBuilder NotificationBuilder { get; private set; } = new UpdateNotificationBuilder();
     public abstract IBank Build();
     public void Reset()
     {

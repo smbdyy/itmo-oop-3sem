@@ -13,6 +13,7 @@ public class DefaultBankBuilder : BankBuilder
             DepositAccountTerm,
             CreditAccountCommission,
             CreditAccountLimit,
-            MaxUnverifiedClientWithdrawal);
+            MaxUnverifiedClientWithdrawal,
+            NotificationBuilder);
     }
 }
