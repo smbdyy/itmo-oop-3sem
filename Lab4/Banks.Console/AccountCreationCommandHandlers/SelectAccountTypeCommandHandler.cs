@@ -8,14 +8,15 @@ public abstract class SelectAccountTypeCommandHandler
     private SelectAccountTypeCommandHandler? _next;
 
     public SelectAccountTypeCommandHandler(
-        IUserInteractionInterface interactionInterface)
+        IUserInteractionInterface interactionInterface,
+        AccountCreationContext context)
     {
         InteractionInterface = interactionInterface;
+        Context = context;
     }
 
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected AccountCreationCommandHandler? AccountCreationChain { get; private set; }
-    protected IBank? Bank { get; private set; }
+    protected AccountCreationContext Context { get; }
 
     public SelectAccountTypeCommandHandler SetNext(SelectAccountTypeCommandHandler next)
     {
@@ -25,15 +26,13 @@ public abstract class SelectAccountTypeCommandHandler
 
     public SelectAccountTypeCommandHandler SetAccountCreationChain(AccountCreationCommandHandler accountCreationChain)
     {
-        AccountCreationChain = accountCreationChain;
-        _next?.SetAccountCreationChain(accountCreationChain);
+        Context.SetAccountCreationChain(accountCreationChain);
         return this;
     }
 
     public SelectAccountTypeCommandHandler SetBank(IBank bank)
     {
-        Bank = bank;
-        _next?.SetBank(bank);
+        Context.SetBank(bank);
         return this;
     }
 

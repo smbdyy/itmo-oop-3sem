@@ -8,8 +8,10 @@ namespace Banks.Console.AccountCreationCommandHandlers;
 
 public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
 {
-    public SelectDepositAccountHandler(IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) { }
+    public SelectDepositAccountHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountCreationContext context)
+        : base(interactionInterface, context) { }
 
     public override void Handle(string accountType)
     {
@@ -17,9 +19,9 @@ public class SelectDepositAccountHandler : SelectAccountTypeCommandHandler
         {
             InteractionInterface.WriteLine("enter start money amount:");
             MoneyAmount amount = UserInputParser.GetUnsignedDecimal(InteractionInterface);
-            AccountCreationChain!
+            Context.AccountCreationChain
                 .SetBuilder(new DepositBankAccountBuilder().SetStartMoneyAmount(amount))
-                .SetBank(Bank!)
+                .SetBank(Context.Bank)
                 .Handle();
 
             return;
