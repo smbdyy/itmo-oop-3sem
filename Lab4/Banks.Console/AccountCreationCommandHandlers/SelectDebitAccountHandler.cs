@@ -8,8 +8,11 @@ public class SelectDebitAccountHandler : SelectAccountTypeCommandHandler
 {
     public SelectDebitAccountHandler(
         IUserInteractionInterface interactionInterface,
-        AccountCreationContext context)
+        SelectAccountTypeContext context)
         : base(interactionInterface, context) { }
+
+    public SelectDebitAccountHandler(IUserInteractionInterface interactionInterface)
+        : this(interactionInterface, new SelectAccountTypeContext()) { }
 
     public override void Handle(string accountType)
     {

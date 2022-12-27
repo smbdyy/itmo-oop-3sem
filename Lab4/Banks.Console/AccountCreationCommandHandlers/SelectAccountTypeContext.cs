@@ -1,13 +1,12 @@
-﻿using Banks.Builders;
-using Banks.Console.Tools.Exception;
+﻿using Banks.Console.Tools.Exception;
 using Banks.Interfaces;
 
 namespace Banks.Console.AccountCreationCommandHandlers;
 
-public class AccountCreationContext
+public class SelectAccountTypeContext
 {
-    private BankAccountBuilder? _builder;
     private IBank? _bank;
+    private AccountCreationCommandHandler? _accountCreationChain;
 
     public IBank Bank
     {
@@ -22,28 +21,28 @@ public class AccountCreationContext
         }
     }
 
-    public BankAccountBuilder Builder
+    public AccountCreationCommandHandler AccountCreationChain
     {
         get
         {
-            if (_builder is null)
+            if (_accountCreationChain is null)
             {
                 throw new ContextNotSetException();
             }
 
-            return _builder;
+            return _accountCreationChain;
         }
     }
 
-    public AccountCreationContext SetBank(IBank bank)
+    public SelectAccountTypeContext SetBank(IBank bank)
     {
         _bank = bank;
         return this;
     }
 
-    public AccountCreationContext SetBuilder(BankAccountBuilder builder)
+    public SelectAccountTypeContext SetAccountCreationChain(AccountCreationCommandHandler chain)
     {
-        _builder = builder;
+        _accountCreationChain = chain;
         return this;
     }
 }

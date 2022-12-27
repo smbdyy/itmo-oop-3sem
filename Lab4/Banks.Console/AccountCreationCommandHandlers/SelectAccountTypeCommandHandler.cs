@@ -9,14 +9,17 @@ public abstract class SelectAccountTypeCommandHandler
 
     public SelectAccountTypeCommandHandler(
         IUserInteractionInterface interactionInterface,
-        AccountCreationContext context)
+        SelectAccountTypeContext context)
     {
         InteractionInterface = interactionInterface;
         Context = context;
     }
 
+    public SelectAccountTypeCommandHandler(IUserInteractionInterface interactionInterface)
+        : this(interactionInterface, new SelectAccountTypeContext()) { }
+
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected AccountCreationContext Context { get; }
+    protected SelectAccountTypeContext Context { get; }
 
     public SelectAccountTypeCommandHandler SetNext(SelectAccountTypeCommandHandler next)
     {

@@ -10,14 +10,23 @@ public class SetClientCommandHandler : AccountCreationCommandHandler
 {
     private readonly ICentralBank _centralBank;
 
+    public SetClientCommandHandler(
+        ICentralBank centralBank,
+        IUserInteractionInterface interactionInterface,
+        AccountCreationContext context)
+        : base(interactionInterface, context)
+    {
+        _centralBank = centralBank;
+    }
+
     public SetClientCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
-        : base(interactionInterface) => _centralBank = centralBank;
+        : this(centralBank, interactionInterface, new AccountCreationContext()) { }
 
     public override void Handle()
     {
         InteractionInterface.WriteLine("select client:");
         BankClient client = Utils.GetClientByInputNumber(_centralBank, InteractionInterface);
-        Builder!.SetClient(client);
+        Context.Builder.SetClient(client);
         base.Handle();
     }
 }

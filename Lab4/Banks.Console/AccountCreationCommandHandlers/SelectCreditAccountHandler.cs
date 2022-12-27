@@ -9,8 +9,11 @@ public class SelectCreditAccountHandler : SelectAccountTypeCommandHandler
 {
     public SelectCreditAccountHandler(
         IUserInteractionInterface interactionInterface,
-        AccountCreationContext context)
+        SelectAccountTypeContext context)
         : base(interactionInterface, context) { }
+
+    public SelectCreditAccountHandler(IUserInteractionInterface interactionInterface)
+        : this(interactionInterface, new SelectAccountTypeContext()) { }
 
     public override void Handle(string accountType)
     {

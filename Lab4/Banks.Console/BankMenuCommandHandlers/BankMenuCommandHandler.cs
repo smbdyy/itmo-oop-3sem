@@ -7,13 +7,16 @@ public abstract class BankMenuCommandHandler
 {
     private BankMenuCommandHandler? _next;
 
-    public BankMenuCommandHandler(IUserInteractionInterface interactionInterface)
+    public BankMenuCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        BankMenuContext context)
     {
         InteractionInterface = interactionInterface;
+        Context = context;
     }
 
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected IBank? Bank { get; private set; }
+    protected BankMenuContext Context { get; }
 
     public BankMenuCommandHandler SetNext(BankMenuCommandHandler next)
     {
@@ -23,8 +26,7 @@ public abstract class BankMenuCommandHandler
 
     public void SetBank(IBank bank)
     {
-        Bank = bank;
-        _next?.SetBank(bank);
+        Context.SetBank(bank);
     }
 
     public virtual bool Handle(string command)

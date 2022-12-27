@@ -8,14 +8,19 @@ public abstract class AccountCreationCommandHandler
 {
     private AccountCreationCommandHandler? _next;
 
-    public AccountCreationCommandHandler(IUserInteractionInterface interactionInterface)
+    public AccountCreationCommandHandler(
+        IUserInteractionInterface interactionInterface,
+        AccountCreationContext context)
     {
         InteractionInterface = interactionInterface;
+        Context = context;
     }
 
-    protected BankAccountBuilder? Builder { get; private set; }
+    public AccountCreationCommandHandler(IUserInteractionInterface interactionInterface)
+        : this(interactionInterface, new AccountCreationContext()) { }
+
     protected IUserInteractionInterface InteractionInterface { get; }
-    protected IBank? Bank { get; private set; }
+    protected AccountCreationContext Context { get; }
 
     public AccountCreationCommandHandler SetNext(AccountCreationCommandHandler next)
     {
@@ -25,15 +30,13 @@ public abstract class AccountCreationCommandHandler
 
     public AccountCreationCommandHandler SetBuilder(BankAccountBuilder builder)
     {
-        Builder = builder;
-        _next?.SetBuilder(builder);
+        Context.SetBuilder(builder);
         return this;
     }
 
     public AccountCreationCommandHandler SetBank(IBank bank)
     {
-        Bank = bank;
-        _next?.SetBank(bank);
+        Context.SetBank(bank);
         return this;
     }
 
@@ -41,7 +44,7 @@ public abstract class AccountCreationCommandHandler
     {
         if (_next is null)
         {
-            IBankAccount account = Bank!.CreateAccount(Builder!);
+            IBankAccount account = Context.Bank.CreateAccount(Context.Builder);
             InteractionInterface.WriteLine($"account created, id: {account.Id}");
             return;
         }
