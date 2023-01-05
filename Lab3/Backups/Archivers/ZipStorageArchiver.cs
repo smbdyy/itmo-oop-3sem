@@ -11,15 +11,15 @@ public class ZipStorageArchiver : IStorageArchiver
         IRepository repository,
         IEnumerable<IRepositoryObject> repositoryObjects)
     {
-        var archiveObjects = new List<IRepositoryObject>();
+        var archiveEntries = new List<IRepositoryObject>();
 
         foreach (IRepositoryObject repositoryObject in repositoryObjects)
         {
             var visitor = new ZipArchiverVisitor(archivePath, repository);
             repositoryObject.Accept(visitor);
-            archiveObjects.Add(visitor.GetTree());
+            archiveEntries.Add(visitor.GetTree());
         }
 
-        return archiveObjects;
+        return archiveEntries;
     }
 }
