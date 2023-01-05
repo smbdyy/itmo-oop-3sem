@@ -6,6 +6,6 @@ namespace Backups.Archivers;
 public interface IStorageArchiver
 {
     public string ArchiveExtension { get; }
-    public IStorageArchive CreateArchive(string name, IRepository repository, IRepositoryObject repositoryObject);
-    public IStorageArchive CreateArchive(string name, IRepository repository, IEnumerable<IRepositoryObject> repositoryObjects);
+    public IEnumerable<IRepositoryObject>
+        CreateArchive(string archivePath, IRepository repository, IEnumerable<IRepositoryObject> repositoryObjects);
 }

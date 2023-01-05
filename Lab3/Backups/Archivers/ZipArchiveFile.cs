@@ -6,12 +6,12 @@ namespace Backups.Archivers;
 
 public class ZipArchiveFile : IRepositoryFile
 {
-    private ZipArchiveEntry _archiveEntry;
+    private readonly IRepositoryFile _archiveFile;
 
-    public ZipArchiveFile(string path, ZipArchiveEntry archiveEntry)
+    public ZipArchiveFile(string path, IRepositoryFile archiveFile)
     {
         Path = path;
-        _archiveEntry = archiveEntry;
+        _archiveFile = archiveFile;
     }
 
     public string Path { get; }
@@ -20,6 +20,14 @@ public class ZipArchiveFile : IRepositoryFile
 
     public Stream Open()
     {
-        return _archiveEntry.Open();
+        using Stream archiveFileStream = _archiveFile.Open();
+        using var archive = new ZipArchive(archiveFileStream, ZipArchiveMode.Read);
+        ZipArchiveEntry? entry = archive.GetEntry(Path);
+        if (entry is null)
+        {
+            throw new NotImplementedException();
+        }
+
+        return entry.Open();
     }
 }
