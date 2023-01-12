@@ -5,8 +5,8 @@ namespace Backups.Tools.Creators;
 
 public class RestorePointCreator : IRestorePointCreator
 {
-    public IRestorePoint Create(IEnumerable<IBackupObject> backupObjects, IStorage storage)
+    public IRestorePoint Create(string folderName, IEnumerable<IBackupObject> backupObjects, IStorage storage)
     {
-        return new RestorePoint(backupObjects, storage);
+        return new RestorePoint(folderName, backupObjects, storage);
     }
 }
