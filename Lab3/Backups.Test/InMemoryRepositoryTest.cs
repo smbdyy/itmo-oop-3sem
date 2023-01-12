@@ -53,7 +53,8 @@ public class InMemoryRepositoryTest
         backupTask.AddBackupObject(dirBackupObject);
         backupTask.CreateRestorePoint();
 
-        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "RestorePoint_1.zip")));
-        Assert.Single(backupTask.Repository.GetFileSystemEntries(restorePointsPath));
+        string restorePointFolderPath = Path.Combine(restorePointsPath, backupTask.RestorePoints.Last().FolderName);
+        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "RestorePoint_1.zip")));
+        Assert.Single(backupTask.Repository.GetFileSystemEntries(restorePointFolderPath));
     }
 }
