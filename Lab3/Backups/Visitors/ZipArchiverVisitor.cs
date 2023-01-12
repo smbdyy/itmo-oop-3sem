@@ -17,12 +17,12 @@ public class ZipArchiverVisitor : IRepositoryVisitor
         _archivePath = archivePath;
         _repository = repository;
         IRepositoryObject archiveFile = _repository.GetRepositoryObject(archivePath);
-        if (archiveFile is not IRepositoryFile)
+        if (archiveFile is not IRepositoryFile file)
         {
             throw new NotImplementedException();
         }
 
-        _archiveFile = (IRepositoryFile)archiveFile;
+        _archiveFile = file;
     }
 
     public IRepositoryObject GetTree()
