@@ -24,19 +24,23 @@ public class InMemoryRepositoryTest
         backupTask.AddBackupObject(dirBackupObject);
         backupTask.CreateRestorePoint();
 
-        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "file1.txt(1).zip")));
-        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "dir1(1).zip")));
-        Assert.Equal(2, backupTask.Repository.GetFileSystemEntries(restorePointsPath).Count());
+        string restorePointFolderPath = Path.Combine(restorePointsPath, backupTask.RestorePoints.Last().FolderName);
+        var restorePointFolder = (IRepositoryFolder)repository.GetRepositoryObject(restorePointFolderPath);
+        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "file1.txt(1).zip")));
+        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "dir1(1).zip")));
+        Assert.Equal(2, restorePointFolder.Entries.Count);
 
         backupTask.RemoveBackupObject(dirBackupObject);
         backupTask.CreateRestorePoint();
 
-        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointsPath, "file1.txt(2).zip")));
-        Assert.Equal(3, backupTask.Repository.GetFileSystemEntries(restorePointsPath).Count());
+        restorePointFolderPath = Path.Combine(restorePointsPath, backupTask.RestorePoints.Last().FolderName);
+        restorePointFolder = (IRepositoryFolder)repository.GetRepositoryObject(restorePointFolderPath);
+        Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "file1.txt(2).zip")));
+        Assert.Equal(1, restorePointFolder.Entries.Count);
 
-        backupTask.Repository.DeleteFile(Path.Combine(restorePointsPath, "file1.txt(1).zip"));
-        backupTask.Repository.DeleteFile(Path.Combine(restorePointsPath, "file1.txt(2).zip"));
-        backupTask.Repository.DeleteFile(Path.Combine(restorePointsPath, "dir1(1).zip"));
+        backupTask.Repository.DeleteFile(Path.Combine(restorePointFolderPath, "file1.txt(1).zip"));
+        backupTask.Repository.DeleteFile(Path.Combine(restorePointFolderPath, "file1.txt(2).zip"));
+        backupTask.Repository.DeleteFile(Path.Combine(restorePointFolderPath, "dir1(1).zip"));
     }
 
     [Fact]
@@ -54,7 +58,8 @@ public class InMemoryRepositoryTest
         backupTask.CreateRestorePoint();
 
         string restorePointFolderPath = Path.Combine(restorePointsPath, backupTask.RestorePoints.Last().FolderName);
+        var restorePointFolder = (IRepositoryFolder)repository.GetRepositoryObject(restorePointFolderPath);
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "RestorePoint_1.zip")));
-        Assert.Single(backupTask.Repository.GetFileSystemEntries(restorePointFolderPath));
+        Assert.Single(restorePointFolder.Entries);
     }
 }
