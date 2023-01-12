@@ -14,6 +14,7 @@ public class SplitStorageAlgorithm : IStorageAlgorithm
         {
             string archiveName = $"{Path.GetFileName(entry.Path)}({id}){storageArchiver.ArchiveExtension}";
             string archivePath = Path.Combine(path, archiveName);
+            repository.CreateFile(archivePath);
             archiveEntries.AddRange(storageArchiver.CreateArchive(
                 archivePath, repository, new List<IRepositoryObject> { entry }));
         }
