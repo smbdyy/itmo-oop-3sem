@@ -6,5 +6,6 @@ namespace Backups.StorageAlgorithms;
 
 public interface IStorageAlgorithm
 {
-    IStorage MakeStorage(int id, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IRepositoryObject> objects);
+    IStorage MakeStorage(
+        int id, string path, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IRepositoryObject> objects);
 }
