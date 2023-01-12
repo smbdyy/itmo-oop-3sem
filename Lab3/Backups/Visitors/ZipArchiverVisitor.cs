@@ -56,11 +56,14 @@ public class ZipArchiverVisitor : IRepositoryVisitor
             }
         }
 
+        var entries = new List<IRepositoryObject>();
         foreach (IRepositoryObject folderEntry in repositoryFolder.Entries)
         {
             var visitor = new ZipArchiverVisitor(_archivePath, _repository);
             folderEntry.Accept(visitor);
-            _tree = visitor.GetTree();
+            entries.Add(visitor.GetTree());
         }
+
+        _tree = new ZipArchiveFolder(repositoryFolder.Path, entries);
     }
 }
