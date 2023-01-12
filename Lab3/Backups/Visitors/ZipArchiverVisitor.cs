@@ -59,9 +59,8 @@ public class ZipArchiverVisitor : IRepositoryVisitor
         var entries = new List<IRepositoryObject>();
         foreach (IRepositoryObject folderEntry in repositoryFolder.Entries)
         {
-            var visitor = new ZipArchiverVisitor(_archivePath, _repository);
-            folderEntry.Accept(visitor);
-            entries.Add(visitor.GetTree());
+            folderEntry.Accept(this);
+            entries.Add(GetTree());
         }
 
         _tree = new ZipArchiveFolder(repositoryFolder.Path, entries);
