@@ -51,22 +51,6 @@ public class FileSystemRepository : IRepository
         return File.Exists(Path.Combine(RootPath, path));
     }
 
-    public IEnumerable<string> GetDirectories(string path)
-    {
-        ValidateRelativePath(path);
-        string[] fullNames = Directory.GetDirectories(Path.Combine(RootPath, path));
-
-        return fullNames.Select(fullName => Path.GetFileName(fullName));
-    }
-
-    public IEnumerable<string> GetFiles(string path)
-    {
-        ValidateRelativePath(path);
-        string[] fullNames = Directory.GetFiles(Path.Combine(RootPath, path));
-
-        return fullNames.Select(fullName => Path.GetFileName(fullName));
-    }
-
     public IEnumerable<string> GetFileSystemEntries(string path)
     {
         ValidateRelativePath(path);
