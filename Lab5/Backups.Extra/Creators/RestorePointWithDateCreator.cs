@@ -14,8 +14,8 @@ public class RestorePointWithDateCreator : IRestorePointCreator
         _dateTime = dateTime;
     }
 
-    public IRestorePoint Create(IEnumerable<IBackupObject> backupObjects, IStorage storage)
+    public IRestorePoint Create(string folderName, IEnumerable<IBackupObject> backupObjects, IStorage storage)
     {
-        return new RestorePointWithDate(backupObjects, storage, _dateTime);
+        return new RestorePointWithDate(folderName, backupObjects, storage, _dateTime);
     }
 }
