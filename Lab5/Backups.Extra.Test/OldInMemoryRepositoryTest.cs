@@ -1,5 +1,4 @@
 ﻿using Backups.Archivers;
-using Backups.Entities;
 using Backups.Extra.Entities;
 using Backups.Extra.Models;
 using Backups.Models;
@@ -8,7 +7,7 @@ using Backups.StorageAlgorithms;
 using Backups.Tools.Creators;
 using Xunit;
 
-namespace Backups.Test;
+namespace Backups.Extra.Test;
 
 public class OldInMemoryRepositoryTest
 {
