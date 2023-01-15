@@ -1,4 +1,5 @@
 ﻿using Backups.StorageAlgorithms;
+using Backups.Tools.Exceptions;
 
 namespace Backups.Models;
 
@@ -10,7 +11,7 @@ public class RestorePoint : IRestorePoint
     {
         if (folderName == string.Empty)
         {
-            throw new NotImplementedException();
+            throw BackupsArgumentException.EmptyPathString();
         }
 
         FolderName = folderName;
