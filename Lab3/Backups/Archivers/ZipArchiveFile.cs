@@ -21,14 +21,24 @@ public class ZipArchiveFile : IRepositoryFile
 
     public Stream Open()
     {
-        using Stream archiveFileStream = _archiveFile.Open();
-        using var archive = new ZipArchive(archiveFileStream, ZipArchiveMode.Read);
-        ZipArchiveEntry? entry = archive.GetEntry(Path);
-        if (entry is null)
+        var stream = new MemoryStream();
+        using (Stream archiveFileStream = _archiveFile.Open())
         {
-            throw RepositoryException.FileNotFound(Path);
+            using (var archive = new ZipArchive(archiveFileStream, ZipArchiveMode.Read))
+            {
+                ZipArchiveEntry? entry = archive.GetEntry(Path);
+                if (entry is null)
+                {
+                    throw RepositoryException.FileNotFound(Path);
+                }
+
+                using (Stream entryStream = entry.Open())
+                {
+                    entryStream.CopyTo(stream);
+                }
+            }
         }
 
-        return entry.Open();
+        return stream;
     }
 }
