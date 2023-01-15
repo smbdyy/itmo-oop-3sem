@@ -87,7 +87,8 @@ public class BackupTaskExtended : IBackupTask
     {
         if (!_restorePoints.Contains(restorePoint))
         {
-            throw new NotImplementedException();
+            throw new BackupTaskException(
+                $"restore point {restorePoint.FolderName} is not found in backup task {Name}");
         }
 
         var visitor = new CopyToRepositoryVisitor(repository);
@@ -103,7 +104,8 @@ public class BackupTaskExtended : IBackupTask
     {
         if (!_restorePoints.Contains(restorePoint))
         {
-            throw new NotImplementedException();
+            throw new BackupTaskException(
+                $"restore point {restorePoint.FolderName} is not found in backup task {Name}");
         }
 
         Repository.DeleteDirectory(Path.Combine(Repository.RestorePointsPath, restorePoint.FolderName));
