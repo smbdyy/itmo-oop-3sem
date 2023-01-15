@@ -3,15 +3,14 @@ using Backups.StorageAlgorithms;
 
 namespace Backups.Extra.Models;
 
-public class RestorePointWithDate : IRestorePoint
+public class RestorePointWithDateSetter : IRestorePoint
 {
     private List<IBackupObject> _backupObjects;
 
-    public RestorePointWithDate(
+    public RestorePointWithDateSetter(
         string folderName,
         IEnumerable<IBackupObject> backupObjects,
-        IStorage storage,
-        DateTime creationDateTime)
+        IStorage storage)
     {
         if (folderName == string.Empty)
         {
@@ -20,12 +19,11 @@ public class RestorePointWithDate : IRestorePoint
 
         _backupObjects = backupObjects.ToList();
         Storage = storage;
-        CreationDateTime = creationDateTime;
         FolderName = folderName;
     }
 
     public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
-    public DateTime CreationDateTime { get; }
+    public DateTime CreationDateTime { get; set; }
     public IStorage Storage { get; }
     public string FolderName { get; }
 }
