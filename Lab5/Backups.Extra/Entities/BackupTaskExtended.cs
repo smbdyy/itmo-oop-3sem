@@ -1,6 +1,7 @@
 ﻿using Backups.Archivers;
 using Backups.Entities;
 using Backups.Extra.Interfaces;
+using Backups.Extra.Visitors;
 using Backups.Models;
 using Backups.Repositories;
 using Backups.StorageAlgorithms;
@@ -80,6 +81,22 @@ public class BackupTaskExtended : IBackupTask
 
         _restorePoints.Add(CreateRestorePointFromRepositoryObjects(repositoryObjects));
         CleanupRestorePoints();
+    }
+
+    public void RestoreToRepository(IRestorePoint restorePoint, IRepository repository)
+    {
+        if (!_restorePoints.Contains(restorePoint))
+        {
+            throw new NotImplementedException();
+        }
+
+        var visitor = new CopyToRepositoryVisitor(repository);
+        foreach (IRepositoryObject storageEntry in restorePoint.Storage.GetEntries())
+        {
+            storageEntry.Accept(visitor);
+        }
+
+        DeleteRestorePoint(restorePoint);
     }
 
     private void DeleteRestorePoint(IRestorePoint restorePoint)
