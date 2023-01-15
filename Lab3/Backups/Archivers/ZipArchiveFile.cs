@@ -22,22 +22,16 @@ public class ZipArchiveFile : IRepositoryFile
     public Stream Open()
     {
         var stream = new MemoryStream();
-        using (Stream archiveFileStream = _archiveFile.Open())
+        using Stream archiveFileStream = _archiveFile.Open();
+        using var archive = new ZipArchive(archiveFileStream, ZipArchiveMode.Read);
+        ZipArchiveEntry? entry = archive.GetEntry(Path);
+        if (entry is null)
         {
-            using (var archive = new ZipArchive(archiveFileStream, ZipArchiveMode.Read))
-            {
-                ZipArchiveEntry? entry = archive.GetEntry(Path);
-                if (entry is null)
-                {
-                    throw RepositoryException.FileNotFound(Path);
-                }
-
-                using (Stream entryStream = entry.Open())
-                {
-                    entryStream.CopyTo(stream);
-                }
-            }
+            throw RepositoryException.FileNotFound(Path);
         }
+
+        using Stream entryStream = entry.Open();
+        entryStream.CopyTo(stream);
 
         return stream;
     }
