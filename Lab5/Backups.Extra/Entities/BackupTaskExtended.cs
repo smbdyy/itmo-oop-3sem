@@ -79,6 +79,7 @@ public class BackupTaskExtended : IBackupTask
             _backupObjects.Select(b => Repository.GetRepositoryObject(b.Path));
 
         _restorePoints.Add(CreateRestorePointFromRepositoryObjects(repositoryObjects));
+        CleanupRestorePoints();
     }
 
     private void DeleteRestorePoint(IRestorePoint restorePoint)
