@@ -1,5 +1,4 @@
 ﻿using Backups.Archivers;
-using Backups.Entities;
 using Backups.Extra.Entities;
 using Backups.Extra.Models;
 using Backups.Models;
@@ -8,15 +7,15 @@ using Backups.StorageAlgorithms;
 using Backups.Tools.Creators;
 using Xunit;
 
-namespace Backups.Extra.Test;
+namespace Backups.Extra.Test.BasicBackupTaskLogicTests;
 
-public class OldLocalFileSystemTest
+public class InMemoryRepositoryTest
 {
     [Fact]
     public void CreateRestorePoints_SplitStoragesCreated()
     {
         const string restorePointsPath = "RestorePoints";
-        var repository = new FileSystemRepository(@"C:\BackupsLab", restorePointsPath);
+        var repository = new InMemoryRepository(restorePointsPath);
         repository.CreateFile("file1.txt");
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
@@ -60,7 +59,7 @@ public class OldLocalFileSystemTest
     public void CreateRestorePoint_SingleStorageCreated()
     {
         const string restorePointsPath = "RestorePoints";
-        var repository = new FileSystemRepository(@"C:\BackupsLab", restorePointsPath);
+        var repository = new InMemoryRepository(restorePointsPath);
         repository.CreateFile("file1.txt");
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
@@ -85,7 +84,5 @@ public class OldLocalFileSystemTest
         var restorePointFolder = (IRepositoryFolder)repository.GetRepositoryObject(restorePointFolderPath);
         Assert.True(backupTask.Repository.FileExists(Path.Combine(restorePointFolderPath, "RestorePoint_1.zip")));
         Assert.Single(restorePointFolder.Entries);
-
-        backupTask.Repository.DeleteFile(Path.Combine(restorePointFolderPath, "RestorePoint_1.zip"));
     }
 }
