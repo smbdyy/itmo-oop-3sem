@@ -128,8 +128,10 @@ public class BackupTaskExtended : IBackupTask
         string path = Path.Combine(Repository.RestorePointsPath, folderName);
         Repository.CreateDirectory(path);
 
-        IStorage storage = _storageAlgorithm.MakeStorage(id, path, Repository, _archiver, repositoryObjects);
-        return _restorePointCreator.Create(folderName, _backupObjects, storage);
+        var repositoryObjectsAsList = repositoryObjects.ToList();
+        IStorage storage = _storageAlgorithm.MakeStorage(id, path, Repository, _archiver, repositoryObjectsAsList);
+        IEnumerable<BackupObject> backupObjects = repositoryObjectsAsList.Select(o => new BackupObject(o.Path));
+        return _restorePointCreator.Create(folderName, backupObjects, storage);
     }
 
     private int GetNewRestorePointId() => ++_newRestorePointId;
