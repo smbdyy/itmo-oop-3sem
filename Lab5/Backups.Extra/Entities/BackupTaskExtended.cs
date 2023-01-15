@@ -2,6 +2,7 @@
 using Backups.Entities;
 using Backups.Extra.Interfaces;
 using Backups.Models;
+using Backups.Repositories;
 using Backups.StorageAlgorithms;
 using Backups.Tools.Creators;
 
@@ -19,16 +20,43 @@ public class BackupTaskExtended : IBackupTask
     private int _newRestorePointId;
 
     public BackupTaskExtended(
+        string name,
+        IRepository repository,
         IRestorePointDeleteSelector deleteSelector,
         IBackupTaskLogger logger,
         IStorageAlgorithm storageAlgorithm,
         IStorageArchiver archiver,
         IRestorePointCreator restorePointCreator)
     {
+        Name = repository.ValidateRelativePath(name);
+        Repository = repository;
         _deleteSelector = deleteSelector;
         _logger = logger;
         _storageAlgorithm = storageAlgorithm;
         _archiver = archiver;
         _restorePointCreator = restorePointCreator;
     }
+
+    public string Name { get; }
+    public string ArchiveExtension => _archiver.ArchiveExtension;
+    public IRepository Repository { get; }
+    public IReadOnlyCollection<IRestorePoint> RestorePoints => _restorePoints;
+    public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
+
+    public void AddBackupObject(IBackupObject backupObject) { }
+    public void RemoveBackupObject(IBackupObject backupObject) { }
+    public void CreateRestorePoint() { }
+
+    private void DeleteRestorePoint(IRestorePoint restorePoint)
+    {
+        if (!_restorePoints.Contains(restorePoint))
+        {
+            throw new NotImplementedException();
+        }
+
+        Repository.DeleteDirectory(Path.Combine(Repository.RestorePointsPath, restorePoint.FolderName));
+        _restorePoints.Remove(restorePoint);
+    }
+
+    private int GetNewRestorePointId() => _newRestorePointId++;
 }
