@@ -23,7 +23,7 @@ public class RestorePointWithDateSetter : IRestorePoint
     }
 
     public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
-    public DateTime CreationDateTime { get; set; }
+    public DateTime CreationDateTime { get; set; } = DateTime.Now;
     public IStorage Storage { get; }
     public string FolderName { get; }
 }
