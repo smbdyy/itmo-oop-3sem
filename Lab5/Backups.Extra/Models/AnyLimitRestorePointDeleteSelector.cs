@@ -3,11 +3,11 @@ using Backups.Models;
 
 namespace Backups.Extra.Models;
 
-public class AnyLimitHybridRestorePointDeleteSelector : IRestorePointDeleteSelector
+public class AnyLimitRestorePointDeleteSelector : IRestorePointDeleteSelector
 {
     private readonly List<IRestorePointDeleteSelector> _selectors;
 
-    public AnyLimitHybridRestorePointDeleteSelector(IEnumerable<IRestorePointDeleteSelector> selectors)
+    public AnyLimitRestorePointDeleteSelector(IEnumerable<IRestorePointDeleteSelector> selectors)
     {
         _selectors = selectors.ToList();
         if (_selectors.Count == 0)
