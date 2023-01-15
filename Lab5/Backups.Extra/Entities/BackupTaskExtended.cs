@@ -131,5 +131,5 @@ public class BackupTaskExtended : IBackupTask
         return _restorePointCreator.Create(folderName, _backupObjects, storage);
     }
 
-    private int GetNewRestorePointId() => _newRestorePointId++;
+    private int GetNewRestorePointId() => ++_newRestorePointId;
 }
