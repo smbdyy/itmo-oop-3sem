@@ -1,5 +1,6 @@
 ﻿using System.IO.Compression;
 using Backups.Repositories;
+using Backups.Tools.Exceptions;
 using Backups.Visitors;
 
 namespace Backups.Archivers;
@@ -25,7 +26,7 @@ public class ZipArchiveFile : IRepositoryFile
         ZipArchiveEntry? entry = archive.GetEntry(Path);
         if (entry is null)
         {
-            throw new NotImplementedException();
+            throw RepositoryException.FileNotFound(Path);
         }
 
         return entry.Open();

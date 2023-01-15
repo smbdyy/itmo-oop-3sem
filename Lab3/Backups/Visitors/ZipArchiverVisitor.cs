@@ -19,7 +19,7 @@ public class ZipArchiverVisitor : IRepositoryVisitor
         IRepositoryObject archiveFile = _repository.GetRepositoryObject(archivePath);
         if (archiveFile is not IRepositoryFile file)
         {
-            throw new NotImplementedException();
+            throw ArchiverException.ArchiveObjectIsNotFile();
         }
 
         _archiveFile = file;
@@ -29,7 +29,7 @@ public class ZipArchiverVisitor : IRepositoryVisitor
     {
         if (_tree is null)
         {
-            throw new NotImplementedException();
+            throw ArchiverException.CompositeNotBuilt();
         }
 
         return _tree;
