@@ -6,8 +6,11 @@ namespace Backups.StorageAlgorithms;
 
 public class SingleStorageAlgorithm : IStorageAlgorithm
 {
-    public IStorage MakeStorage(int id, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IRepositoryObject> objects)
+    public IStorage MakeStorage(
+        int id, string path, IRepository repository, IStorageArchiver storageArchiver, IEnumerable<IRepositoryObject> objects)
     {
-        return new SingleStorage(storageArchiver.CreateArchive($"RestorePoint_{id}", repository, objects));
+        string archivePath = Path.Combine(path, $"RestorePoint_{id}{storageArchiver.ArchiveExtension}");
+        repository.CreateFile(archivePath);
+        return new Storage(storageArchiver.CreateArchive(archivePath, repository, objects));
     }
 }

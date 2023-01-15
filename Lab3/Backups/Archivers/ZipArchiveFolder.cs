@@ -5,7 +5,7 @@ namespace Backups.Archivers;
 
 public class ZipArchiveFolder : IRepositoryFolder
 {
-    private List<IRepositoryObject> _entries;
+    private readonly List<IRepositoryObject> _entries;
 
     public ZipArchiveFolder(string path, IEnumerable<IRepositoryObject> entries)
     {

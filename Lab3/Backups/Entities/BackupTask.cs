@@ -31,6 +31,7 @@ public class BackupTask : IBackupTask
     }
 
     public string Name { get; }
+    public string ArchiveExtension => _archiver.ArchiveExtension;
     public IRepository Repository { get; }
     public IReadOnlyCollection<IRestorePoint> RestorePoints => _restorePoints;
     public IReadOnlyCollection<IBackupObject> BackupObjects => _backupObjects;
@@ -39,24 +40,14 @@ public class BackupTask : IBackupTask
     {
         IEnumerable<IRepositoryObject> repositoryObjects =
             _backupObjects.Select(b => Repository.GetRepositoryObject(b.Path));
-        IStorage storage = _storageAlgorithm.MakeStorage(GetNewRestorePointId(), Repository, _archiver, repositoryObjects);
-        _restorePoints.Add(_restorePointCreator.Create(_backupObjects, storage));
-    }
 
-    public void DeleteRestorePoint(IRestorePoint restorePoint)
-    {
-        if (!_restorePoints.Contains(restorePoint))
-        {
-            throw new BackupTaskException("restore point is not found");
-        }
+        int id = GetNewRestorePointId();
+        string folderName = $"RestorePoint_{id}";
+        string path = Path.Combine(Repository.RestorePointsPath, folderName);
+        Repository.CreateDirectory(path);
 
-        var archiveNames = restorePoint.Storage.GetArchiveNames().ToList();
-        foreach (string name in archiveNames)
-        {
-            Repository.DeleteFile(Path.Combine(Repository.RestorePointsPath, name));
-        }
-
-        _restorePoints.Remove(restorePoint);
+        IStorage storage = _storageAlgorithm.MakeStorage(id, path, Repository, _archiver, repositoryObjects);
+        _restorePoints.Add(_restorePointCreator.Create(folderName, _backupObjects, storage));
     }
 
     public void AddBackupObject(IBackupObject backupObject)

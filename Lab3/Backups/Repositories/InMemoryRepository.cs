@@ -52,18 +52,6 @@ public class InMemoryRepository : IRepository
         return _fileSystem.DirectoryExists(GetAbsolutePath(path));
     }
 
-    public IEnumerable<string> GetDirectories(string path)
-    {
-        IEnumerable<UPath> directories = _fileSystem.EnumerateDirectories(GetAbsolutePath(path));
-        return directories.Select(directory => Path.GetFileName(directory.FullName));
-    }
-
-    public IEnumerable<string> GetFiles(string path)
-    {
-        IEnumerable<UPath> files = _fileSystem.EnumerateFiles(GetAbsolutePath(path));
-        return files.Select(file => Path.GetFileName(file.FullName));
-    }
-
     public IEnumerable<string> GetFileSystemEntries(string path)
     {
         IEnumerable<UPath> paths = _fileSystem.EnumeratePaths(GetAbsolutePath(path));
