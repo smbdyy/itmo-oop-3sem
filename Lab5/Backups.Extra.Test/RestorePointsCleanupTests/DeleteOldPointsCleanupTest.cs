@@ -2,6 +2,7 @@
 using Backups.Extra.Creators;
 using Backups.Extra.Entities;
 using Backups.Extra.Interfaces;
+using Backups.Extra.LoggerMessageGenerators;
 using Backups.Extra.Loggers;
 using Backups.Extra.Models;
 using Backups.Models;
@@ -22,7 +23,7 @@ public class DeleteOldPointsCleanupTest
         repository.CreateFile("file1.txt");
         var deleteSelector = new AmountRestorePointDeleteSelector(2);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -52,7 +53,7 @@ public class DeleteOldPointsCleanupTest
         repository.CreateFile("file1.txt");
         var deleteSelector = new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10));
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -86,7 +87,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -120,7 +121,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -154,7 +155,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,

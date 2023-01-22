@@ -1,5 +1,6 @@
 ﻿using Backups.Archivers;
 using Backups.Extra.Entities;
+using Backups.Extra.LoggerMessageGenerators;
 using Backups.Extra.Loggers;
 using Backups.Extra.Models;
 using Backups.Models;
@@ -21,7 +22,7 @@ public class MergePointsCleanupTest
         repository.CreateFile("file2.txt");
         var deleteSelector = new AmountRestorePointDeleteSelector(2);
         var cleaner = new MergePointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,

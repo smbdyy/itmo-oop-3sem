@@ -1,5 +1,6 @@
 ﻿using Backups.Archivers;
 using Backups.Extra.Entities;
+using Backups.Extra.LoggerMessageGenerators;
 using Backups.Extra.Loggers;
 using Backups.Extra.Models;
 using Backups.Models;
@@ -21,7 +22,7 @@ public class InMemoryRepositoryTest
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -65,7 +66,7 @@ public class InMemoryRepositoryTest
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLoggerStub();
+        var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
