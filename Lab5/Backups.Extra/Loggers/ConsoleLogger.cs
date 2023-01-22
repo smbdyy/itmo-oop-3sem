@@ -11,6 +11,11 @@ public class ConsoleLogger : IBackupTaskLogger
         _prefixGenerator = prefixGenerator;
     }
 
+    public void WriteLog(string message)
+    {
+        Console.WriteLine(message);
+    }
+
     public void WriteLog(string eventMessage, ILoggerMessageGenerator entityMessageGenerator)
     {
         Console.WriteLine($"{_prefixGenerator.GetPrefix()} {eventMessage} {entityMessageGenerator.GetMessage()}");

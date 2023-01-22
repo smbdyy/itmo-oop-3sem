@@ -19,6 +19,12 @@ public class FileLogger : IBackupTaskLogger
         _filePath = filePath;
     }
 
+    public void WriteLog(string message)
+    {
+        using var writer = new StreamWriter(_filePath);
+        writer.WriteLine(message);
+    }
+
     public void WriteLog(string eventMessage, ILoggerMessageGenerator entityMessageGenerator)
     {
         using var writer = new StreamWriter(_filePath);
