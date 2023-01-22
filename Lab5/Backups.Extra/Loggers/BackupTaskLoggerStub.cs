@@ -1,6 +1,6 @@
 ﻿using Backups.Extra.Interfaces;
 
-namespace Backups.Extra.Entities;
+namespace Backups.Extra.Loggers;
 
 public class BackupTaskLoggerStub : IBackupTaskLogger
 {

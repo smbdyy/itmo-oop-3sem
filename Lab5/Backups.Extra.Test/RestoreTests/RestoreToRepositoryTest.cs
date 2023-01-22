@@ -1,5 +1,6 @@
 ﻿using Backups.Archivers;
 using Backups.Extra.Entities;
+using Backups.Extra.Loggers;
 using Backups.Extra.Models;
 using Backups.Models;
 using Backups.Repositories;
