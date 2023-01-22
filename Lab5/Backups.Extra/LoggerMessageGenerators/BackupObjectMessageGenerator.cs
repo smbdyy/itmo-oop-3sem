@@ -14,6 +14,6 @@ public class BackupObjectMessageGenerator : ILoggerMessageGenerator
 
     public string GetMessage()
     {
-        return $"backup object path: {_backupObject.Path}";
+        return $"backup object (path: {_backupObject.Path})";
     }
 }
