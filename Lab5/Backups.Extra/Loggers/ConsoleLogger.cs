@@ -15,9 +15,4 @@ public class ConsoleLogger : IBackupTaskLogger
     {
         Console.WriteLine(message);
     }
-
-    public void WriteLog(string eventMessage, ILoggerMessageGenerator entityMessageGenerator)
-    {
-        Console.WriteLine($"{_prefixGenerator.GetPrefix()} {eventMessage} {entityMessageGenerator.GetMessage()}");
-    }
 }

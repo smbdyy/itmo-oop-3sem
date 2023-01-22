@@ -24,10 +24,4 @@ public class FileLogger : IBackupTaskLogger
         using var writer = new StreamWriter(_filePath);
         writer.WriteLine(message);
     }
-
-    public void WriteLog(string eventMessage, ILoggerMessageGenerator entityMessageGenerator)
-    {
-        using var writer = new StreamWriter(_filePath);
-        writer.WriteLine($"{_prefixGenerator.GetPrefix()} {eventMessage} {entityMessageGenerator.GetMessage()}");
-    }
 }
