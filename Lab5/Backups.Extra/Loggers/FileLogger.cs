@@ -1,4 +1,5 @@
-﻿using Backups.Extra.Interfaces;
+﻿using Backups.Extra.Exceptions;
+using Backups.Extra.Interfaces;
 
 namespace Backups.Extra.Loggers;
 
@@ -11,7 +12,7 @@ public class FileLogger : IBackupTaskLogger
     {
         if (!File.Exists(filePath))
         {
-            throw new NotImplementedException();
+            throw new FileDoesNotExistException(filePath);
         }
 
         _prefixGenerator = prefixGenerator;
