@@ -1,6 +1,7 @@
 ﻿using Backups.Archivers;
 using Backups.Entities;
 using Backups.Extra.Interfaces;
+using Backups.Extra.LoggerMessageGenerators;
 using Backups.Extra.Visitors;
 using Backups.Models;
 using Backups.Repositories;
@@ -62,6 +63,7 @@ public class BackupTaskExtended : IBackupTask
         }
 
         _backupObjects.Add(backupObject);
+        _logger.WriteLog($"backup object added: {new BackupObjectMessageGenerator(backupObject).GetMessage()}");
     }
 
     public void RemoveBackupObject(IBackupObject backupObject)
@@ -72,6 +74,7 @@ public class BackupTaskExtended : IBackupTask
         }
 
         _backupObjects.Remove(backupObject);
+        _logger.WriteLog($"backup object removed: {new BackupObjectMessageGenerator(backupObject).GetMessage()}");
     }
 
     public void CreateRestorePoint()
@@ -80,6 +83,7 @@ public class BackupTaskExtended : IBackupTask
             _backupObjects.Select(b => Repository.GetRepositoryObject(b.Path));
 
         _restorePoints.Add(CreateRestorePointFromRepositoryObjects(repositoryObjects));
+        _logger.WriteLog($"restore point created: {new RestorePointMessageGenerator(_restorePoints.Last()).GetMessage()}");
         CleanupRestorePoints();
     }
 
@@ -97,7 +101,7 @@ public class BackupTaskExtended : IBackupTask
             storageEntry.Accept(visitor);
         }
 
-        DeleteRestorePoint(restorePoint);
+        _logger.WriteLog($"restored: {new RestorePointMessageGenerator(restorePoint).GetMessage()}");
     }
 
     private void DeleteRestorePoint(IRestorePoint restorePoint)
@@ -110,6 +114,7 @@ public class BackupTaskExtended : IBackupTask
 
         Repository.DeleteDirectory(Path.Combine(Repository.RestorePointsPath, restorePoint.FolderName));
         _restorePoints.Remove(restorePoint);
+        _logger.WriteLog($"restore point deleted: {new RestorePointMessageGenerator(restorePoint).GetMessage()}");
     }
 
     private void CleanupRestorePoints()
