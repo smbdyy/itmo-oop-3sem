@@ -13,7 +13,7 @@ namespace Backups.Extra.Test.BasicBackupTaskLogicTests;
 
 public class LocalFileSystemTest
 {
-    [Fact]
+    [Fact(Skip = "local fs")]
     public void CreateRestorePoints_SplitStoragesCreated()
     {
         const string restorePointsPath = "RestorePoints";
@@ -57,7 +57,7 @@ public class LocalFileSystemTest
         backupTask.Repository.DeleteFile(Path.Combine(restorePointFolderPath, "dir1(1).zip"));
     }
 
-    [Fact]
+    [Fact(Skip = "local fs")]
     public void CreateRestorePoint_SingleStorageCreated()
     {
         const string restorePointsPath = "RestorePoints";
