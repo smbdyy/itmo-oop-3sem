@@ -21,7 +21,7 @@ public class DeleteOldPointsCleanupTest
         repository.CreateFile("file1.txt");
         var deleteSelector = new AmountRestorePointDeleteSelector(2);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -51,7 +51,7 @@ public class DeleteOldPointsCleanupTest
         repository.CreateFile("file1.txt");
         var deleteSelector = new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10));
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -85,7 +85,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -119,7 +119,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -153,7 +153,7 @@ public class DeleteOldPointsCleanupTest
             new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,

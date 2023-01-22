@@ -20,7 +20,7 @@ public class InMemoryRepositoryTest
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
@@ -64,7 +64,7 @@ public class InMemoryRepositoryTest
         repository.CreateDirectory(Path.Combine("dir1", "dir2"));
         var deleteSelector = new AmountRestorePointDeleteSelector(5);
         var cleaner = new DeleteOldPointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,

@@ -20,7 +20,7 @@ public class MergePointsCleanupTest
         repository.CreateFile("file2.txt");
         var deleteSelector = new AmountRestorePointDeleteSelector(2);
         var cleaner = new MergePointsCleaner();
-        var logger = new BackupTaskLogger();
+        var logger = new BackupTaskLoggerStub();
         var backupTask = new BackupTaskExtended(
             "TestTask",
             repository,
