@@ -5,7 +5,7 @@ namespace Backups.Extra.LoggerMessageGenerators;
 
 public class BackupObjectMessageGenerator : ILoggerMessageGenerator
 {
-    private IBackupObject _backupObject;
+    private readonly IBackupObject _backupObject;
 
     public BackupObjectMessageGenerator(IBackupObject backupObject)
     {
