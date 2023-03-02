@@ -25,18 +25,18 @@ public class IsuServiceTest
         var service = new IsuService();
         var groupName = new GroupName('M', new CourseNumber(AcademicDegree.Bachelor, 1), 3);
         Group group = service.AddGroup(groupName, 1);
-        Student student = service.AddStudent(group, new PersonName("Ilya", "Videneev"));
-        Assert.Throws<MaxStudentsAmountExceededException>(() => service.AddStudent(group, new PersonName("Ivan", "Ivanov")));
+        service.AddStudent(group, new PersonName("Ilya", "Videneev"));
+        Assert.Throws<GroupException>(() => service.AddStudent(group, new PersonName("Ivan", "Ivanov")));
     }
 
     [Fact]
     public void CreateGroupWithInvalidName_ThrowException()
     {
-        Assert.Throws<IncorrectCourseNumberException>(() => new CourseNumber(AcademicDegree.Bachelor, 5));
+        Assert.Throws<IncorrectArgumentException>(() => new CourseNumber(AcademicDegree.Bachelor, 5));
 
         var validCourseNumber = new CourseNumber(AcademicDegree.Bachelor, 2);
-        Assert.Throws<IncorrectSpecialtyIdException>(() => new GroupName('!', validCourseNumber, 0));
-        Assert.Throws<IncorrectGroupNumberException>(() => new GroupName('M', validCourseNumber, 1000));
+        Assert.Throws<IncorrectArgumentException>(() => new GroupName('!', validCourseNumber, 0));
+        Assert.Throws<IncorrectArgumentException>(() => new GroupName('M', validCourseNumber, 1000));
     }
 
     [Fact]

@@ -6,14 +6,14 @@ namespace Isu.Services;
 
 public class IsuService : IIsuService
 {
-    private List<Group> _groups = new ();
-    private List<Student> _students = new ();
+    private readonly List<Group> _groups = new ();
+    private readonly List<Student> _students = new ();
 
     public Group AddGroup(GroupName name, int maxStudentsAmount = Group.DefaultMaxStudentsAmount)
     {
         if (_groups.Any(group => group.Name == name))
         {
-            throw new GroupWithGivenNameAlreadyExistsException(name);
+            throw GroupException.NameTaken(name);
         }
 
         var newGroup = new Group(name, maxStudentsAmount);
@@ -25,12 +25,12 @@ public class IsuService : IIsuService
     {
         if (_students.Count(student => student.Group == group) == group.MaxStudentsAmount)
         {
-            throw new MaxStudentsAmountExceededException(group);
+            throw GroupException.StudentsLimitExceeded(group);
         }
 
         if (_students.Any() && _students.Last().Id == 999999)
         {
-            throw new CannotGenerateNewStudentIdException();
+            throw StudentException.CannotCreateId();
         }
 
         int id = _students.Any() ? _students.Last().Id + 1 : 100000;
@@ -44,7 +44,7 @@ public class IsuService : IIsuService
         Student? foundStudent = _students.Find(student => student.Id == id);
         if (foundStudent is null)
         {
-            throw new StudentIsNotFoundException(id);
+            throw NotFoundException.Student(id);
         }
 
         return foundStudent;
@@ -55,19 +55,19 @@ public class IsuService : IIsuService
         return _students.Find(student => student.Id == id);
     }
 
-    public List<Student> FindStudents(GroupName groupName)
+    public IReadOnlyCollection<Student> FindStudents(GroupName groupName)
     {
         Group? group = _groups.Find(group => group.Name == groupName);
 
         if (group is null)
         {
-            throw new GroupIsNotFoundException(groupName);
+            throw NotFoundException.Group(groupName);
         }
 
         return new List<Student>(_students.Where(student => student.Group == group));
     }
 
-    public List<Student> FindStudents(CourseNumber courseNumber)
+    public IReadOnlyCollection<Student> FindStudents(CourseNumber courseNumber)
     {
         return new List<Student>(_students.Where(student => student.Group.Name.CourseNum == courseNumber));
     }

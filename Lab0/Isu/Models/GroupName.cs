@@ -13,17 +13,17 @@ public class GroupName
     {
         if (specialtyId is < 'A' or > 'Z')
         {
-            throw new IncorrectSpecialtyIdException(specialtyId);
+            throw IncorrectArgumentException.SpecialtyId(specialtyId);
         }
 
         if (groupNumber is < 0 or > 99)
         {
-            throw new IncorrectGroupNumberException(groupNumber);
+            throw IncorrectArgumentException.GroupNumber(groupNumber);
         }
 
-        this.SpecialtyId = specialtyId;
-        this.CourseNum = courseNumber;
-        this.GroupNumber = groupNumber;
+        SpecialtyId = specialtyId;
+        CourseNum = courseNumber;
+        GroupNumber = groupNumber;
     }
 
     public char SpecialtyId { get; }
@@ -32,6 +32,8 @@ public class GroupName
 
     public string AsString()
     {
-        return GroupNumber < 10 ? $"{SpecialtyId}{CourseNum.Number}0{GroupNumber}" : $"{SpecialtyId}{CourseNum.Number}{GroupNumber}";
+        return GroupNumber < 10 ?
+            $"{SpecialtyId}{CourseNum.Number}0{GroupNumber}"
+            : $"{SpecialtyId}{CourseNum.Number}{GroupNumber}";
     }
 }

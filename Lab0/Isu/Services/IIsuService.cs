@@ -5,13 +5,13 @@ namespace Isu.Services;
 
 public interface IIsuService
 {
-    Group AddGroup(GroupName name, int maxStudentsAmount = Group.DefaultMaxStudentsAmount);
+    Group AddGroup(GroupName name, int maxStudentsAmount);
     Student AddStudent(Group group, PersonName name);
 
     Student GetStudent(int id);
     Student? FindStudent(int id);
-    List<Student> FindStudents(GroupName groupName);
-    List<Student> FindStudents(CourseNumber courseNumber);
+    IReadOnlyCollection<Student> FindStudents(GroupName groupName);
+    IReadOnlyCollection<Student> FindStudents(CourseNumber courseNumber);
 
     Group? FindGroup(GroupName groupName);
     List<Group> FindGroups(CourseNumber courseNumber);

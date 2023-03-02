@@ -21,7 +21,7 @@ public class Student
     {
         if (Group == newGroup)
         {
-            throw new CannotTransferStudentToTheSameGroupException(this);
+            throw StudentException.AlreadyInGroup(this);
         }
 
         Group = newGroup;

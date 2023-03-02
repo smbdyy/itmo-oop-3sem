@@ -7,13 +7,13 @@ public class CourseNumber
     // there are 3 academic degrees: bachelor (4 courses), master (2 courses) and doctor (4 courses)
     public CourseNumber(AcademicDegree degree, int number)
     {
-        if ((number is < 1 or > 4) || (degree == AcademicDegree.Master && number > 2))
+        if (number is < 1 or > 4 || (degree == AcademicDegree.Master && number > 2))
         {
-            throw new IncorrectCourseNumberException(degree, number);
+            throw IncorrectArgumentException.CourseNumber(degree, number);
         }
 
-        this.Degree = degree;
-        this.Number = number;
+        Degree = degree;
+        Number = number;
     }
 
     public AcademicDegree Degree { get; }

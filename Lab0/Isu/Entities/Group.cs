@@ -11,11 +11,17 @@ public class Group
     {
         if (maxStudentsAmount <= 0)
         {
-            throw new IncorrectMaxStudentsAmountException(maxStudentsAmount);
+            throw IncorrectArgumentException.MaxStudentsAmount(maxStudentsAmount);
         }
 
         Name = name;
         MaxStudentsAmount = maxStudentsAmount;
+    }
+
+    public Group(GroupName name)
+    {
+        Name = name;
+        MaxStudentsAmount = DefaultMaxStudentsAmount;
     }
 
     public GroupName Name { get; }
