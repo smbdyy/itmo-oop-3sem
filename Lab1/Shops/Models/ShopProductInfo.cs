@@ -1,4 +1,5 @@
-﻿using Shops.Exceptions;
+﻿using Shops.Entities;
+using Shops.Exceptions;
 
 namespace Shops.Models;
 
@@ -22,4 +23,7 @@ public class ShopProductInfo
 
     public int Amount { get; }
     public decimal Price { get; }
+
+    public static ShopProductInfo FromShopItem(ShopItem item)
+        => new ShopProductInfo(item.Amount, item.Price);
 }

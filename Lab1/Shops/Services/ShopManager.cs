@@ -10,14 +10,14 @@ public class ShopManager
 
     public Product RegisterProduct(string name)
     {
-        var product = new Product(name);
+        var product = new Product(Guid.NewGuid(), name);
         _products.Add(product);
         return product;
     }
 
     public Shop RegisterShop(string name, string address)
     {
-        var shop = new Shop(name, address);
+        var shop = new Shop(Guid.NewGuid(), name, address);
         _shops.Add(shop);
         return shop;
     }

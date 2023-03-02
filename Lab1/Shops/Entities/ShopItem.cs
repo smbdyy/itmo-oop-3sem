@@ -69,9 +69,4 @@ public class ShopItem
 
         Amount += amount;
     }
-
-    public ShopProductInfo GetInfo()
-    {
-        return new ShopProductInfo(Amount, Price);
-    }
 }

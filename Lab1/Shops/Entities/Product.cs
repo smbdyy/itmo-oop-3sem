@@ -2,9 +2,9 @@
 
 public class Product
 {
-    public Product(string name)
+    public Product(Guid id, string name)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
     }
 
