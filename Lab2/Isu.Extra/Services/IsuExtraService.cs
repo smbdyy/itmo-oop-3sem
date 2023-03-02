@@ -16,7 +16,12 @@ public class IsuExtraService
     private readonly List<OgnpStreamMember> _ognpStreamMembers = new ();
     private readonly List<Teacher> _teachers = new ();
 
-    public IsuExtraService(TimeOnly lessonsStartTime, TimeOnly lessonsMaxEndTime, TimeSpan lessonDuration, TimeSpan breakDuration, IsuService isuService)
+    public IsuExtraService(
+        TimeOnly lessonsStartTime,
+        TimeOnly lessonsMaxEndTime,
+        TimeSpan lessonDuration,
+        TimeSpan breakDuration,
+        IsuService isuService)
     {
         if (lessonsStartTime > lessonsMaxEndTime)
         {
@@ -39,8 +44,12 @@ public class IsuExtraService
         BreakDuration = breakDuration;
         IsuService = isuService;
 
-        MaxLessonsAmount = Convert.ToInt32(Math.Truncate((LessonsMaxEndTime - LessonsStartTime) / (LessonDuration + BreakDuration)));
-        if (LessonsStartTime.Add(((LessonDuration + BreakDuration) * MaxLessonsAmount) + LessonDuration) <= LessonsMaxEndTime)
+        MaxLessonsAmount =
+            Convert.ToInt32(
+                Math.Truncate((LessonsMaxEndTime - LessonsStartTime) / (LessonDuration + BreakDuration)));
+
+        if (LessonsStartTime
+                .Add(((LessonDuration + BreakDuration) * MaxLessonsAmount) + LessonDuration) <= LessonsMaxEndTime)
         {
             MaxLessonsAmount++;
         }
@@ -88,7 +97,7 @@ public class IsuExtraService
 
     public Teacher AddTeacher(PersonName name)
     {
-        var teacher = new Teacher(name);
+        var teacher = new Teacher(Guid.NewGuid(), name);
         _teachers.Add(teacher);
         return teacher;
     }
@@ -134,7 +143,7 @@ public class IsuExtraService
 
     public OgnpCourse CreateOgnpCourse(string name, Megafaculty megafaculty)
     {
-        var course = new OgnpCourse(name, megafaculty);
+        var course = new OgnpCourse(Guid.NewGuid(), name, megafaculty);
         _ognpCourses.Add(course);
         return course;
     }
@@ -146,12 +155,12 @@ public class IsuExtraService
             throw NotFoundException.CourseIsNotRegistered(course);
         }
 
-        var stream = new OgnpStream(course, maxMembers, name);
+        var stream = new OgnpStream(Guid.NewGuid(), course, maxMembers, name);
         _ognpStreams.Add(stream);
         return stream;
     }
 
-    public List<OgnpLesson> GetLessons(OgnpStream stream)
+    public IEnumerable<OgnpLesson> GetLessons(OgnpStream stream)
     {
         if (!_ognpStreams.Contains(stream))
         {
@@ -161,7 +170,7 @@ public class IsuExtraService
         return new List<OgnpLesson>(_ognpLessons.Where(lesson => lesson.Stream == stream));
     }
 
-    public List<GroupLesson> GetLessons(Group group)
+    public IEnumerable<GroupLesson> GetLessons(Group group)
     {
         if (IsuService.FindGroup(group.Name) is null)
         {
@@ -171,23 +180,23 @@ public class IsuExtraService
         return new List<GroupLesson>(_groupLessons.Where(lesson => lesson.Group == group));
     }
 
-    public List<OgnpStream> GetOgnpStreams(OgnpCourse course)
+    public IEnumerable<OgnpStream> GetOgnpStreams(OgnpCourse course)
     {
         return _ognpStreams.Where(stream => stream.Course == course).ToList();
     }
 
-    public List<Student> GetOgnpStreamMembers(OgnpStream stream)
+    public IEnumerable<Student> GetOgnpStreamMembers(OgnpStream stream)
     {
         return _ognpStreamMembers.Where(member => member.Stream == stream).Select(member => member.Student).ToList();
     }
 
-    public List<Student> GetStudentsWithNoOgnpSelected(Group group)
+    public IEnumerable<Student> GetStudentsWithNoOgnpSelected(Group group)
     {
         return IsuService.FindStudents(group.Name)
-            .Where(student => _ognpStreamMembers.All(member => member.Student != student)).ToList();
+            .Where(student => _ognpStreamMembers.All(member => member.Student != student));
     }
 
-    public OgnpLesson AddLesson(OgnpStream stream, Teacher teacher, LessonTime time, Classroom classroom, string subjectName)
+    public OgnpLesson AddOgnpLesson(OgnpStream stream, Teacher teacher, LessonTime time, Classroom classroom, string subjectName)
     {
         if (time.TimeId > MaxLessonsAmount)
         {
@@ -199,22 +208,22 @@ public class IsuExtraService
             throw NotFoundException.TeacherIsNotRegistered(teacher);
         }
 
-        if (GetLessons(stream).Any(lesson => lesson.Lesson.Time == time))
+        if (GetLessons(stream).Any(lesson => lesson.Time == time))
         {
-            throw AddLessonException.SameStreamTimeIntersect(stream, time);
+            throw LessonException.SameStreamTimeIntersect(stream, time);
         }
 
-        if (_groupLessons.Any(lesson => lesson.Lesson.Classroom.Name == classroom.Name && lesson.Lesson.Time == time))
+        if (_groupLessons.Any(lesson => lesson.Classroom.Name == classroom.Name && lesson.Time == time))
         {
-            throw AddLessonException.ClassroomIntersect(time, classroom);
+            throw LessonException.ClassroomIntersect(time, classroom);
         }
 
-        if (_ognpLessons.Any(lesson => lesson.Lesson.Classroom.Name == classroom.Name && lesson.Lesson.Time == time))
+        if (_ognpLessons.Any(lesson => lesson.Classroom.Name == classroom.Name && lesson.Time == time))
         {
-            throw AddLessonException.ClassroomIntersect(time, classroom);
+            throw LessonException.ClassroomIntersect(time, classroom);
         }
 
-        var lesson = new OgnpLesson(new Lesson(teacher, time, classroom, subjectName), stream);
+        var lesson = new OgnpLesson(Guid.NewGuid(), teacher, time, classroom, subjectName, stream);
         _ognpLessons.Add(lesson);
         return lesson;
     }
@@ -231,17 +240,17 @@ public class IsuExtraService
             throw NotFoundException.TeacherIsNotRegistered(teacher);
         }
 
-        if (GetLessons(group).Any(lesson => lesson.Lesson.Time == time))
+        if (GetLessons(group).Any(lesson => lesson.Time == time))
         {
-            throw AddLessonException.SameGroupTimeIntersect(group, time);
+            throw LessonException.SameGroupTimeIntersect(group, time);
         }
 
-        if (_ognpLessons.Any(lesson => lesson.Lesson.Classroom.Name == classroom.Name && lesson.Lesson.Time == time))
+        if (_ognpLessons.Any(lesson => lesson.Classroom.Name == classroom.Name && lesson.Time == time))
         {
-            throw AddLessonException.ClassroomIntersect(time, classroom);
+            throw LessonException.ClassroomIntersect(time, classroom);
         }
 
-        var lesson = new GroupLesson(new Lesson(teacher, time, classroom, subjectName), group);
+        var lesson = new GroupLesson(Guid.NewGuid(), teacher, time, classroom, subjectName, group);
         _groupLessons.Add(lesson);
         return lesson;
     }
@@ -258,22 +267,22 @@ public class IsuExtraService
 
         if (stream.MaxMembers == _ognpStreamMembers.Count(member => member.Stream == stream))
         {
-            throw AddStudentToOgnpException.MaxMembersExceeded(student, stream);
+            throw OgnpException.MaxMembersExceeded(student, stream);
         }
 
         if (stream.Course.Megafaculty == GetMegafaculty(student.Group.Name))
         {
-            throw AddStudentToOgnpException.SameMegafaculty(student, stream);
+            throw OgnpException.SameMegafaculty(student, stream);
         }
 
         if (_ognpStreamMembers.Count(member => member.Student == student) == 2)
         {
-            throw AddStudentToOgnpException.AlreadyHasTwoCourses(student);
+            throw OgnpException.AlreadyHasTwoCourses(student);
         }
 
-        if (GetLessons(student.Group).Any(lesson => GetLessons(stream).Any(l => l.Lesson.Time == lesson.Lesson.Time)))
+        if (GetLessons(student.Group).Any(lesson => GetLessons(stream).Any(l => l.Time == lesson.Time)))
         {
-            throw AddStudentToOgnpException.ScheduleIntersect(student, stream);
+            throw OgnpException.ScheduleIntersect(student, stream);
         }
 
         OgnpStreamMember? studentAsStreamMember =
@@ -285,12 +294,12 @@ public class IsuExtraService
 
             if (studentStream.Course == stream.Course)
             {
-                throw AddStudentToOgnpException.SameCourse(student, stream);
+                throw OgnpException.SameCourse(student, stream);
             }
 
-            if (GetLessons(studentStream).Any(lesson => GetLessons(stream).Any(l => l.Lesson.Time == lesson.Lesson.Time)))
+            if (GetLessons(studentStream).Any(lesson => GetLessons(stream).Any(l => l.Time == lesson.Time)))
             {
-                throw AddStudentToOgnpException.ScheduleIntersect(student, stream);
+                throw OgnpException.ScheduleIntersect(student, stream);
             }
         }
 

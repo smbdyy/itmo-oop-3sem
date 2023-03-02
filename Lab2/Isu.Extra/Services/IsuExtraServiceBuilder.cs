@@ -10,31 +10,31 @@ public class IsuExtraServiceBuilder
     private TimeSpan _breakDuration = new (0, 10, 10);
     private IsuService _isuService = new IsuService();
 
-    public IsuExtraServiceBuilder WithLessonsStartTime(TimeOnly lessonsStartTime)
+    public IsuExtraServiceBuilder SetLessonsStartTime(TimeOnly lessonsStartTime)
     {
         _lessonsStartTime = lessonsStartTime;
         return this;
     }
 
-    public IsuExtraServiceBuilder WithLessonsMaxEndTime(TimeOnly lessonsMaxEndTime)
+    public IsuExtraServiceBuilder SetLessonsMaxEndTime(TimeOnly lessonsMaxEndTime)
     {
         _lessonsMaxEndTime = lessonsMaxEndTime;
         return this;
     }
 
-    public IsuExtraServiceBuilder WithLessonDuration(TimeSpan lessonDuration)
+    public IsuExtraServiceBuilder SetLessonDuration(TimeSpan lessonDuration)
     {
         _lessonDuration = lessonDuration;
         return this;
     }
 
-    public IsuExtraServiceBuilder WithBreakDuration(TimeSpan breakDuration)
+    public IsuExtraServiceBuilder SetBreakDuration(TimeSpan breakDuration)
     {
         _breakDuration = breakDuration;
         return this;
     }
 
-    public IsuExtraServiceBuilder WithIsuService(IsuService service)
+    public IsuExtraServiceBuilder SetIsuService(IsuService service)
     {
         _isuService = service;
         return this;

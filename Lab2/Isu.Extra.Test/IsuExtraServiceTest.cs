@@ -14,8 +14,8 @@ public class IsuExtraServiceTest
     public void BuildIsuExtraServiceWithLessonsEndTimeEarlierThanStartTime_ThrowException()
     {
         IsuExtraServiceBuilder builder = new IsuExtraServiceBuilder()
-            .WithLessonsStartTime(new TimeOnly(9, 0))
-            .WithLessonsMaxEndTime(new TimeOnly(8, 0));
+            .SetLessonsStartTime(new TimeOnly(9, 0))
+            .SetLessonsMaxEndTime(new TimeOnly(8, 0));
 
         Assert.Throws<ServiceBuildException>(() => builder.Build());
     }
@@ -24,9 +24,9 @@ public class IsuExtraServiceTest
     public void BuildIsuExtraServiceImpossibleToAddALesson_ThrowException()
     {
         IsuExtraServiceBuilder builder = new IsuExtraServiceBuilder()
-            .WithLessonsStartTime(new TimeOnly(8, 0))
-            .WithLessonsMaxEndTime(new TimeOnly(9, 0))
-            .WithLessonDuration(new TimeSpan(2, 0, 0));
+            .SetLessonsStartTime(new TimeOnly(8, 0))
+            .SetLessonsMaxEndTime(new TimeOnly(9, 0))
+            .SetLessonDuration(new TimeSpan(2, 0, 0));
 
         Assert.Throws<ServiceBuildException>(() => builder.Build());
     }
@@ -87,7 +87,7 @@ public class IsuExtraServiceTest
         service.AddStudentToOgnpStream(student, course1Stream);
         service.AddStudentToOgnpStream(student, course2Stream);
 
-        Assert.Throws<AddStudentToOgnpException>(() => service.AddStudentToOgnpStream(student, course3Stream));
+        Assert.Throws<OgnpException>(() => service.AddStudentToOgnpStream(student, course3Stream));
     }
 
     [Fact]
@@ -118,7 +118,7 @@ public class IsuExtraServiceTest
         Teacher teacher = service.AddTeacher(new PersonName("Name", "Surname"));
 
         OgnpLesson ognpLesson = service
-            .AddLesson(stream, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
+            .AddOgnpLesson(stream, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
         Assert.Contains(ognpLesson, service.GetLessons(stream));
 
         GroupLesson groupLesson = service
@@ -134,15 +134,15 @@ public class IsuExtraServiceTest
         OgnpStream stream1 = service.AddOgnpStream(course, 3, "stream 1");
         Group group = service.IsuService.AddGroup(new GroupName('M', new CourseNumber(AcademicDegree.Bachelor, 1), 3));
         Teacher teacher = service.AddTeacher(new PersonName("Name", "Surname"));
-        service.AddLesson(stream1, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
+        service.AddOgnpLesson(stream1, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
 
-        Assert.Throws<AddLessonException>(() => service.AddLesson(
+        Assert.Throws<LessonException>(() => service.AddOgnpLesson(
             stream1,
             teacher,
             new LessonTime(1, DayOfWeek.Monday),
             new Classroom(1, 1, 3),
             "Physics"));
-        Assert.Throws<AddLessonException>(() => service.AddLesson(
+        Assert.Throws<LessonException>(() => service.AddLesson(
             group,
             teacher,
             new LessonTime(1, DayOfWeek.Monday),
@@ -150,7 +150,7 @@ public class IsuExtraServiceTest
             "Programming"));
 
         OgnpStream stream2 = service.AddOgnpStream(course, 3, "stream 2");
-        Assert.Throws<AddLessonException>(() => service.AddLesson(
+        Assert.Throws<LessonException>(() => service.AddOgnpLesson(
             stream2,
             teacher,
             new LessonTime(1, DayOfWeek.Monday),
@@ -167,9 +167,9 @@ public class IsuExtraServiceTest
         Group group = service.IsuService.AddGroup(new GroupName('M', new CourseNumber(AcademicDegree.Bachelor, 1), 3));
         Student student = service.IsuService.AddStudent(group, new PersonName("Ivan", "Ivanov"));
         Teacher teacher = service.AddTeacher(new PersonName("Name", "Surname"));
-        service.AddLesson(stream, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
+        service.AddOgnpLesson(stream, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 1), "Maths");
         service.AddLesson(group, teacher, new LessonTime(1, DayOfWeek.Monday), new Classroom(1, 1, 2), "Physics");
 
-        Assert.Throws<AddStudentToOgnpException>(() => service.AddStudentToOgnpStream(student, stream));
+        Assert.Throws<OgnpException>(() => service.AddStudentToOgnpStream(student, stream));
     }
 }

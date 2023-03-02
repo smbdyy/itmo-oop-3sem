@@ -4,7 +4,7 @@ public class ServiceBuildException : Exception
 {
     public ServiceBuildException() { }
 
-    public ServiceBuildException(string message)
+    public ServiceBuildException(string? message)
         : base(message) { }
 
     public static ServiceBuildException LessonsEndTimeBeforeStartTime(TimeOnly start, TimeOnly end)

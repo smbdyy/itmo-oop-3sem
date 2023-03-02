@@ -4,7 +4,7 @@ namespace Isu.Extra.Models;
 
 public class OgnpCourse
 {
-    public OgnpCourse(string name, Megafaculty megafaculty)
+    public OgnpCourse(Guid id, string name, Megafaculty megafaculty)
     {
         if (name == string.Empty)
         {
@@ -13,7 +13,7 @@ public class OgnpCourse
 
         Name = name;
         Megafaculty = megafaculty;
-        Id = Guid.NewGuid();
+        Id = id;
     }
 
     public Guid Id { get; }

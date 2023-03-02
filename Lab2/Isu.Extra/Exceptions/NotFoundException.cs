@@ -6,9 +6,7 @@ namespace Isu.Extra.Exceptions;
 
 public class NotFoundException : Exception
 {
-    public NotFoundException() { }
-
-    public NotFoundException(string message)
+    public NotFoundException(string? message)
         : base(message) { }
 
     public static NotFoundException TeacherById(Guid id)

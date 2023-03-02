@@ -2,9 +2,7 @@
 
 public class IncorrectArgumentException : Exception
 {
-    public IncorrectArgumentException() { }
-
-    public IncorrectArgumentException(string message)
+    public IncorrectArgumentException(string? message)
         : base(message) { }
 
     public static IncorrectArgumentException ClassroomBlock(int value)

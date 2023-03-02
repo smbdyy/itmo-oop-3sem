@@ -2,7 +2,7 @@
 
 namespace Isu.Extra.Models;
 
-public class LessonTime
+public struct LessonTime : IEquatable<LessonTime>
 {
     public LessonTime(int timeId, DayOfWeek week)
     {
@@ -36,6 +36,11 @@ public class LessonTime
         }
 
         return obj.GetType() == GetType() && this == (LessonTime)obj;
+    }
+
+    public bool Equals(LessonTime other)
+    {
+        return other == this;
     }
 
     public override int GetHashCode()

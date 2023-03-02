@@ -5,10 +5,10 @@ namespace Isu.Extra.Entities;
 
 public class OgnpStream
 {
-    public OgnpStream(OgnpCourse course, int maxMembers, string name)
+    public OgnpStream(Guid id, OgnpCourse course, int maxMembers, string name)
     {
         Course = course;
-        Id = Guid.NewGuid();
+        Id = id;
         if (maxMembers < 1)
         {
             throw IncorrectArgumentException.MaxMembersLessThanOne(maxMembers);

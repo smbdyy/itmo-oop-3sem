@@ -4,10 +4,10 @@ namespace Isu.Extra.Entities;
 
 public class Teacher
 {
-    public Teacher(PersonName name)
+    public Teacher(Guid id, PersonName name)
     {
         Name = name;
-        Id = Guid.NewGuid();
+        Id = id;
     }
 
     public PersonName Name { get; }
