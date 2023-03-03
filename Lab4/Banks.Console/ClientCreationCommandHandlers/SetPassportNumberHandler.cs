@@ -1,7 +1,7 @@
 ﻿using Banks.Builders;
+using Banks.Clients;
 using Banks.Console.Tools;
 using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
 using Banks.Models;
 using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 

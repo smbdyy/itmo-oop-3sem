@@ -1,4 +1,7 @@
-﻿using Banks.Builders;
+﻿using Banks.Banks.Builders;
+using Banks.Builders;
+using Banks.CentralBanks;
+using Banks.Clients;
 using Banks.Console;
 using Banks.Console.AccountCreationCommandHandlers;
 using Banks.Console.AccountMenuCommandHandlers;
@@ -10,7 +13,7 @@ using Banks.Console.ClientMenuCommandHandlers;
 using Banks.Console.MainMenuCommandHandlers;
 using Banks.Console.Tools;
 using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
+using Banks.Models.Builders;
 using Banks.Tools.NotificationReceivers;
 
 var centralBank = new CentralBank(new DefaultBankBuilder());

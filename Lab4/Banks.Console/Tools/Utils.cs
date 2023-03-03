@@ -1,6 +1,8 @@
-﻿using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
-using Banks.Interfaces;
+﻿using Banks.Accounts;
+using Banks.Banks;
+using Banks.CentralBanks;
+using Banks.Clients;
+using Banks.Console.UserInteractionInterfaces;
 
 namespace Banks.Console.Tools;
 

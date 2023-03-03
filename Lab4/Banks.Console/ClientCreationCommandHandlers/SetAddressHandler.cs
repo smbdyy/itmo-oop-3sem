@@ -1,8 +1,8 @@
 ﻿using Banks.Builders;
+using Banks.Clients;
 using Banks.Console.AddressCreationCommandHandlers;
 using Banks.Console.Tools;
 using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
 
 namespace Banks.Console.ClientCreationCommandHandlers;
 

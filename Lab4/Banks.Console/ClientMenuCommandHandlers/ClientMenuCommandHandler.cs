@@ -1,5 +1,5 @@
-﻿using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
+﻿using Banks.Clients;
+using Banks.Console.UserInteractionInterfaces;
 
 namespace Banks.Console.ClientMenuCommandHandlers;
 

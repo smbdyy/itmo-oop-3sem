@@ -1,5 +1,4 @@
 ﻿using Banks.Console.UserInteractionInterfaces;
-using Banks.Interfaces;
 
 namespace Banks.Console.BankMenuCommandHandlers;
 

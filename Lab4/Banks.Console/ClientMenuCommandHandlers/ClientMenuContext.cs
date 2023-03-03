@@ -1,5 +1,5 @@
-﻿using Banks.Console.Tools.Exception;
-using Banks.Entities;
+﻿using Banks.Clients;
+using Banks.Console.Tools.Exception;
 
 namespace Banks.Console.ClientMenuCommandHandlers;
 

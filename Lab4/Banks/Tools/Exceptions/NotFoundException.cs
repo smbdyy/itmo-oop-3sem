@@ -1,5 +1,6 @@
-﻿using Banks.Entities;
-using Banks.Interfaces;
+﻿using Banks.Accounts;
+using Banks.Banks;
+using Banks.Clients;
 using Banks.Models;
 
 namespace Banks.Tools.Exceptions;

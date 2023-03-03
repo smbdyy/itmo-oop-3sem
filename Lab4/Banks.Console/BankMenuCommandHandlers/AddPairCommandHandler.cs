@@ -1,6 +1,5 @@
 ﻿using Banks.Console.Tools;
 using Banks.Console.UserInteractionInterfaces;
-using Banks.Interfaces;
 using Banks.Models;
 using Banks.Tools.Exceptions;
 using ArgumentException = System.ArgumentException;

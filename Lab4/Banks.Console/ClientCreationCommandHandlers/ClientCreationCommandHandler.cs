@@ -1,6 +1,6 @@
 ﻿using Banks.Builders;
+using Banks.Clients;
 using Banks.Console.UserInteractionInterfaces;
-using Banks.Entities;
 using Banks.Tools.NotificationReceivers;
 
 namespace Banks.Console.ClientCreationCommandHandlers;

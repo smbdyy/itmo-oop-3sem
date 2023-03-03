@@ -1,5 +1,5 @@
-﻿using Banks.Entities;
-using Banks.Interfaces;
+﻿using Banks.Banks;
+using Banks.Clients;
 
 namespace Banks.Tools.Exceptions;
 
