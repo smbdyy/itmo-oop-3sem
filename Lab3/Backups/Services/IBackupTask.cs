@@ -1,7 +1,8 @@
 ﻿using Backups.Models;
 using Backups.Repositories;
+using Backups.RestorePoints;
 
-namespace Backups.Entities;
+namespace Backups.Services;
 
 public interface IBackupTask
 {

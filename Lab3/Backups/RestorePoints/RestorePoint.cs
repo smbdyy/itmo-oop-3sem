@@ -1,7 +1,8 @@
-﻿using Backups.StorageAlgorithms;
+﻿using Backups.Models;
+using Backups.StorageAlgorithms;
 using Backups.Tools.Exceptions;
 
-namespace Backups.Models;
+namespace Backups.RestorePoints;
 
 public class RestorePoint : IRestorePoint
 {

@@ -1,7 +1,7 @@
 ﻿using Backups.Models;
 using Backups.StorageAlgorithms;
 
-namespace Backups.Tools.Creators;
+namespace Backups.RestorePoints.Creators;
 
 public class RestorePointCreator : IRestorePointCreator
 {

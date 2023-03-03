@@ -1,6 +1,7 @@
-﻿using Backups.StorageAlgorithms;
+﻿using Backups.Models;
+using Backups.StorageAlgorithms;
 
-namespace Backups.Models;
+namespace Backups.RestorePoints;
 
 public interface IRestorePoint
 {
