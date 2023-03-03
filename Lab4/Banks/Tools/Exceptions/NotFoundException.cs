@@ -48,7 +48,7 @@ public class NotFoundException : Exception
         return new NotFoundException($"bank with id {id} is not found");
     }
 
-    public static NotFoundException StartAmountPercentPair(StartAmountPercentPair pair, IBank bank)
+    public static NotFoundException StartAmountPercentPair(DepositPercentInfo pair, IBank bank)
     {
         return new NotFoundException(
             $"start amount -- percent pair {pair.StartAmount} -- " +

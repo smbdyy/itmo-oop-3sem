@@ -21,8 +21,8 @@ public class AddPairCommandHandler : BankMenuCommandHandler
         MoneyAmount percent = UserInputParser.GetUnsignedDecimal(InteractionInterface);
         try
         {
-            var pair = new StartAmountPercentPair(amount, percent);
-            Context.Bank.AddDepositAccountPercent(pair);
+            var pair = new DepositPercentInfo(amount, percent);
+            Context.Bank.AddDepositPercentInfo(pair);
             System.Console.WriteLine("pair has been added");
             return true;
         }

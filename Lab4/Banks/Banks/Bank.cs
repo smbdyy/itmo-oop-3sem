@@ -11,7 +11,7 @@ namespace Banks.Banks;
 public class Bank : IBank
 {
     private readonly List<IBankAccount> _accounts = new ();
-    private readonly List<StartAmountPercentPair> _depositAmountPercentPairs = new ();
+    private readonly List<DepositPercentInfo> _depositPercentInfo = new ();
     private readonly List<BankClient> _subscribers = new ();
     private readonly BankNotificationBuilder _bankNotificationBuilder;
     private DepositTermDays _depositAccountTerm;
@@ -44,7 +44,7 @@ public class Bank : IBank
     public string Name { get; }
     public DateOnly CurrentDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public IReadOnlyCollection<IBankAccount> Accounts => _accounts;
-    public IReadOnlyCollection<StartAmountPercentPair> StartAmountPercentPairs => _depositAmountPercentPairs;
+    public IReadOnlyCollection<DepositPercentInfo> DepositPercentInfo => _depositPercentInfo;
     public IReadOnlyCollection<BankClient> Subscribers => _subscribers;
     public DepositTermDays DepositAccountTerm
     {
@@ -95,32 +95,32 @@ public class Bank : IBank
         }
     }
 
-    public void AddDepositAccountPercent(StartAmountPercentPair depositAmountPercentPair)
+    public void AddDepositPercentInfo(DepositPercentInfo info)
     {
-        if (_depositAmountPercentPairs.Any(p => p.StartAmount == depositAmountPercentPair.StartAmount))
+        if (_depositPercentInfo.Any(p => p.StartAmount == info.StartAmount))
         {
-            throw AlreadyExistsException.PairForStartAmount(depositAmountPercentPair.StartAmount);
+            throw AlreadyExistsException.PairForStartAmount(info.StartAmount);
         }
 
-        if (_depositAmountPercentPairs.Any(p => p.Percent == depositAmountPercentPair.Percent))
+        if (_depositPercentInfo.Any(p => p.Percent == info.Percent))
         {
-            throw AlreadyExistsException.PairForPercent(depositAmountPercentPair.Percent);
+            throw AlreadyExistsException.PairForPercent(info.Percent);
         }
 
-        _depositAmountPercentPairs.Add(depositAmountPercentPair);
+        _depositPercentInfo.Add(info);
         NotifySubscribers();
     }
 
-    public void DeleteDepositAccountPercent(StartAmountPercentPair depositAmountPercentPair)
+    public void DeleteDepositPercentInfo(DepositPercentInfo info)
     {
-        StartAmountPercentPair? found = _depositAmountPercentPairs.FirstOrDefault(p =>
-            p.StartAmount != depositAmountPercentPair.StartAmount && p.Percent != depositAmountPercentPair.Percent);
+        DepositPercentInfo? found = _depositPercentInfo.FirstOrDefault(p =>
+            p.StartAmount != info.StartAmount && p.Percent != info.Percent);
         if (found is null)
         {
-            throw NotFoundException.StartAmountPercentPair(depositAmountPercentPair, this);
+            throw NotFoundException.StartAmountPercentPair(info, this);
         }
 
-        _depositAmountPercentPairs.Remove(found);
+        _depositPercentInfo.Remove(found);
     }
 
     public IBankAccount CreateAccount(BankAccountBuilder builder)

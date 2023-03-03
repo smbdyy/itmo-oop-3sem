@@ -1,4 +1,5 @@
 ﻿using Banks.Banks;
+using Banks.Banks.Builders;
 using Banks.CentralBanks;
 using Banks.Console.UserInteractionInterfaces;
 
@@ -8,13 +9,18 @@ public abstract class BankCreationCommandHandler
 {
     private BankCreationCommandHandler? _next;
 
-    public BankCreationCommandHandler(ICentralBank centralBank, IUserInteractionInterface interactionInterface)
+    public BankCreationCommandHandler(
+        ICentralBank centralBank,
+        BankBuilder builder,
+        IUserInteractionInterface interactionInterface)
     {
         CentralBank = centralBank;
+        Builder = builder;
         InteractionInterface = interactionInterface;
     }
 
     protected ICentralBank CentralBank { get; }
+    protected BankBuilder Builder { get; }
     protected IUserInteractionInterface InteractionInterface { get; }
 
     public BankCreationCommandHandler SetNext(BankCreationCommandHandler next)
@@ -25,6 +31,6 @@ public abstract class BankCreationCommandHandler
 
     public virtual IBank Handle()
     {
-        return _next is null ? CentralBank.CreateBank() : _next.Handle();
+        return _next is null ? CentralBank.CreateBank(Builder) : _next.Handle();
     }
 }

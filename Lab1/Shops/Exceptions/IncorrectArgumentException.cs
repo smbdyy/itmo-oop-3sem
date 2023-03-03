@@ -1,6 +1,4 @@
-﻿using Shops.Entities;
-
-namespace Shops.Exceptions;
+﻿namespace Shops.Exceptions;
 
 public class IncorrectArgumentException : Exception
 {

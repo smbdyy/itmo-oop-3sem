@@ -10,7 +10,7 @@ public abstract class BankBuilder
     protected DepositTermDays DepositAccountTerm { get; private set; } = 10;
     protected MoneyAmount CreditAccountCommission { get; private set; } = 10;
     protected NonPositiveMoneyAmount CreditAccountLimit { get; private set; } = -1000;
-    protected MoneyAmount MaxUnverifiedClientWithdrawal { get; private set; } = 1000;
+    protected MoneyAmount UnverifiedClientWithdrawalLimit { get; private set; } = 1000;
     protected BankNotificationBuilder NotificationBuilder { get; private set; } = new UpdateNotificationBuilder();
     public abstract IBank Build();
     public void Reset()
@@ -18,7 +18,7 @@ public abstract class BankBuilder
         DepositAccountTerm = 10;
         CreditAccountCommission = 10;
         CreditAccountLimit = -1000;
-        MaxUnverifiedClientWithdrawal = 1000;
+        UnverifiedClientWithdrawalLimit = 1000;
         NotificationBuilder = new UpdateNotificationBuilder();
     }
 
@@ -51,9 +51,9 @@ public abstract class BankBuilder
         return this;
     }
 
-    public BankBuilder SetMaxUnverifiedClientWithdrawal(MoneyAmount value)
+    public BankBuilder SetUnverifiedClientWithdrawalLimit(MoneyAmount value)
     {
-        MaxUnverifiedClientWithdrawal = value;
+        UnverifiedClientWithdrawalLimit = value;
         return this;
     }
 

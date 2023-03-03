@@ -1,5 +1,4 @@
-﻿using Banks.Tools.Exceptions;
-using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
+﻿using ArgumentException = Banks.Tools.Exceptions.ArgumentException;
 
 namespace Banks.Models;
 
