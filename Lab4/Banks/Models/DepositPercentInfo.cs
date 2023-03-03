@@ -2,9 +2,9 @@
 
 namespace Banks.Models;
 
-public class StartAmountPercentPair
+public class DepositPercentInfo
 {
-    public StartAmountPercentPair(MoneyAmount startAmount, MoneyAmount percent)
+    public DepositPercentInfo(MoneyAmount startAmount, MoneyAmount percent)
     {
         if (startAmount < 0)
         {

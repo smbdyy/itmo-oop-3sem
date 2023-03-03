@@ -18,7 +18,7 @@ public class UpdateNotificationBuilder : BankNotificationBuilder
                             Credit account limit: {Bank.CreditAccountLimit.Value},
                             Unverified client withdrawal limit: {Bank.UnverifiedClientWithdrawalLimit.Value}.
                             Deposit account percents:";
-        foreach (StartAmountPercentPair pair in Bank.StartAmountPercentPairs)
+        foreach (DepositPercentInfo pair in Bank.DepositPercentInfo)
         {
             message += Environment.NewLine + $"From {pair.StartAmount}: {pair.Percent}";
         }

@@ -10,6 +10,11 @@ public class CentralBank : ICentralBank
     private readonly List<BankClient> _clients = new ();
     private readonly List<IBank> _banks = new ();
 
+    public CentralBank()
+    {
+        CurrentDate = DateOnly.FromDateTime(DateTime.Now);
+    }
+
     public CentralBank(DateOnly currentDate)
     {
         CurrentDate = currentDate;

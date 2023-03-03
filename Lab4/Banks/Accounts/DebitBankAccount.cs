@@ -11,7 +11,7 @@ public class DebitBankAccount : IBankAccount
 {
     private readonly List<ITransaction> _transactions = new ();
     private readonly List<ITransactionInfo> _transactionHistory = new ();
-    private readonly TransactionProcessor _validationChain;
+    private readonly TransactionProcessor _transactionProcessingChain;
 
     public DebitBankAccount(BankClient client, MoneyAmount unverifiedClientWithdrawalLimit, DateOnly currentDate)
     {
@@ -19,8 +19,8 @@ public class DebitBankAccount : IBankAccount
         CurrentDate = currentDate;
         CreationDate = currentDate;
 
-        _validationChain = new EnoughMoneyValidator();
-        _validationChain
+        _transactionProcessingChain = new EnoughMoneyValidator();
+        _transactionProcessingChain
             .SetNext(new VerifiedClientValidator(unverifiedClientWithdrawalLimit))
             .SetNext(new TransactionFinisher());
     }
@@ -34,7 +34,7 @@ public class DebitBankAccount : IBankAccount
 
     public void Withdraw(MoneyAmount amount)
     {
-        MoneyAmount = _validationChain.Withdraw(this, amount);
+        MoneyAmount = _transactionProcessingChain.Withdraw(this, amount);
         var transaction = new WithdrawalTransaction(amount, 0);
         _transactions.Add(transaction);
         _transactionHistory.Add(new WithdrawalTransactionInfo(transaction));
@@ -42,7 +42,7 @@ public class DebitBankAccount : IBankAccount
 
     public void Replenish(MoneyAmount amount)
     {
-        MoneyAmount = _validationChain.Replenish(this, amount);
+        MoneyAmount = _transactionProcessingChain.Replenish(this, amount);
         var transaction = new ReplenishmentTransaction(amount, 0);
         _transactions.Add(transaction);
         _transactionHistory.Add(new ReplenishmentTransactionInfo(transaction));
@@ -56,7 +56,7 @@ public class DebitBankAccount : IBankAccount
         }
 
         var transaction = new TransferTransaction(amount, 0, this, recipient);
-        MoneyAmount = _validationChain.Send(transaction);
+        MoneyAmount = _transactionProcessingChain.Send(transaction);
         _transactions.Add(transaction);
         _transactionHistory.Add(new TransferSendingTransactionInfo(transaction));
     }
@@ -64,7 +64,7 @@ public class DebitBankAccount : IBankAccount
     public void Receive(TransferTransaction transaction)
     {
         var receiveTransaction = new TransferReceivingTransaction(transaction, 0);
-        MoneyAmount = _validationChain.Replenish(this, transaction.Amount);
+        MoneyAmount = _transactionProcessingChain.Replenish(this, transaction.Amount);
         _transactions.Add(receiveTransaction);
         _transactionHistory.Add(new TransferReceivingTransactionInfo(receiveTransaction));
     }

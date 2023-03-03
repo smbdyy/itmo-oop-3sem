@@ -1,8 +1,6 @@
 ﻿using Banks.Banks.Builders;
-using Banks.Builders;
 using Banks.CentralBanks;
 using Banks.Clients;
-using Banks.Console;
 using Banks.Console.AccountCreationCommandHandlers;
 using Banks.Console.AccountMenuCommandHandlers;
 using Banks.Console.AddressCreationCommandHandlers;
@@ -16,7 +14,8 @@ using Banks.Console.UserInteractionInterfaces;
 using Banks.Models.Builders;
 using Banks.Tools.NotificationReceivers;
 
-var centralBank = new CentralBank(new DefaultBankBuilder());
+var centralBank = new CentralBank();
+var bankBuilder = new DefaultBankBuilder();
 var interactionInterface = new ConsoleUserInteractionInterface();
 
 var addressBuilder = new AddressBuilder();
@@ -26,12 +25,12 @@ addressCreationChain
     .SetNext(new SetStreetHandler(addressBuilder, interactionInterface))
     .SetNext(new SetHouseNumberHandler(addressBuilder, interactionInterface));
 
-BankCreationCommandHandler bankCreationChain = new SetNameHandler(centralBank, interactionInterface);
+BankCreationCommandHandler bankCreationChain = new SetNameHandler(centralBank, bankBuilder, interactionInterface);
 bankCreationChain
-    .SetNext(new SetCreditAccountCommissionHandler(centralBank, interactionInterface))
-    .SetNext(new SetCreditAccountLimitHandler(centralBank, interactionInterface))
-    .SetNext(new SetDepositAccountTermHandler(centralBank, interactionInterface))
-    .SetNext(new SetUnverifiedClientWithdrawalLimitHandler(centralBank, interactionInterface));
+    .SetNext(new SetCreditAccountCommissionHandler(centralBank, bankBuilder, interactionInterface))
+    .SetNext(new SetCreditAccountLimitHandler(centralBank, bankBuilder, interactionInterface))
+    .SetNext(new SetDepositAccountTermHandler(centralBank, bankBuilder, interactionInterface))
+    .SetNext(new SetUnverifiedClientWithdrawalLimitHandler(centralBank, bankBuilder, interactionInterface));
 
 BankClientBuilder clientBuilder = new BankClientBuilder().AddNotificationReceiver(new ConsoleNotificationReceiver());
 ClientCreationCommandHandler clientCreationChain = new SetClientNameHandler(clientBuilder, interactionInterface);

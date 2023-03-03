@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Isu.Entities;
 using Isu.Exceptions;
 
 namespace Isu.Models;

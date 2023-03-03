@@ -25,7 +25,7 @@ public class DepositBankAccountBuilder : BankAccountBuilder
 
     private MoneyAmount CalculateDepositAccountPercent()
     {
-        StartAmountPercentPair? pair = Bank.StartAmountPercentPairs
+        DepositPercentInfo? pair = Bank.DepositPercentInfo
             .Where(pair => pair.StartAmount <= _startMoneyAmount)
             .MaxBy(pair => pair.StartAmount);
 

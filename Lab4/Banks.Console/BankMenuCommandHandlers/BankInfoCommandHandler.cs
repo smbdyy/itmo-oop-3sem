@@ -20,9 +20,9 @@ public class BankInfoCommandHandler : BankMenuCommandHandler
         System.Console.WriteLine($"Credit account limit: {Context.Bank.CreditAccountLimit.Value}");
         System.Console.WriteLine($"Unverified client withdrawal limit: {Context.Bank.UnverifiedClientWithdrawalLimit.Value}");
 
-        if (Context.Bank.StartAmountPercentPairs.Count == 0) return true;
+        if (Context.Bank.DepositPercentInfo.Count == 0) return true;
         System.Console.WriteLine("Start amount -- percent pairs:");
-        foreach (StartAmountPercentPair pair in Context.Bank.StartAmountPercentPairs)
+        foreach (DepositPercentInfo pair in Context.Bank.DepositPercentInfo)
         {
             System.Console.WriteLine($"amount: {pair.StartAmount}, percent: {pair.Percent}");
         }

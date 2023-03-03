@@ -1,4 +1,3 @@
-using Isu.Entities;
 using Isu.Exceptions;
 
 namespace Isu.Models;
