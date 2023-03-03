@@ -1,9 +1,7 @@
-﻿using Backups.Extra.Interfaces;
-using Backups.Models;
-using Backups.Repositories;
+﻿using Backups.Repositories;
 using Backups.RestorePoints;
 
-namespace Backups.Extra.Entities;
+namespace Backups.Extra.RestorePointCleaners;
 
 public class MergePointsCleaner : IRestorePointsCleaner
 {

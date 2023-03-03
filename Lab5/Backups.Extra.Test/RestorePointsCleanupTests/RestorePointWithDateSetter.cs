@@ -2,7 +2,7 @@
 using Backups.RestorePoints;
 using Backups.StorageAlgorithms;
 
-namespace Backups.Extra.Models;
+namespace Backups.Extra.Test.RestorePointsCleanupTests;
 
 public class RestorePointWithDateSetter : IRestorePoint
 {

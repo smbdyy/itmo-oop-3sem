@@ -1,10 +1,9 @@
-﻿using Backups.Extra.Models;
-using Backups.Models;
+﻿using Backups.Models;
 using Backups.RestorePoints;
 using Backups.RestorePoints.Creators;
 using Backups.StorageAlgorithms;
 
-namespace Backups.Extra.Creators;
+namespace Backups.Extra.Test.RestorePointsCleanupTests;
 
 public class RestorePointWithDateSetterCreator : IRestorePointCreator
 {

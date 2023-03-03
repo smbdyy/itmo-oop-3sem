@@ -1,9 +1,9 @@
 ﻿using Backups.Archivers;
-using Backups.Extra.Creators;
-using Backups.Extra.Entities;
-using Backups.Extra.Interfaces;
 using Backups.Extra.Loggers;
-using Backups.Extra.Models;
+using Backups.Extra.Loggers.MessageGenerators;
+using Backups.Extra.RestorePointCleaners;
+using Backups.Extra.RestorePointCleaners.Selectors;
+using Backups.Extra.Services;
 using Backups.Models;
 using Backups.Repositories;
 using Backups.RestorePoints.Creators;
@@ -50,7 +50,7 @@ public class DeleteOldPointsCleanupTest
         const string restorePointsPath = "RestorePoints";
         var repository = new InMemoryRepository(restorePointsPath);
         repository.CreateFile("file1.txt");
-        var deleteSelector = new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10));
+        var deleteSelector = new DateRestorePointDeleteSelector(new DateTime(2023, 1, 10));
         var cleaner = new DeleteOldPointsCleaner();
         var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
         var backupTask = new BackupTaskExtended(
@@ -83,7 +83,7 @@ public class DeleteOldPointsCleanupTest
         var deleteSelectors = new List<IRestorePointDeleteSelector>
         {
             new AmountRestorePointDeleteSelector(2),
-            new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
+            new DateRestorePointDeleteSelector(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
         var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
@@ -117,7 +117,7 @@ public class DeleteOldPointsCleanupTest
         var deleteSelectors = new List<IRestorePointDeleteSelector>
         {
             new AmountRestorePointDeleteSelector(2),
-            new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
+            new DateRestorePointDeleteSelector(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
         var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());
@@ -151,7 +151,7 @@ public class DeleteOldPointsCleanupTest
         var deleteSelectors = new List<IRestorePointDeleteSelector>
         {
             new AmountRestorePointDeleteSelector(2),
-            new DateRestorePointDeleteCreator(new DateTime(2023, 1, 10)),
+            new DateRestorePointDeleteSelector(new DateTime(2023, 1, 10)),
         };
         var cleaner = new DeleteOldPointsCleaner();
         var logger = new ConsoleLogger(new CurrentTimePrefixGenerator());

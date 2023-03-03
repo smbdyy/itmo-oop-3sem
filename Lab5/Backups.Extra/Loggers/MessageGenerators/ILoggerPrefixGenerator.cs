@@ -1,4 +1,4 @@
-﻿namespace Backups.Extra.Interfaces;
+﻿namespace Backups.Extra.Loggers.MessageGenerators;
 
 public interface ILoggerPrefixGenerator
 {

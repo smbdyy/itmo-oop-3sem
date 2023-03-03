@@ -1,6 +1,8 @@
 ﻿using Backups.Archivers;
-using Backups.Extra.Interfaces;
 using Backups.Extra.Loggers;
+using Backups.Extra.Loggers.MessageGenerators;
+using Backups.Extra.RestorePointCleaners;
+using Backups.Extra.RestorePointCleaners.Selectors;
 using Backups.Extra.Visitors;
 using Backups.Models;
 using Backups.Repositories;
@@ -10,7 +12,7 @@ using Backups.Services;
 using Backups.StorageAlgorithms;
 using Backups.Tools.Exceptions;
 
-namespace Backups.Extra.Entities;
+namespace Backups.Extra.Services;
 
 public class BackupTaskExtended : IBackupTask
 {

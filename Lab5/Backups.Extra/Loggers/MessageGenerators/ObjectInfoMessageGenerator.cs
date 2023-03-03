@@ -1,7 +1,7 @@
 ﻿using Backups.Models;
 using Backups.RestorePoints;
 
-namespace Backups.Extra.Loggers;
+namespace Backups.Extra.Loggers.MessageGenerators;
 
 public static class ObjectInfoMessageGenerator
 {

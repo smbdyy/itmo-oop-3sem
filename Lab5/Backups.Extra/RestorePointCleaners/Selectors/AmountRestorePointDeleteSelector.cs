@@ -1,8 +1,6 @@
-﻿using Backups.Extra.Interfaces;
-using Backups.Models;
-using Backups.RestorePoints;
+﻿using Backups.RestorePoints;
 
-namespace Backups.Extra.Models;
+namespace Backups.Extra.RestorePointCleaners.Selectors;
 
 public class AmountRestorePointDeleteSelector : IRestorePointDeleteSelector
 {

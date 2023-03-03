@@ -1,14 +1,12 @@
-﻿using Backups.Extra.Interfaces;
-using Backups.Models;
-using Backups.RestorePoints;
+﻿using Backups.RestorePoints;
 
-namespace Backups.Extra.Models;
+namespace Backups.Extra.RestorePointCleaners.Selectors;
 
-public class DateRestorePointDeleteCreator : IRestorePointDeleteSelector
+public class DateRestorePointDeleteSelector : IRestorePointDeleteSelector
 {
     private readonly DateTime _notOlderThan;
 
-    public DateRestorePointDeleteCreator(DateTime notOlderThan)
+    public DateRestorePointDeleteSelector(DateTime notOlderThan)
     {
         _notOlderThan = notOlderThan;
     }

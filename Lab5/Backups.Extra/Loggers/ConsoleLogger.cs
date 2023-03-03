@@ -1,4 +1,4 @@
-﻿using Backups.Extra.Interfaces;
+﻿using Backups.Extra.Loggers.MessageGenerators;
 
 namespace Backups.Extra.Loggers;
 

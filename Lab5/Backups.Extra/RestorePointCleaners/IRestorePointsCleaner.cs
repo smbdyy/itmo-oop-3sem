@@ -1,9 +1,7 @@
-﻿using Backups.Models;
-using Backups.Repositories;
+﻿using Backups.Repositories;
 using Backups.RestorePoints;
-using Backups.StorageAlgorithms;
 
-namespace Backups.Extra.Interfaces;
+namespace Backups.Extra.RestorePointCleaners;
 
 public interface IRestorePointsCleaner
 {

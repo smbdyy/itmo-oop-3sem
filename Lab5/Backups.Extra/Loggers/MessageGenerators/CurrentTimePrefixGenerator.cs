@@ -1,6 +1,4 @@
-﻿using Backups.Extra.Interfaces;
-
-namespace Backups.Extra.Loggers;
+﻿namespace Backups.Extra.Loggers.MessageGenerators;
 
 public class CurrentTimePrefixGenerator : ILoggerPrefixGenerator
 {
